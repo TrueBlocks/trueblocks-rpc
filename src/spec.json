@@ -1,0 +1,527 @@
+[
+  {
+    "name": "web3_clientVersion",
+    "params": [],
+    "returns": "STRING"
+  },
+  {
+    "name": "web3_sha3",
+    "params": ["DATA"],
+    "returns": "DATA"
+  },
+  {
+    "name": "net_listening",
+    "params": [],
+    "returns": true
+  },
+  {
+    "name": "net_version",
+    "params": [],
+    "returns": "STRING"
+  },
+  {
+    "name": "net_peerCount",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_getBlockByNumber",
+    "params": ["QUANTITY|TAG", true],
+    "returns": {
+      "place_holder": "BLOCK_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getBlockByHash",
+    "params": ["HASH", true],
+    "returns": {
+      "place_holder": "BLOCK_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getBlockTransactionCountByNumber",
+    "params": ["QUANTITY|TAG"],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_getBlockTransactionCountByHash",
+    "params": ["HASH"],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_getTransactionByHash",
+    "params": ["HASH"],
+    "returns": {
+      "place_holder": "TRANSACTION_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getTransactionByBlockHashAndIndex",
+    "params": ["HASH", "QUANTITY"],
+    "returns": {
+      "place_holder": "TRANSACTION_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getTransactionByBlockNumberAndIndex",
+    "params": ["QUANTITY|TAG", "QUANTITY"],
+    "returns": {
+      "place_holder": "TRANSACTION_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getTransactionReceipt",
+    "params": ["HASH"],
+    "returns": {
+      "place_holder": "TRANSACTIONRECEIPT_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getUncleByBlockNumberAndIndex",
+    "params": ["QUANTITY|TAG", "QUANTITY"],
+    "returns": {
+      "place_holder": "BLOCK_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getUncleByBlockHashAndIndex",
+    "params": ["HASH", "QUANTITY"],
+    "returns": {
+      "place_holder": "BLOCK_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getUncleCountByBlockNumber",
+    "params": ["QUANTITY|TAG"],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_getUncleCountByBlockHash",
+    "params": ["HASH"],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_newPendingTransactionFilter",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_newBlockFilter",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_newFilter",
+    "params": [
+      {
+        "place_holder": "FILTER_OBJECT"
+      }
+    ],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_uninstallFilter",
+    "params": ["QUANTITY"],
+    "returns": true
+  },
+  {
+    "name": "eth_getFilterChanges",
+    "params": ["QUANTITY"],
+    "returns": {
+      "place_holder": "FILTERLOG_OBJECT"
+    }
+  },
+  {
+    "name": "eth_getLogs",
+    "params": [
+      {
+        "place_holder": "FILTER_OBJECT"
+      }
+    ],
+    "returns": {
+      "place_holder": "LOGARRAY"
+    }
+  },
+  {
+    "name": "eth_getBalance",
+    "params": ["ADDRESS", "QUANTITY|TAG"],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_getTransactionCount",
+    "params": ["ADDRESS", "QUANTITY|TAG"],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_getCode",
+    "params": ["ADDRESS", "QUANTITY|TAG"],
+    "returns": "DATA"
+  },
+  {
+    "name": "eth_getStorageAt",
+    "params": ["ADDRESS", "QUANTITY", "QUANTITY|TAG"],
+    "returns": "DATA"
+  },
+  {
+    "name": "eth_blockNumber",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_syncing",
+    "params": [],
+    "returns": {
+      "place_holder": "SYNCING_OBJECT"
+    }
+  },
+  {
+    "name": "eth_chainId",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_protocolVersion",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_gasPrice",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_call",
+    "params": [
+      {
+        "place_holder": "CALL_OBJECT"
+      },
+      "QUANTITY|TAG"
+    ],
+    "returns": "DATA"
+  },
+  {
+    "name": "eth_estimateGas",
+    "params": [
+      {
+        "place_holder": "CALL_OBJECT"
+      }
+    ],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_sendTransaction",
+    "params": [
+      {
+        "place_holder": "SENDTRANSACTION_OBJECT"
+      }
+    ],
+    "returns": "DATA, 32 Bytes"
+  },
+  {
+    "name": "eth_sendRawTransaction",
+    "params": ["DATA"],
+    "returns": "DATA, 32 Bytes"
+  },
+  {
+    "name": "eth_getProof",
+    "params": ["ADDRESS", ["DATA"], "QUANTITY|TAG"],
+    "returns": "DATA"
+  },
+  {
+    "name": "eth_coinbase",
+    "params": [],
+    "returns": "DATA, 20 Bytes"
+  },
+  {
+    "name": "eth_hashrate",
+    "params": [],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "eth_mining",
+    "params": [],
+    "returns": true
+  },
+  {
+    "name": "eth_getWork",
+    "params": [],
+    "returns": {
+      "place_holder": "WORK_OBJECT"
+    }
+  },
+  {
+    "name": "eth_submitWork",
+    "params": ["DATA, 8 Bytes", "HASH", "HASH"],
+    "returns": true
+  },
+  {
+    "name": "eth_submitHashrate",
+    "params": ["HASH", "STRING"],
+    "returns": true
+  },
+  {
+    "name": "trace_call",
+    "params": [
+      {
+        "place_holder": "TRACECALL_OBJECT"
+      },
+      ["STRING"],
+      "QUANTITY|TAG"
+    ],
+    "returns": {
+      "place_holder": "BLOCKTRACEARRAY"
+    }
+  },
+  {
+    "name": "trace_callMany",
+    "params": [
+      [
+        {
+          "place_holder": "TRACECALL"
+        }
+      ],
+      "QUANTITY|TAG"
+    ],
+    "returns": {
+      "place_holder": "BLOCKTRACEARRAY"
+    }
+  },
+  {
+    "name": "trace_rawTransaction",
+    "params": ["DATA", ["STRING"]],
+    "returns": {
+      "place_holder": "BLOCKTRACE._OBJECT"
+    }
+  },
+  {
+    "name": "trace_replayBlockTransactions",
+    "params": ["QUANTITY|TAG", ["STRING"]],
+    "returns": {
+      "place_holder": "BLOCKTRACEARRAY._OBJECT"
+    }
+  },
+  {
+    "name": "trace_replayTransaction",
+    "params": ["HASH", ["STRING"]],
+    "returns": {
+      "place_holder": "BLOCKTRACE._OBJECT"
+    }
+  },
+  {
+    "name": "trace_transaction",
+    "params": ["HASH"],
+    "returns": {
+      "place_holder": "ADHOCTRACEARRAY,_OBJECT"
+    }
+  },
+  {
+    "name": "trace_get",
+    "params": ["HASH", ["QUANTITY"]],
+    "returns": {
+      "place_holder": "ADHOCTRACEARRAY,_OBJECT"
+    }
+  },
+  {
+    "name": "trace_block",
+    "params": ["QUANTITY|TAG"],
+    "returns": {
+      "place_holder": "ADHOCTRACEARRAY._OBJECT"
+    }
+  },
+  {
+    "name": "trace_filter",
+    "params": [
+      {
+        "place_holder": "TRACEFILTER_OBJECT"
+      }
+    ],
+    "returns": {
+      "place_holder": "ADHOCTRACEARRAY"
+    }
+  },
+  {
+    "name": "tg_forks",
+    "params": [],
+    "returns": {
+      "place_holder": "FORK_OBJECT"
+    }
+  },
+  {
+    "name": "tg_getHeaderByNumber",
+    "params": ["QUANTITY|TAG"],
+    "returns": {
+      "place_holder": "BLOCKHEADER_OBJECT"
+    }
+  },
+  {
+    "name": "tg_getHeaderByHash",
+    "params": ["HASH"],
+    "returns": {
+      "place_holder": "BLOCKHEADER_OBJECT"
+    }
+  },
+  {
+    "name": "tg_getLogsByHash",
+    "params": ["HASH"],
+    "returns": {
+      "place_holder": "LOGARRAY"
+    }
+  },
+  {
+    "name": "tg_issuance",
+    "params": ["QUANTITY|TAG"],
+    "returns": {
+      "place_holder": "ISSUANCE_OBJECT"
+    }
+  },
+  {
+    "name": "debug_storageRangeAt",
+    "params": ["HASH", 8, "ADDRESS", "HASH", 8],
+    "returns": {
+      "place_holder": "STORAGERANGERESULT_OBJECT"
+    }
+  },
+  {
+    "name": "debug_accountRange",
+    "params": ["QUANTITY|TAG", ["DATA"], 8, true, true, true],
+    "returns": {
+      "place_holder": "ITERATORDUMP_OBJECT"
+    }
+  },
+  {
+    "name": "debug_getModifiedAccountsByNumber",
+    "params": ["QUANTITY|TAG", "QUANTITY|TAG"],
+    "returns": "Array of DATA, 20 Bytes"
+  },
+  {
+    "name": "debug_getModifiedAccountsByHash",
+    "params": ["HASH", "HASH"],
+    "returns": "Array of DATA, 20 Bytes"
+  },
+  {
+    "name": "debug_traceTransaction",
+    "params": ["HASH"],
+    "returns": "STACK_TRACE"
+  },
+  {
+    "name": "eth_accounts",
+    "params": [],
+    "returns": "Array of DATA, 20 Bytes"
+  },
+  {
+    "name": "eth_getCompilers",
+    "params": [],
+    "returns": {
+      "place_holder": "STRINGARRAY"
+    }
+  },
+  {
+    "name": "eth_compileLLL",
+    "params": ["STRING"],
+    "returns": "DATA"
+  },
+  {
+    "name": "eth_compileSolidity",
+    "params": ["STRING"],
+    "returns": "DATA"
+  },
+  {
+    "name": "eth_compileSerpent",
+    "params": ["STRING"],
+    "returns": "DATA"
+  },
+  {
+    "name": "eth_sign",
+    "params": ["ADDRESS", "DATA"],
+    "returns": "DATA"
+  },
+  {
+    "name": "db_getString",
+    "params": ["STRING", "STRING"],
+    "returns": "STRING"
+  },
+  {
+    "name": "db_putString",
+    "params": ["STRING", "STRING", "STRING"],
+    "returns": true
+  },
+  {
+    "name": "db_getHex",
+    "params": ["STRING", "STRING"],
+    "returns": "DATA"
+  },
+  {
+    "name": "db_putHex",
+    "params": ["STRING", "STRING", "DATA"],
+    "returns": true
+  },
+  {
+    "name": "shh_post",
+    "params": [
+      {
+        "place_holder": "POST_OBJECT"
+      }
+    ],
+    "returns": true
+  },
+  {
+    "name": "shh_version",
+    "params": [],
+    "returns": "STRING"
+  },
+  {
+    "name": "shh_newIdentity",
+    "params": [],
+    "returns": "DATA, 60 Bytes"
+  },
+  {
+    "name": "shh_hasIdentity",
+    "params": ["DATA_60BYTES"],
+    "returns": true
+  },
+  {
+    "name": "shh_newGroup",
+    "params": [],
+    "returns": "DATA, 60 Bytes"
+  },
+  {
+    "name": "shh_addToGroup",
+    "params": ["DATA_60BYTES"],
+    "returns": true
+  },
+  {
+    "name": "shh_newFilter",
+    "params": [
+      {
+        "place_holder": "FILTER_OBJECT"
+      }
+    ],
+    "returns": "QUANTITY"
+  },
+  {
+    "name": "shh_uninstallFilter",
+    "params": ["QUANTITY"],
+    "returns": true
+  },
+  {
+    "name": "shh_getFilterChanges",
+    "params": ["QUANTITY"],
+    "returns": {
+      "place_holder": "MESSAGEARRAY"
+    }
+  },
+  {
+    "name": "shh_getMessages",
+    "params": ["QUANTITY"],
+    "returns": {
+      "place_holder": "MESSAGEARRAY"
+    }
+  },
+  {
+    "name": "tb_whereBlock",
+    "params": ["QUANTITY|TAG"],
+    "returns": {
+      "place_holder": "WHEREBLOCK_OBJECT"
+    }
+  }
+]
