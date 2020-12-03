@@ -100,9 +100,3 @@ install(TARGETS ${ALL_LIBS} EXPORT libjson-rpc-cppTargets
 get_filename_component(FULL_PATH_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
 set(FULL_PATH_INCLUDEDIR "${FULL_PATH_INSTALL_PREFIX}/include")
 set(FULL_PATH_LIBDIR "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-
-configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-client.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-client.pc)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-server.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-server.pc)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-common.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-common.pc)
-
-INSTALL(FILES "${CMAKE_BINARY_DIR}/libjsonrpccpp-server.pc" "${CMAKE_BINARY_DIR}/libjsonrpccpp-client.pc" "${CMAKE_BINARY_DIR}/libjsonrpccpp-common.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
