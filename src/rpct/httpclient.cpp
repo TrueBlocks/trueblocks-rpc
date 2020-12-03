@@ -7,7 +7,7 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include "httpclient.h"
+#include <rpct/httpclient.h>
 #include <cstdlib>
 #include <curl/curl.h>
 #include <string.h>
@@ -75,8 +75,7 @@ void HttpClient::SendRPCMessage(const string& message, string& result) {
 
     struct curl_slist* headers = NULL;
 
-    for (std::map<string, string>::iterator header = this->headers.begin(); header != this->headers.end();
-         ++header) {
+    for (std::map<string, string>::iterator header = this->headers.begin(); header != this->headers.end(); ++header) {
         headers = curl_slist_append(headers, (header->first + ": " + header->second).c_str());
     }
 

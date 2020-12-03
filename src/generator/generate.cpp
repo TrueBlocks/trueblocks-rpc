@@ -15,8 +15,8 @@
 #include "generate.h"
 #include <argtable2.h>
 #include <rpct/version.h>
-#include <rpct/libs/exception.h>
-#include <rpct/libs/procedure.h>
+#include <rpct/exception.h>
+#include <rpct/procedure.h>
 
 using namespace jsonrpc;
 using namespace std;

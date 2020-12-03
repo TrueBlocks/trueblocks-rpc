@@ -7,9 +7,9 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include "rpcprotocolserverv2.h"
+#include <rpct/rpcprotocolserverv2.h>
 #include <iostream>
-#include <rpct/libs/errors.h>
+#include <rpct/errors.h>
 
 using namespace std;
 using namespace jsonrpc;

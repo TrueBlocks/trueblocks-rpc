@@ -7,9 +7,8 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include "httpserver.h"
-
-#include <rpct/libs/exception.h>
+#include <rpct/httpserver.h>
+#include <rpct/exception.h>
 
 #include <cstdlib>
 #include <cstring>

@@ -7,7 +7,7 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include "rpcprotocolclient.h"
+#include <rpct/rpcprotocolclient.h>
 
 #include <json/json.h>
 

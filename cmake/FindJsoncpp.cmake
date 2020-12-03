@@ -2,7 +2,7 @@
 #
 # Find the jsoncpp includes and library
 #
-# if you nee to add a custom library search path, do it via via CMAKE_PREFIX_PATH
+# if you need to add a custom library search path, do it via via CMAKE_PREFIX_PATH
 #
 # This module defines
 #  JSONCPP_INCLUDE_DIR, where to find header, etc.

@@ -43,7 +43,7 @@ void CppClientCodeGenerator::generateStub() {
     writeLine(substitute(TEMPLATE_CPPSERVER_GUARD2, "<STUBNAME>", stub_upper));
 
     writeNewLine();
-    this->writeLine("#include <rpct/rpclib.h>");
+    this->writeLine("#include <rpct/rpctlib.h>");
     this->writeNewLine();
 
     int depth = namespaceOpen(stubname);

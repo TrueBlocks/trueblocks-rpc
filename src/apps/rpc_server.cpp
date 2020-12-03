@@ -6,7 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-#include <rpct/server/httpserver.h>
+#include <rpct/httpserver.h>
 #include <stdio.h>
 
 #include <iostream>

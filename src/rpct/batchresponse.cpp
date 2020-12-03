@@ -7,7 +7,7 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include "batchresponse.h"
+#include <rpct/batchresponse.h>
 #include <algorithm>
 
 using namespace jsonrpc;

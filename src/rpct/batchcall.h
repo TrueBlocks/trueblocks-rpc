@@ -11,7 +11,7 @@
 #define JSONRPC_CPP_BATCHCALL_H
 
 #include <json/json.h>
-#include <rpct/libs/procedure.h>
+#include <rpct/procedure.h>
 
 namespace jsonrpc {
     class BatchCall {
