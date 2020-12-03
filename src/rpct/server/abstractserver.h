@@ -10,7 +10,7 @@
 #ifndef JSONRPC_CPP_ABSTRACTSERVER_H_
 #define JSONRPC_CPP_ABSTRACTSERVER_H_
 
-#include <rpct/common/procedure.h>
+#include <rpct/libs/procedure.h>
 
 #include <map>
 #include <string>

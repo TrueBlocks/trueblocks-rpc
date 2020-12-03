@@ -12,7 +12,7 @@
 
 #include <map>
 #include <json/json.h>
-#include <rpct/common/utils.h>
+#include <rpct/libs/utils.h>
 
 namespace jsonrpc {
     /**

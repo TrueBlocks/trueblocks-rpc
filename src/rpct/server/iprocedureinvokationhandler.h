@@ -10,7 +10,7 @@
 #ifndef JSONRPC_CPP_IPROCEDUREINVOKATIONHANDLER_H
 #define JSONRPC_CPP_IPROCEDUREINVOKATIONHANDLER_H
 
-#include <rpct/common/procedure.h>
+#include <rpct/libs/procedure.h>
 
 namespace jsonrpc {
     class IProcedureInvokationHandler {

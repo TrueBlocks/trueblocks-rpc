@@ -11,7 +11,7 @@
 #define JSONRPC_CPP_HTTPCLIENT_H_
 
 #include <curl/curl.h>
-#include <rpct/common/exception.h>
+#include <rpct/libs/exception.h>
 #include <map>
 
 namespace jsonrpc {

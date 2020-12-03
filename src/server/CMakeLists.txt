@@ -13,7 +13,7 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(common_server_stubs DEPENDS ${CMAKE_BINARY_DIR}/gen/rpc_server.h)
+add_custom_target(libs_server_stubs DEPENDS ${CMAKE_BINARY_DIR}/gen/rpc_server.h)
 
 add_executable(rpc_server rpc_server.cpp ${CMAKE_BINARY_DIR}/gen/rpc_server.h)
 target_link_libraries(rpc_server jsonrpcserver)

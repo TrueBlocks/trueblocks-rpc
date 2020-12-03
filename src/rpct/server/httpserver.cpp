@@ -9,7 +9,7 @@
 
 #include "httpserver.h"
 
-#include <rpct/common/exception.h>
+#include <rpct/libs/exception.h>
 
 #include <cstdlib>
 #include <cstring>

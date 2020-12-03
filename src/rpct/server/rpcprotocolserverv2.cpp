@@ -9,7 +9,7 @@
 
 #include "rpcprotocolserverv2.h"
 #include <iostream>
-#include <rpct/common/errors.h>
+#include <rpct/libs/errors.h>
 
 using namespace std;
 using namespace jsonrpc;

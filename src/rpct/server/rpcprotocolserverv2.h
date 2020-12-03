@@ -14,7 +14,7 @@
 #include <vector>
 #include <map>
 
-#include <rpct/common/exception.h>
+#include <rpct/libs/exception.h>
 #include "rpct/server/iprocedureinvokationhandler.h"
 
 namespace jsonrpc {

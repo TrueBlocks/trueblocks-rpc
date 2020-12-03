@@ -1,7 +1,7 @@
-# setup common headers and sources
+# setup libs headers and sources
 file(GLOB jsonrpc_header *.h)
-file(GLOB jsonrpc_header_common common/*.h)
-file(GLOB jsonrpc_source_common common/*.c*)
+file(GLOB jsonrpc_header_libs libs/*.h)
+file(GLOB jsonrpc_source_libs libs/*.c*)
 
 # setup server headers and sources
 file(GLOB jsonrpc_install_header_server
@@ -46,7 +46,7 @@ list(APPEND server_connector_libs ${CMAKE_THREAD_LIBS_INIT} ${MHD_LIBRARIES})
 set(SERVER_LIBS "${SERVER_LIBS} -lmicrohttpd")
 
 # configure a header file to pass some of the CMake settings to the source code
-file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/gen/rpct/common")
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/gen/rpct/libs")
 configure_file("${PROJECT_SOURCE_DIR}/rpct/version.h.in" "${CMAKE_BINARY_DIR}/gen/rpct/version.h")
 install(FILES "${CMAKE_BINARY_DIR}/gen/rpct/version.h" DESTINATION include/rpct)
 
@@ -54,29 +54,29 @@ install(FILES "${CMAKE_BINARY_DIR}/gen/rpct/version.h" DESTINATION include/rpct)
 include_directories(..)
 include_directories(${MHD_INCLUDE_DIRS})
 
-add_library(common STATIC ${jsonrpc_source_common} ${jsonrpc_header})
-target_link_libraries(common jsoncpp_lib_static)
-set_target_properties(common PROPERTIES OUTPUT_NAME rpct-common)
-add_library(jsonrpccommon ALIAS common)
+add_library(libs STATIC ${jsonrpc_source_libs} ${jsonrpc_header})
+target_link_libraries(libs jsoncpp_lib_static)
+set_target_properties(libs PROPERTIES OUTPUT_NAME rpct-libs)
+add_library(jsonrpclibs ALIAS libs)
 
 add_library(client STATIC ${jsonrpc_source_client} ${jsonrpc_header} ${jsonrpc_header_client} ${client_connector_source})
-target_link_libraries(client common ${client_connector_libs})
+target_link_libraries(client libs ${client_connector_libs})
 set_target_properties(client PROPERTIES OUTPUT_NAME rpct-client)
 add_library(jsonrpcclient ALIAS client)
 
 add_library(server STATIC ${jsonrpc_source_server} ${jsonrpc_header} ${jsonrpc_header_server} ${server_connector_source})
-target_link_libraries(server common ${server_connector_libs})
+target_link_libraries(server libs ${server_connector_libs})
 set_target_properties(server PROPERTIES OUTPUT_NAME rpct-server)
 add_library(jsonrpcserver ALIAS server)
 
 set(ALL_LIBS)
-list(APPEND ALL_LIBS common client server)
+list(APPEND ALL_LIBS libs client server)
 set_target_properties(${ALL_LIBS} PROPERTIES VERSION "${VERSION_STRING}" SOVERSION "${SO_VERSION}")
 
 # install libraries
 install(FILES ${jsonrpc_header}                 DESTINATION include/rpct)
-install(FILES ${jsonrpc_header_common}          DESTINATION include/rpct/common)
-install(FILES ${jsonrpc_helper_header_common}   DESTINATION include/rpct/common/helper)
+install(FILES ${jsonrpc_header_libs}            DESTINATION include/rpct/libs)
+install(FILES ${jsonrpc_helper_header_libs}     DESTINATION include/rpct/libs/helper)
 install(FILES ${jsonrpc_install_header_client}  DESTINATION include/rpct/client)
 install(FILES ${jsonrpc_install_header_server}  DESTINATION include/rpct/server)
 install(FILES ${client_connector_header}        DESTINATION include/rpct/client)
@@ -97,12 +97,12 @@ install(TARGETS ${ALL_LIBS} EXPORT libjson-rpc-cppTargets
 )
 
 #set pkg-config
-get_filename_component(FULL_PATH_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
-set(FULL_PATH_INCLUDEDIR "${FULL_PATH_INSTALL_PREFIX}/include")
-set(FULL_PATH_LIBDIR "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+#get_filename_component(FULL_PATH_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
+#set(FULL_PATH_INCLUDEDIR "${FULL_PATH_INSTALL_PREFIX}/include")
+#set(FULL_PATH_LIBDIR "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
-configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-client.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-client.pc)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-server.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-server.pc)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-common.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-common.pc)
-
-INSTALL(FILES "${CMAKE_BINARY_DIR}/libjsonrpccpp-server.pc" "${CMAKE_BINARY_DIR}/libjsonrpccpp-client.pc" "${CMAKE_BINARY_DIR}/libjsonrpccpp-common.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+#configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-client.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-client.pc)
+#configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-server.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-server.pc)
+#configure_file(${PROJECT_SOURCE_DIR}/cmake/libjsonrpccpp-libs.pc.cmake ${CMAKE_BINARY_DIR}/libjsonrpccpp-libs.pc)
+#
+#INSTALL(FILES "${CMAKE_BINARY_DIR}/libjsonrpccpp-server.pc" "${CMAKE_BINARY_DIR}/libjsonrpccpp-client.pc" "${CMAKE_BINARY_DIR}/libjsonrpccpp-libs.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")

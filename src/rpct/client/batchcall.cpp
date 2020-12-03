@@ -9,7 +9,7 @@
 
 #include "batchcall.h"
 #include "rpcprotocolclient.h"
-#include <rpct/common/procedure.h>
+#include <rpct/libs/procedure.h>
 
 using namespace jsonrpc;
 using namespace std;

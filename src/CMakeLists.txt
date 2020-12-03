@@ -86,7 +86,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 
 # setup global include_directories (for backwards compatibility)
 include_directories("${CMAKE_BINARY_DIR}/gen/")
-include_directories("${CMAKE_BINARY_DIR}/gen/rpct/common")
+include_directories("${CMAKE_BINARY_DIR}/gen/rpct/libs")
 
 add_subdirectory(rpct)
 add_subdirectory(generator)
