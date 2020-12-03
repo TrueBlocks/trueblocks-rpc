@@ -36,12 +36,12 @@ debug_value("VERSION_STRING:    " ${VERSION_STRING})
 set(LIB_SUFFIX "" CACHE STRING "Suffix for library directory (32/64)")
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wformat -Wno-format-extra-args -Wformat-security -Wformat-nonliteral -Wformat=2 -Wextra -Wnon-virtual-dtor -fPIC -O0")
 
 elseif ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11 -Wall -Wextra -Wnon-virtual-dtor -fPIC -O0")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+    set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG} -std=c++17 -Wall -Wextra -Wnon-virtual-dtor -fPIC -O0")
 
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     # Suppress warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)

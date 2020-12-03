@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <algorithm>
 
 #include "generate.h"
 #include <argtable2.h>

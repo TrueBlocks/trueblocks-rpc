@@ -7,6 +7,7 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
+#include <algorithm>
 #include "generate.h"
 
 extern const char* TEMPLATE_CPPCLIENT_SIGCLASS;
