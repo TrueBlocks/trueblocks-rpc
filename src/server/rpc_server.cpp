@@ -6,7 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-#include <jsonrpccpp/server/httpserver.h>
+#include <rpct/server/httpserver.h>
 #include <stdio.h>
 
 #include <iostream>
@@ -704,7 +704,6 @@ Json::Value EthRpcServer::shh_getMessages(const string& param01) {
 Json::Value getTestBlock(const string& id, bool txHashes) {
     Json::Value result;
     // result["author"] = "0x0c729be7c39543c3d549282a40395299d987cec2";
-    result["difficulty"] = id + (txHashes ? "" : "");
     result["difficulty"] = "0xb5708d578a6";
     result["extraData"] = "0xd783010400844765746887676f312e352e31856c696e7578";
     result["gasLimit"] = "0x2fefd8";
@@ -720,7 +719,7 @@ Json::Value getTestBlock(const string& id, bool txHashes) {
     result["miner"] = "0x0c729be7c39543c3d549282a40395299d987cec2";
     result["mixHash"] = "0x1530cda332d86d5d7462e3a0eb585e22c88348dd796d29e6ef18196a78cdce07";
     result["nonce"] = "0x938e5630b060b7d3";
-    result["number"] = "0xf4629";
+    result["number"] = id;
     result["parentHash"] = "0x96810a6076e621e311a232468bfd3dcfac08f4803b255af0f00300f47981c10f";
     result["receiptsRoot"] = "0x075608bec75d988c52ea6750f4c2204fd60082eb1df32cf8f4732e8a591eef62";
     result["sha3Uncles"] = "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347";
@@ -730,10 +729,10 @@ Json::Value getTestBlock(const string& id, bool txHashes) {
     result["timestamp"] = "0x56bff9bb";
     result["transactionsRoot"] = "0xb779480508401ddd57f1f1e83a54715dcafc6ccec4e4d842c1b68cb418e6560d";
     Json::Value txs;
-    txs[0u] = getTestTrans("0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08", false);
-    txs[1u] = getTestTrans("0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a", false);
-    txs[2u] = getTestTrans("0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63", false);
-    txs[3u] = getTestTrans("0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521", false);
+    txs[0u] = getTestTrans("0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08", txHashes);
+    txs[1u] = getTestTrans("0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a", txHashes);
+    txs[2u] = getTestTrans("0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63", txHashes);
+    txs[3u] = getTestTrans("0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521", txHashes);
     result["transactions"] = txs;
     result["uncles"] = Json::Value(Json::arrayValue);
     return result;

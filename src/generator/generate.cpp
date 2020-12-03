@@ -12,9 +12,9 @@
 
 #include "generate.h"
 #include <argtable2.h>
-#include <jsonrpccpp/version.h>
-#include <jsonrpccpp/common/exception.h>
-#include <jsonrpccpp/common/procedure.h>
+#include <rpct/version.h>
+#include <rpct/common/exception.h>
+#include <rpct/common/procedure.h>
 
 using namespace jsonrpc;
 using namespace std;
