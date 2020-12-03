@@ -13,7 +13,7 @@ build:
 
 #coverage: test
 #	mkdir -p reports
-#	gcovr -r . -d -e "build" -e "src/test" -e "src/client" -e "src/server" -e "src/generator/main.cpp" --html --html-details -o reports/coverage.html
+#	gcovr -r . -d -e "build" -e "src/test" -e "src/client" -e "src/server" -e "src/generator/generate.cpp" --html --html-details -o reports/coverage.html
 
 format:
 	find . -name "*.h" -o -name "*.cpp" -exec clang-format -style=LLVM -i {} \;

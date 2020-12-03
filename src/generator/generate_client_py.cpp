@@ -1,4 +1,4 @@
-#include "generators.h"
+#include "generate.h"
 #include <algorithm>
 
 extern const char* TEMPLATE_PYTHON_CLIENT_SIGCLASS;

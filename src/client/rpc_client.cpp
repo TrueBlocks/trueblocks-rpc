@@ -1,7 +1,7 @@
 /*************************************************************************
  * libjson-rpc-cpp
  *************************************************************************
- * @file    rpct_client.cpp
+ * @file    rpc_client.cpp
  * @date    01.05.2013
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#include "gen/rpct_client.h"
+#include "gen/rpc_client.h"
 
 using namespace jsonrpc;
 using namespace std;
@@ -45,7 +45,7 @@ int main() {
         CALL_ONE1(client.eth_getTransactionByBlockHashAndIndex(
             "0x785b221ec95c66579d5ae14eebe16284a769e948359615d580f02e646e93f1d5", "0x25"));
         CALL_ONE1(client.eth_getTransactionByBlockNumberAndIndex("0x52a90b", "0x25"));
-        CALL_ONE1(
+        CALL_ONE(
             client.eth_getTransactionReceipt("0xb2fea9c4b24775af6990237aa90228e5e092c56bdaee74496992a53c208da1ee"));
         CALL_ONE1(client.eth_getUncleByBlockNumberAndIndex("0x12", "0x12"));
         CALL_ONE1(client.eth_getUncleByBlockHashAndIndex("0x12", "0x12"));
@@ -121,9 +121,6 @@ int main() {
         CALL_ONE1(client.shh_uninstallFilter("0x12"));
         CALL_ONE1(client.shh_getFilterChanges("0x12"));
         CALL_ONE1(client.shh_getMessages("0x12"));
-
-        CALL_ONE(client.tb_whereBlock("0x12"));
-
         cout << endl;
     } catch (JsonRpcException& e) {
         cerr << e.what() << endl;

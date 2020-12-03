@@ -7,7 +7,7 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include "generators.h"
+#include "generate.h"
 #include <algorithm>
 
 using namespace jsonrpc;

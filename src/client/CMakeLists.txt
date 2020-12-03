@@ -5,15 +5,15 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(${MHD_INCLUDE_DIRS})
 
 add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/gen/rpct_client.h
-    COMMAND rpctgen ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-client=RpctClient --cpp-client-file=${CMAKE_BINARY_DIR}/gen/rpct_client.h
+    OUTPUT ${CMAKE_BINARY_DIR}/gen/rpc_client.h
+    COMMAND rpc_generator ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-client=RpctClient --cpp-client-file=${CMAKE_BINARY_DIR}/gen/rpc_client.h
     MAIN_DEPENDENCY ../spec.json
-    DEPENDS rpctgen
+    DEPENDS rpc_generator
     COMMENT "Generating C++ Client Stubfile"
     VERBATIM
 )
 
-add_custom_target(common_client_stubs DEPENDS ${CMAKE_BINARY_DIR}/gen/rpct_client.h)
+add_custom_target(common_client_stubs DEPENDS ${CMAKE_BINARY_DIR}/gen/rpc_client.h)
 
-add_executable(rpctc rpct_client.cpp ${CMAKE_BINARY_DIR}/gen/rpct_client.h)
-target_link_libraries(rpctc jsonrpcclient)
+add_executable(rpc_client rpc_client.cpp ${CMAKE_BINARY_DIR}/gen/rpc_client.h)
+target_link_libraries(rpc_client jsonrpcclient)

@@ -516,12 +516,5 @@
     "returns": {
       "place_holder": "MESSAGEARRAY"
     }
-  },
-  {
-    "name": "tb_whereBlock",
-    "params": ["QUANTITY|TAG"],
-    "returns": {
-      "place_holder": "WHEREBLOCK_OBJECT"
-    }
   }
 ]

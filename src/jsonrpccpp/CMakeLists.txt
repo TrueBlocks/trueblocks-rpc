@@ -54,72 +54,23 @@ install(FILES "${CMAKE_BINARY_DIR}/gen/jsonrpccpp/version.h" DESTINATION include
 include_directories(..)
 include_directories(${MHD_INCLUDE_DIRS})
 
-# setup shared common library
-if (BUILD_SHARED_LIBS)
-	add_library(jsonrpccommon SHARED ${jsonrpc_source_common} ${jsonrpc_header})
-	target_link_libraries(jsonrpccommon ${JSONCPP_LIBRARY})
-	set_target_properties(jsonrpccommon PROPERTIES OUTPUT_NAME jsonrpccpp-common)
-endif()
+add_library(common STATIC ${jsonrpc_source_common} ${jsonrpc_header})
+target_link_libraries(common jsoncpp_lib_static)
+set_target_properties(common PROPERTIES OUTPUT_NAME jsonrpccpp-common)
+add_library(jsonrpccommon ALIAS common)
 
-# setup static common library
-if (BUILD_STATIC_LIBS OR MSVC)
-	add_library(common STATIC ${jsonrpc_source_common} ${jsonrpc_header})
-	target_link_libraries(common jsoncpp_lib_static)
-	set_target_properties(common PROPERTIES OUTPUT_NAME jsonrpccpp-common)
+add_library(client STATIC ${jsonrpc_source_client} ${jsonrpc_header} ${jsonrpc_header_client} ${client_connector_source})
+target_link_libraries(client common ${client_connector_libs})
+set_target_properties(client PROPERTIES OUTPUT_NAME jsonrpccpp-client)
+add_library(jsonrpcclient ALIAS client)
 
-	if (NOT BUILD_SHARED_LIBS)
-		add_library(jsonrpccommon ALIAS common)
-	endif()
-endif()
-
-# setup shared client library
-if (BUILD_SHARED_LIBS)
-    add_library(jsonrpcclient SHARED ${jsonrpc_source_client} ${jsonrpc_header} ${jsonrpc_header_client} ${client_connector_source})
-    add_dependencies(jsonrpcclient jsonrpccommon)
-    target_link_libraries(jsonrpcclient jsonrpccommon ${client_connector_libs})
-    set_target_properties(jsonrpcclient PROPERTIES OUTPUT_NAME jsonrpccpp-client)
-endif()
-
-# setup static client library
-if (BUILD_STATIC_LIBS OR MSVC)
-	add_library(client STATIC ${jsonrpc_source_client} ${jsonrpc_header} ${jsonrpc_header_client} ${client_connector_source})
-	target_link_libraries(client common ${client_connector_libs})
-	set_target_properties(client PROPERTIES OUTPUT_NAME jsonrpccpp-client)
-
-	if (NOT BUILD_SHARED_LIBS)
-		add_library(jsonrpcclient ALIAS client)
-	endif()
-endif()
-
-# setup shared server library
-if (BUILD_SHARED_LIBS)
-    add_library(jsonrpcserver SHARED ${jsonrpc_source_server} ${jsonrpc_header} ${jsonrpc_header_server} ${server_connector_source})
-    add_dependencies(jsonrpcserver jsonrpccommon)
-    target_link_libraries(jsonrpcserver jsonrpccommon ${server_connector_libs})
-    set_target_properties(jsonrpcserver PROPERTIES OUTPUT_NAME jsonrpccpp-server)
-endif()
-
-# setup static server library
-if (BUILD_STATIC_LIBS OR MSVC)
-	add_library(server STATIC ${jsonrpc_source_server} ${jsonrpc_header} ${jsonrpc_header_server} ${server_connector_source})
-	target_link_libraries(server common ${server_connector_libs})
-	set_target_properties(server PROPERTIES OUTPUT_NAME jsonrpccpp-server)
-
-	if (NOT BUILD_SHARED_LIBS)
-		add_library(jsonrpcserver ALIAS server)
-	endif()
-endif()
+add_library(server STATIC ${jsonrpc_source_server} ${jsonrpc_header} ${jsonrpc_header_server} ${server_connector_source})
+target_link_libraries(server common ${server_connector_libs})
+set_target_properties(server PROPERTIES OUTPUT_NAME jsonrpccpp-server)
+add_library(jsonrpcserver ALIAS server)
 
 set(ALL_LIBS)
-
-if (BUILD_SHARED_LIBS OR NOT BUILD_STATIC_LIBS)
-    list(APPEND ALL_LIBS jsonrpccommon jsonrpcclient jsonrpcserver)
-endif()
-
-if (BUILD_STATIC_LIBS OR MSVC)
-	list(APPEND ALL_LIBS common client server)
-endif()
-
+list(APPEND ALL_LIBS common client server)
 set_target_properties(${ALL_LIBS} PROPERTIES VERSION "${VERSION_STRING}" SOVERSION "${SO_VERSION}")
 
 # install libraries

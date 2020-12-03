@@ -33,19 +33,7 @@ debug_value("CMAKE_SOURCE_DIR:  " ${CMAKE_SOURCE_DIR})
 debug_value("CMAKE_MODULE_PATH: " ${CMAKE_MODULE_PATH})
 debug_value("VERSION_STRING:    " ${VERSION_STRING})
 
-#if(NOT MSVC)
-#	set(BUILD_SHARED_LIBS YES CACHE BOOL "Build shared libraries")
-#	set(BUILD_STATIC_LIBS NO CACHE BOOL "Build static libraries")
-#else()
-	set(BUILD_SHARED_LIBS NO CACHE BOOL "Build shared libraries")
-	set(BUILD_STATIC_LIBS YES CACHE BOOL "Build static libraries")
-#endif()
-
 set(LIB_SUFFIX "" CACHE STRING "Suffix for library directory (32/64)")
-
-if (NOT BUILD_SHARED_LIBS AND NOT BUILD_STATIC_LIBS)
-    message(FATAL_ERROR "Both BUILD_SHARED_LIBS and BUILD_STATIC_LIBS are disabled")
-endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")

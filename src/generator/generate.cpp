@@ -1,7 +1,7 @@
 /*************************************************************************
  * libjson-rpc-cpp
  *************************************************************************
- * @file    main.cpp
+ * @file    generate.cpp
  * @date    29.09.2013
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-#include "generators.h"
+#include "generate.h"
 #include <argtable2.h>
 #include <jsonrpccpp/version.h>
 #include <jsonrpccpp/common/exception.h>
@@ -158,7 +158,7 @@ ProcedureVector GetProceduresFromFile(const string& filename) {
     return GetProceduresFromString(content);
 }
 
-bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, vector<CodeGenerator*>& stubgenerators,
+bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, vector<CodeGenerator*>& generators,
                           FILE* _stdout, FILE* _stderr) {
     struct arg_file* inputfile = arg_file0(NULL, NULL, "<specfile>", "path of input specification file");
     struct arg_lit* help = arg_lit0("h", "help", "print this help and exit");
@@ -235,7 +235,7 @@ bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, ve
                 filename = class2Filename(cppserver->sval[0], ".h");
             if (verbose->count > 0)
                 fprintf(_stdout, "Generating C++ Serverstub to: %s\n", filename.c_str());
-            stubgenerators.push_back(new CppServerCodeGenerator(cppserver->sval[0], procedures, filename));
+            generators.push_back(new CppServerCodeGenerator(cppserver->sval[0], procedures, filename));
         }
 
         if (cppclient->count > 0) {
@@ -246,7 +246,7 @@ bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, ve
                 filename = class2Filename(cppclient->sval[0], ".h");
             if (verbose->count > 0)
                 fprintf(_stdout, "Generating C++ Clientstub to: %s\n", filename.c_str());
-            stubgenerators.push_back(new CppClientCodeGenerator(cppclient->sval[0], procedures, filename));
+            generators.push_back(new CppClientCodeGenerator(cppclient->sval[0], procedures, filename));
         }
 
         if (jsclient->count > 0) {
@@ -258,7 +258,7 @@ bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, ve
 
             if (verbose->count > 0)
                 fprintf(_stdout, "Generating JavaScript Clientstub to: %s\n", filename.c_str());
-            stubgenerators.push_back(new JsClientCodeGenerator(jsclient->sval[0], procedures, filename));
+            generators.push_back(new JsClientCodeGenerator(jsclient->sval[0], procedures, filename));
         }
 
         if (pyclient->count > 0) {
@@ -270,7 +270,7 @@ bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, ve
 
             if (verbose->count > 0)
                 fprintf(_stdout, "Generating Python Clientstub to: %s\n", filename.c_str());
-            stubgenerators.push_back(new PythonClientCodeGenerator(pyclient->sval[0], procedures, filename));
+            generators.push_back(new PythonClientCodeGenerator(pyclient->sval[0], procedures, filename));
         }
     } catch (const JsonRpcException& ex) {
         fprintf(_stderr, "%s\n", ex.what());

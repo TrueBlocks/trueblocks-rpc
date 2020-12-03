@@ -1,7 +1,7 @@
 /*************************************************************************
  * libjson-rpc-cpp
  *************************************************************************
- * @file    rpct_server.cpp
+ * @file    rpc_server.cpp
  * @date    02.05.2013
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#include "gen/rpct_server.h"
+#include "gen/rpc_server.h"
 
 using namespace jsonrpc;
 using namespace std;
@@ -127,8 +127,6 @@ class EthRpcServer : public AbstractStubServer {
     bool shh_uninstallFilter(const string& param01);
     Json::Value shh_getFilterChanges(const string& param01);
     Json::Value shh_getMessages(const string& param01);
-
-    Json::Value tb_whereBlock(const string& param01);
 };
 
 EthRpcServer::EthRpcServer(HttpServer& connector) : AbstractStubServer(connector) {
@@ -700,14 +698,6 @@ Json::Value EthRpcServer::shh_getMessages(const string& param01) {
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_getMessages");
     throw excep;
     Json::Value result;
-    return result;
-}
-
-Json::Value EthRpcServer::tb_whereBlock(const string& param01) {
-    std::cerr << "Serviced tb_whereBlock(" << param01 << ")" << std::endl;
-    Json::Value result;
-    result["blockNumber"] = 12;
-    result["path"] = "Parity-Ethereum//v2.6.7-beta-b463487-20191231/x86_64-linux-gnu/rustc1.40.0";
     return result;
 }
 
