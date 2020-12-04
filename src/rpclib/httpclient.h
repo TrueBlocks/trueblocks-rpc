@@ -9,7 +9,7 @@
 #pragma once
 
 #include <curl/curl.h>
-#include <rpct/exception.h>
+#include <rpclib/exception.h>
 #include <map>
 
 namespace jsonrpc {

@@ -7,9 +7,8 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include <rpct/client.h>
-
-#include <rpct/clientprotocolhandler.h>
+#include <rpclib/client.h>
+#include <rpclib/clientprotocolhandler.h>
 
 using namespace jsonrpc;
 

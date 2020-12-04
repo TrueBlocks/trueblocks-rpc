@@ -14,9 +14,9 @@
 
 #include "generate.h"
 #include <argtable2.h>
-#include <rpct/version.h>
-#include <rpct/exception.h>
-#include <rpct/procedure.h>
+#include <rpclib/version.h>
+#include <rpclib/exception.h>
+#include <rpclib/procedure.h>
 
 namespace jsonrpc {
     void splitPackages(const string& classname, StringVector& result) {

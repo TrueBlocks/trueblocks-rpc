@@ -7,7 +7,7 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include <rpct/httpclient.h>
+#include <rpclib/httpclient.h>
 #include <cstdlib>
 #include <curl/curl.h>
 #include <string.h>

@@ -9,7 +9,7 @@
 #pragma once
 
 #include <json/json.h>
-#include <rpct/procedure.h>
+#include <rpclib/procedure.h>
 
 namespace jsonrpc {
     class BatchCall {

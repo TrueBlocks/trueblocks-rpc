@@ -14,7 +14,7 @@
 #include <sstream>
 #include <vector>
 
-#include <rpct/procedure.h>
+#include <rpclib/procedure.h>
 
 namespace jsonrpc {
     extern void splitPackages(const string& classname, StringVector& result);

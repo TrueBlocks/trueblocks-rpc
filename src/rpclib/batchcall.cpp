@@ -7,9 +7,9 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include <rpct/batchcall.h>
-#include <rpct/clientprotocolhandler.h>
-#include <rpct/procedure.h>
+#include <rpclib/batchcall.h>
+#include <rpclib/clientprotocolhandler.h>
+#include <rpclib/procedure.h>
 
 using namespace jsonrpc;
 using namespace std;

@@ -10,7 +10,7 @@
 #define RESPONSEHANDLER_H
 
 #include <json/json.h>
-#include <rpct/exception.h>
+#include <rpclib/exception.h>
 
 #include <string>
 

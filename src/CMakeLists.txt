@@ -77,6 +77,6 @@ include_directories(${JSONCPP_INCLUDE_DIR}/jsoncpp)
 include(GNUInstallDirs)
 include_directories("${CMAKE_BINARY_DIR}/gen/")
 
-add_subdirectory(rpct)
+add_subdirectory(rpclib)
 add_subdirectory(gen)
 add_subdirectory(apps)

@@ -8,7 +8,7 @@
  ************************************************************************/
 #pragma once
 
-#include <rpct/procedure.h>
+#include <rpclib/procedure.h>
 
 #include <map>
 #include <string>

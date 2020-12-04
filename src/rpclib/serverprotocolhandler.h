@@ -12,8 +12,8 @@
 #include <vector>
 #include <map>
 
-#include <rpct/exception.h>
-#include "rpct/iprocedureinvokationhandler.h"
+#include <rpclib/exception.h>
+#include <rpclib/iprocedureinvokationhandler.h>
 
 namespace jsonrpc {
     class ServerProtocolHandler {
