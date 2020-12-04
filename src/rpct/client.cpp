@@ -9,16 +9,16 @@
 
 #include <rpct/client.h>
 
-#include <rpct/rpcprotocolclient.h>
+#include <rpct/clientprotocolhandler.h>
 
 using namespace jsonrpc;
 
 Client::Client(HttpClient& connector, bool omitEndingLineFeed) : connector(connector) {
-    this->protocol = new RpcProtocolClient(omitEndingLineFeed);
+    protocol = new ClientProtocolHandler(omitEndingLineFeed);
 }
 
 Client::~Client() {
-    delete this->protocol;
+    delete protocol;
 }
 
 void Client::CallMethod(const string& name, const Json::Value& parameter, Json::Value& result) {
@@ -51,7 +51,7 @@ void Client::CallProcedures(const BatchCall& calls, BatchResponse& result) {
         if (tmpresult[i].isObject()) {
             Json::Value singleResult;
             try {
-                Json::Value id = this->protocol->HandleResponse(tmpresult[i], singleResult);
+                Json::Value id = protocol->HandleResponse(tmpresult[i], singleResult);
                 result.addResponse(id, singleResult, false);
             } catch (JsonRpcException& ex) {
                 Json::Value id = -1;
@@ -66,13 +66,13 @@ void Client::CallProcedures(const BatchCall& calls, BatchResponse& result) {
 
 BatchResponse Client::CallProcedures(const BatchCall& calls) {
     BatchResponse result;
-    this->CallProcedures(calls, result);
+    CallProcedures(calls, result);
     return result;
 }
 
 Json::Value Client::CallMethod(const string& name, const Json::Value& parameter) {
     Json::Value result;
-    this->CallMethod(name, parameter, result);
+    CallMethod(name, parameter, result);
     return result;
 }
 

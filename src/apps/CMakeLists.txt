@@ -6,9 +6,9 @@ include_directories(${MHD_INCLUDE_DIRS})
 
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/gen/rpc_server.h
-    COMMAND rpc_generator ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-server=AbstractStubServer --cpp-server-file=${CMAKE_BINARY_DIR}/gen/rpc_server.h
+    COMMAND rpc_gen ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-server=AbstractStubServer --cpp-server-file=${CMAKE_BINARY_DIR}/gen/rpc_server.h
     MAIN_DEPENDENCY ../spec.json
-    DEPENDS rpc_generator
+    DEPENDS rpc_gen
     COMMENT "Generating C++ Server Stubfiles"
     VERBATIM
 )
@@ -19,9 +19,9 @@ target_link_libraries(rpc_server jsonrpclibs)
 
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/gen/rpc_client.h
-    COMMAND rpc_generator ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-client=RpctClient --cpp-client-file=${CMAKE_BINARY_DIR}/gen/rpc_client.h
+    COMMAND rpc_gen ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-client=RpctClient --cpp-client-file=${CMAKE_BINARY_DIR}/gen/rpc_client.h
     MAIN_DEPENDENCY ../spec.json
-    DEPENDS rpc_generator
+    DEPENDS rpc_gen
     COMMENT "Generating C++ Client Stubfile"
     VERBATIM
 )

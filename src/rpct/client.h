@@ -20,7 +20,7 @@
 #include "httpclient.h"
 
 namespace jsonrpc {
-    class RpcProtocolClient;
+    class ClientProtocolHandler;
 
     class Client {
       public:
@@ -37,7 +37,7 @@ namespace jsonrpc {
 
       private:
         HttpClient& connector;
-        RpcProtocolClient* protocol;
+        ClientProtocolHandler* protocol;
     };
 
 } /* namespace jsonrpc */

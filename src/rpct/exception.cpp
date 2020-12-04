@@ -12,27 +12,26 @@
 using namespace jsonrpc;
 
 JsonRpcException::JsonRpcException(int code) : code(code), message(Errors::GetErrorMessage(code)) {
-    this->setWhatMessage();
+    setWhatMessage();
 }
 
-JsonRpcException::JsonRpcException(int code, const string& message)
-    : code(code), message(Errors::GetErrorMessage(code)) {
-    if (this->message != "")
-        this->message = this->message + ": ";
-    this->message = this->message + message;
-    this->setWhatMessage();
+JsonRpcException::JsonRpcException(int code, const string& m) : code(code), message(Errors::GetErrorMessage(code)) {
+    if (message != "")
+        message = message + ": ";
+    message = message + m;
+    setWhatMessage();
 }
 
-JsonRpcException::JsonRpcException(int code, const string& message, const Json::Value& data)
+JsonRpcException::JsonRpcException(int code, const string& m, const Json::Value& data)
     : code(code), message(Errors::GetErrorMessage(code)), data(data) {
-    if (this->message != "")
-        this->message = this->message + ": ";
-    this->message = this->message + message;
-    this->setWhatMessage();
+    if (message != "")
+        message = message + ": ";
+    message = message + m;
+    setWhatMessage();
 }
 
-JsonRpcException::JsonRpcException(const string& message) : code(0), message(message) {
-    this->setWhatMessage();
+JsonRpcException::JsonRpcException(const string& m) : code(0), message(m) {
+    setWhatMessage();
 }
 
 JsonRpcException::~JsonRpcException() throw() {
@@ -51,17 +50,17 @@ const Json::Value& JsonRpcException::GetData() const {
 }
 
 const char* JsonRpcException::what() const throw() {
-    return this->whatString.c_str();
+    return whatString.c_str();
 }
 
 void JsonRpcException::setWhatMessage() {
-    if (this->code != 0) {
+    if (code != 0) {
         stringstream ss;
-        ss << "Exception " << this->code << " : " << this->message;
+        ss << "Exception " << code << " : " << message;
         if (data != Json::nullValue)
             ss << ", data: " << data.toStyledString();
-        this->whatString = ss.str();
+        whatString = ss.str();
     } else {
-        this->whatString = this->message;
+        whatString = message;
     }
 }

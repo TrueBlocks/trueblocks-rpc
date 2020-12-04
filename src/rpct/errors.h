@@ -43,8 +43,6 @@ namespace jsonrpc {
         /**
          * Server Library Errors
          */
-        static const int ERROR_SERVER_PROCEDURE_IS_METHOD;
-        static const int ERROR_SERVER_PROCEDURE_IS_NOTIFICATION;
         static const int ERROR_SERVER_PROCEDURE_POINTER_IS_NULL;
         static const int ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND;
         static const int ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX;

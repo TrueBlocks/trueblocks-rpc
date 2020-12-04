@@ -8,7 +8,7 @@
  ************************************************************************/
 
 #include <rpct/batchcall.h>
-#include <rpct/rpcprotocolclient.h>
+#include <rpct/clientprotocolhandler.h>
 #include <rpct/procedure.h>
 
 using namespace jsonrpc;
@@ -19,31 +19,31 @@ BatchCall::BatchCall() : id(1) {
 
 int BatchCall::addCall(const string& methodname, const Json::Value& params, bool isNotification) {
     Json::Value call;
-    call[RpcProtocolClient::KEY_PROTOCOL_VERSION] = "2.0";
-    call[RpcProtocolClient::KEY_PROCEDURE_NAME] = methodname;
+    call[ClientProtocolHandler::KEY_PROTOCOL_VERSION] = "2.0";
+    call[ClientProtocolHandler::KEY_PROCEDURE_NAME] = methodname;
 
     if (params.isNull() || params.size() > 0)
-        call[RpcProtocolClient::KEY_PARAMETER] = params;
+        call[ClientProtocolHandler::KEY_PARAMETER] = params;
 
     if (!isNotification) {
-        call[RpcProtocolClient::KEY_ID] = this->id++;
+        call[ClientProtocolHandler::KEY_ID] = id++;
     }
     result.append(call);
 
     if (isNotification)
         return -1;
-    return call[RpcProtocolClient::KEY_ID].asInt();
+    return call[ClientProtocolHandler::KEY_ID].asInt();
 }
 
 string BatchCall::toString(bool fast) const {
-    string result;
+    string res;
     if (fast) {
         Json::StreamWriterBuilder wbuilder;
         wbuilder["indentation"] = "";
-        result = Json::writeString(wbuilder, this->result);
+        res = Json::writeString(wbuilder, result);
     } else {
         Json::StreamWriterBuilder wbuilder;
-        result = Json::writeString(wbuilder, this->result);
+        res = Json::writeString(wbuilder, result);
     }
-    return result;
+    return res;
 }

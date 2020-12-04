@@ -54,8 +54,8 @@ void init_string(struct loc_str* s) {
     s->ptr[0] = '\0';
 }
 
-HttpClient::HttpClient(const string& url) : url(url) {
-    this->timeout = 10000;
+HttpClient::HttpClient(const string& u) : url(u) {
+    timeout = 10000;
     curl = curl_easy_init();
 }
 
@@ -65,7 +65,7 @@ HttpClient::~HttpClient() {
 
 void HttpClient::SendRPCMessage(const string& message, string& result) {
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
-    curl_easy_setopt(curl, CURLOPT_URL, this->url.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
 
     CURLcode res;
@@ -73,31 +73,30 @@ void HttpClient::SendRPCMessage(const string& message, string& result) {
     struct loc_str s;
     init_string(&s);
 
-    struct curl_slist* headers = NULL;
+    struct curl_slist* headersPtr = NULL;
 
-    for (std::map<string, string>::iterator header = this->headers.begin(); header != this->headers.end(); ++header) {
-        headers = curl_slist_append(headers, (header->first + ": " + header->second).c_str());
+    for (std::map<string, string>::iterator header = headers.begin(); header != headers.end(); ++header) {
+        headersPtr = curl_slist_append(headersPtr, (header->first + ": " + header->second).c_str());
     }
-
-    headers = curl_slist_append(headers, "Content-Type: application/json");
-    headers = curl_slist_append(headers, "charsets: utf-8");
+    headersPtr = curl_slist_append(headersPtr, "Content-Type: application/json");
+    headersPtr = curl_slist_append(headersPtr, "charsets: utf-8");
 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
-    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersPtr);
     curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, timeout);
 
     res = curl_easy_perform(curl);
 
     result = s.ptr;
     free(s.ptr);
-    curl_slist_free_all(headers);
+    curl_slist_free_all(headersPtr);
     if (res != CURLE_OK) {
         stringstream str;
         str << "libcurl error: " << res;
 
         if (res == 7)
-            str << " -> Could not connect to " << this->url << " (is server running?)";
+            str << " -> Could not connect to " << url << " (is server running?)";
         else if (res == 28)
             str << " -> Operation timed out";
         throw JsonRpcException(Errors::ERROR_CLIENT_CONNECTOR, str.str());
@@ -111,18 +110,18 @@ void HttpClient::SendRPCMessage(const string& message, string& result) {
     }
 }
 
-void HttpClient::SetUrl(const string& url) {
-    this->url = url;
+void HttpClient::SetUrl(const string& u) {
+    url = u;
 }
 
-void HttpClient::SetTimeout(long timeout) {
-    this->timeout = timeout;
+void HttpClient::SetTimeout(long t) {
+    timeout = t;
 }
 
 void HttpClient::AddHeader(const string& attr, const string& val) {
-    this->headers[attr] = val;
+    headers[attr] = val;
 }
 
 void HttpClient::RemoveHeader(const string& attr) {
-    this->headers.erase(attr);
+    headers.erase(attr);
 }

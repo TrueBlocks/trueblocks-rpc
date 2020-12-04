@@ -16,8 +16,7 @@
 using namespace std;
 using namespace jsonrpc;
 
-Procedure::Procedure()
-    : procedureName(""), procedureType(RPC_METHOD), returntype(JSON_BOOLEAN), paramDeclaration(PARAMS_BY_NAME) {
+Procedure::Procedure() : procedureName(""), returntype(JSON_BOOLEAN), paramDeclaration(PARAMS_BY_NAME) {
 }
 
 Procedure::Procedure(const string& name, parameterDeclaration_t paramType, jsontype_t returntype, ...) {
@@ -30,14 +29,13 @@ Procedure::Procedure(const string& name, parameterDeclaration_t paramType, jsont
     jsontype_t type;
     while (paramname != NULL) {
         type = (jsontype_t)va_arg(parameters, int);
-        this->AddParameter(paramname, type);
+        AddParameter(paramname, type);
         paramname = va_arg(parameters, const char*);
     }
     va_end(parameters);
-    this->procedureName = name;
-    this->returntype = returntype;
-    this->procedureType = RPC_METHOD;
-    this->paramDeclaration = paramType;
+    procedureName = name;
+    returntype = returntype;
+    paramDeclaration = paramType;
 }
 
 Procedure::Procedure(const string& name, parameterDeclaration_t paramType, ...) {
@@ -50,69 +48,64 @@ Procedure::Procedure(const string& name, parameterDeclaration_t paramType, ...) 
     jsontype_t type;
     while (paramname != NULL) {
         type = (jsontype_t)va_arg(parameters, int);
-        this->AddParameter(paramname, type);
+        AddParameter(paramname, type);
         paramname = va_arg(parameters, const char*);
     }
     va_end(parameters);
-    this->procedureName = name;
-    this->procedureType = RPC_NOTIFICATION;
-    this->paramDeclaration = paramType;
-    this->returntype = JSON_BOOLEAN;
+    procedureName = name;
+    paramDeclaration = paramType;
+    returntype = JSON_BOOLEAN;
 }
 
 bool Procedure::ValdiateParameters(const Json::Value& parameters) const {
-    if (this->parametersName.empty()) {
+    if (parametersName.empty()) {
         return true;
     }
-    if (parameters.isArray() && this->paramDeclaration == PARAMS_BY_POSITION) {
-        return this->ValidatePositionalParameters(parameters);
-    } else if (parameters.isObject() && this->paramDeclaration == PARAMS_BY_NAME) {
-        return this->ValidateNamedParameters(parameters);
+    if (parameters.isArray() && paramDeclaration == PARAMS_BY_POSITION) {
+        return ValidatePositionalParameters(parameters);
+    } else if (parameters.isObject() && paramDeclaration == PARAMS_BY_NAME) {
+        return ValidateNamedParameters(parameters);
     } else {
         return false;
     }
 }
 const parameterNameList_t& Procedure::GetParameters() const {
-    return this->parametersName;
-}
-procedure_t Procedure::GetProcedureType() const {
-    return this->procedureType;
+    return parametersName;
 }
 const string& Procedure::GetProcedureName() const {
-    return this->procedureName;
+    return procedureName;
 }
 parameterDeclaration_t Procedure::GetParameterDeclarationType() const {
-    return this->paramDeclaration;
+    return paramDeclaration;
 }
 jsontype_t Procedure::GetReturnType() const {
-    return this->returntype;
+    return returntype;
 }
 
 void Procedure::SetProcedureName(const string& name) {
-    this->procedureName = name;
+    procedureName = name;
 }
-void Procedure::SetProcedureType(procedure_t type) {
-    this->procedureType = type;
-}
+
 void Procedure::SetReturnType(jsontype_t type) {
-    this->returntype = type;
+    returntype = type;
 }
+
 void Procedure::SetParameterDeclarationType(parameterDeclaration_t type) {
-    this->paramDeclaration = type;
+    paramDeclaration = type;
 }
 
 void Procedure::AddParameter(const string& name, jsontype_t type) {
-    this->parametersName[name] = type;
-    this->parametersPosition.push_back(type);
+    parametersName[name] = type;
+    parametersPosition.push_back(type);
 }
 bool Procedure::ValidateNamedParameters(const Json::Value& parameters) const {
     bool ok = parameters.isObject() || parameters.isNull();
-    for (map<string, jsontype_t>::const_iterator it = this->parametersName.begin();
-         ok == true && it != this->parametersName.end(); ++it) {
+    for (map<string, jsontype_t>::const_iterator it = parametersName.begin(); ok == true && it != parametersName.end();
+         ++it) {
         if (!parameters.isMember(it->first)) {
             ok = false;
         } else {
-            ok = this->ValidateSingleParameter(it->second, parameters[it->first]);
+            ok = ValidateSingleParameter(it->second, parameters[it->first]);
         }
     }
     return ok;
@@ -120,12 +113,12 @@ bool Procedure::ValidateNamedParameters(const Json::Value& parameters) const {
 bool Procedure::ValidatePositionalParameters(const Json::Value& parameters) const {
     bool ok = true;
 
-    if (parameters.size() != this->parametersPosition.size()) {
+    if (parameters.size() != parametersPosition.size()) {
         return false;
     }
 
-    for (unsigned int i = 0; ok && i < this->parametersPosition.size(); i++) {
-        ok = this->ValidateSingleParameter(this->parametersPosition.at(i), parameters[i]);
+    for (unsigned int i = 0; ok && i < parametersPosition.size(); i++) {
+        ok = ValidateSingleParameter(parametersPosition.at(i), parameters[i]);
     }
     return ok;
 }

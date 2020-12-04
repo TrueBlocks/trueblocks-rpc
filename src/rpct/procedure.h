@@ -53,14 +53,12 @@ namespace jsonrpc {
 
         // Various get methods.
         const parameterNameList_t& GetParameters() const;
-        procedure_t GetProcedureType() const;
         const string& GetProcedureName() const;
         jsontype_t GetReturnType() const;
         parameterDeclaration_t GetParameterDeclarationType() const;
 
         // Various set methods.
         void SetProcedureName(const string& name);
-        void SetProcedureType(procedure_t type);
         void SetReturnType(jsontype_t type);
         void SetParameterDeclarationType(parameterDeclaration_t type);
 
@@ -92,11 +90,6 @@ namespace jsonrpc {
          * This vector holds all parametertypes by position.
          */
         parameterPositionList_t parametersPosition;
-
-        /**
-         * @brief defines whether the procedure is a method or a notification
-         */
-        procedure_t procedureType;
 
         /**
          * @brief this field is only valid if procedure is of type method (not

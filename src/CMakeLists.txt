@@ -79,5 +79,5 @@ include_directories("${CMAKE_BINARY_DIR}/gen/")
 include_directories("${CMAKE_BINARY_DIR}/gen/rpct")
 
 add_subdirectory(rpct)
-add_subdirectory(generator)
+add_subdirectory(gen)
 add_subdirectory(apps)

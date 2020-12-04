@@ -32,7 +32,7 @@ typedef intptr_t ssize_t;
 
 #include <map>
 
-#include "rpcprotocolserverv2.h"
+#include "serverprotocolhandler.h"
 
 namespace jsonrpc {
     /**
@@ -64,14 +64,14 @@ namespace jsonrpc {
         bool virtual SendResponse(const string& response, void* addInfo = NULL);
         bool virtual SendOptionsResponse(void* addInfo);
 
-        void SetUrlHandler(const string& url, ProtocolHandler* handler);
+        void SetUrlHandler(const string& url, ServerProtocolHandler* handler);
 
         void ProcessRequest(const string& request, string& response);
-        void SetHandler(ProtocolHandler* handler);
-        ProtocolHandler* GetHandler();
+        void SetHandler(ServerProtocolHandler* handler);
+        ServerProtocolHandler* GetHandler();
 
       private:
-        ProtocolHandler* handler;
+        ServerProtocolHandler* handler;
 
         int port;
         int threads;
@@ -83,13 +83,13 @@ namespace jsonrpc {
 
         struct MHD_Daemon* daemon;
         bool bindlocalhost;
-        std::map<string, ProtocolHandler*> urlhandler;
+        std::map<string, ServerProtocolHandler*> urlhandler;
         struct sockaddr_in loopback_addr;
 
         static int callback(void* cls, struct MHD_Connection* connection, const char* url, const char* method,
                             const char* version, const char* upload_data, size_t* upload_data_size, void** con_cls);
 
-        ProtocolHandler* GetHandler(const string& url);
+        ServerProtocolHandler* GetHandler(const string& url);
     };
 
 } /* namespace jsonrpc */

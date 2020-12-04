@@ -39,13 +39,13 @@ static void GetFileContent(const string& filename, string& target) {
     }
 }
 
-HttpServer::HttpServer(int port, const string& sslcert, const string& sslkey, int threads)
+HttpServer::HttpServer(int p, const string& sslc, const string& sslk, int t)
     : handler(NULL),
-      port(port),
-      threads(threads),
+      port(p),
+      threads(t),
       running(false),
-      path_sslcert(sslcert),
-      path_sslkey(sslkey),
+      path_sslcert(sslc),
+      path_sslkey(sslk),
       daemon(NULL),
       bindlocalhost(false) {
 }
@@ -53,22 +53,22 @@ HttpServer::HttpServer(int port, const string& sslcert, const string& sslkey, in
 HttpServer::~HttpServer() {
 }
 
-ProtocolHandler* HttpServer::GetHandler(const string& url) {
+ServerProtocolHandler* HttpServer::GetHandler(const string& url) {
     if (handler != NULL)
         return handler;
-    map<string, ProtocolHandler*>::iterator it = this->urlhandler.find(url);
-    if (it != this->urlhandler.end())
+    map<string, ServerProtocolHandler*>::iterator it = urlhandler.find(url);
+    if (it != urlhandler.end())
         return it->second;
     return NULL;
 }
 
 HttpServer& HttpServer::BindLocalhost() {
-    this->bindlocalhost = true;
+    bindlocalhost = true;
     return *this;
 }
 
 bool HttpServer::StartListening() {
-    if (!this->running) {
+    if (!running) {
         const bool has_epoll = (MHD_is_feature_supported(MHD_FEATURE_EPOLL) == MHD_YES);
         const bool has_poll = (MHD_is_feature_supported(MHD_FEATURE_POLL) == MHD_YES);
         unsigned int mhd_flags = MHD_USE_DUAL_STACK;
@@ -85,44 +85,42 @@ bool HttpServer::StartListening() {
         else if (has_poll)
             mhd_flags = MHD_USE_POLL_INTERNALLY;
 
-        if (this->bindlocalhost) {
-            memset(&this->loopback_addr, 0, sizeof(this->loopback_addr));
+        if (bindlocalhost) {
+            memset(&loopback_addr, 0, sizeof(loopback_addr));
             loopback_addr.sin_family = AF_INET;
-            loopback_addr.sin_port = htons(this->port);
+            loopback_addr.sin_port = htons(port);
             loopback_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
-            this->daemon =
-                MHD_start_daemon(mhd_flags, this->port, NULL, NULL, (MHD_AccessHandlerCallback)HttpServer::callback,
-                                 this, MHD_OPTION_THREAD_POOL_SIZE, this->threads, MHD_OPTION_SOCK_ADDR,
-                                 (struct sockaddr*)(&(this->loopback_addr)), MHD_OPTION_END);
+            daemon = MHD_start_daemon(mhd_flags, port, NULL, NULL, (MHD_AccessHandlerCallback)HttpServer::callback,
+                                      this, MHD_OPTION_THREAD_POOL_SIZE, threads, MHD_OPTION_SOCK_ADDR,
+                                      (struct sockaddr*)(&(loopback_addr)), MHD_OPTION_END);
 
-        } else if (this->path_sslcert != "" && this->path_sslkey != "") {
+        } else if (path_sslcert != "" && path_sslkey != "") {
             try {
-                GetFileContent(this->path_sslcert, this->sslcert);
-                GetFileContent(this->path_sslkey, this->sslkey);
+                GetFileContent(path_sslcert, sslcert);
+                GetFileContent(path_sslkey, sslkey);
 
-                this->daemon = MHD_start_daemon(
-                    MHD_USE_SSL | mhd_flags, this->port, NULL, NULL, (MHD_AccessHandlerCallback)HttpServer::callback,
-                    this, MHD_OPTION_HTTPS_MEM_KEY, this->sslkey.c_str(), MHD_OPTION_HTTPS_MEM_CERT,
-                    this->sslcert.c_str(), MHD_OPTION_THREAD_POOL_SIZE, this->threads, MHD_OPTION_END);
+                daemon = MHD_start_daemon(MHD_USE_SSL | mhd_flags, port, NULL, NULL,
+                                          (MHD_AccessHandlerCallback)HttpServer::callback, this,
+                                          MHD_OPTION_HTTPS_MEM_KEY, sslkey.c_str(), MHD_OPTION_HTTPS_MEM_CERT,
+                                          sslcert.c_str(), MHD_OPTION_THREAD_POOL_SIZE, threads, MHD_OPTION_END);
             } catch (JsonRpcException& ex) {
                 return false;
             }
         } else {
-            this->daemon =
-                MHD_start_daemon(mhd_flags, this->port, NULL, NULL, (MHD_AccessHandlerCallback)HttpServer::callback,
-                                 this, MHD_OPTION_THREAD_POOL_SIZE, this->threads, MHD_OPTION_END);
+            daemon = MHD_start_daemon(mhd_flags, port, NULL, NULL, (MHD_AccessHandlerCallback)HttpServer::callback,
+                                      this, MHD_OPTION_THREAD_POOL_SIZE, threads, MHD_OPTION_END);
         }
-        if (this->daemon != NULL)
-            this->running = true;
+        if (daemon != NULL)
+            running = true;
     }
-    return this->running;
+    return running;
 }
 
 bool HttpServer::StopListening() {
-    if (this->running) {
-        MHD_stop_daemon(this->daemon);
-        this->running = false;
+    if (running) {
+        MHD_stop_daemon(daemon);
+        running = false;
     }
     return true;
 }
@@ -154,9 +152,9 @@ bool HttpServer::SendOptionsResponse(void* addInfo) {
     return ret == MHD_YES;
 }
 
-void HttpServer::SetUrlHandler(const string& url, ProtocolHandler* handler) {
-    this->urlhandler[url] = handler;
-    this->SetHandler(NULL);
+void HttpServer::SetUrlHandler(const string& url, ServerProtocolHandler* handler) {
+    urlhandler[url] = handler;
+    SetHandler(NULL);
 }
 
 int HttpServer::callback(void* cls, MHD_Connection* connection, const char* url, const char* method,
@@ -178,7 +176,7 @@ int HttpServer::callback(void* cls, MHD_Connection* connection, const char* url,
             return MHD_YES;
         } else {
             string response;
-            ProtocolHandler* handler = client_connection->server->GetHandler(string(url));
+            ServerProtocolHandler* handler = client_connection->server->GetHandler(string(url));
             if (handler == NULL) {
                 client_connection->code = MHD_HTTP_INTERNAL_SERVER_ERROR;
                 client_connection->server->SendResponse("No client connection handler found", client_connection);
@@ -205,15 +203,15 @@ int HttpServer::callback(void* cls, MHD_Connection* connection, const char* url,
 }
 
 void HttpServer::ProcessRequest(const string& request, string& response) {
-    if (this->handler != NULL) {
-        this->handler->HandleRequest(request, response);
+    if (handler != NULL) {
+        handler->HandleRequest(request, response);
     }
 }
 
-void HttpServer::SetHandler(ProtocolHandler* handler) {
-    this->handler = handler;
+void HttpServer::SetHandler(ServerProtocolHandler* h) {
+    handler = h;
 }
 
-ProtocolHandler* HttpServer::GetHandler() {
-    return this->handler;
+ServerProtocolHandler* HttpServer::GetHandler() {
+    return handler;
 }

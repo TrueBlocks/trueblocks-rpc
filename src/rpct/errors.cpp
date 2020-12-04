@@ -21,8 +21,6 @@ const int Errors::ERROR_RPC_INVALID_REQUEST = -32600;
 const int Errors::ERROR_RPC_INVALID_PARAMS = -32602;
 const int Errors::ERROR_RPC_INTERNAL_ERROR = -32603;
 
-const int Errors::ERROR_SERVER_PROCEDURE_IS_METHOD = -32604;
-const int Errors::ERROR_SERVER_PROCEDURE_IS_NOTIFICATION = -32605;
 const int Errors::ERROR_SERVER_PROCEDURE_POINTER_IS_NULL = -32606;
 const int Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND = -32000;
 const int Errors::ERROR_SERVER_CONNECTOR = -32002;
@@ -51,11 +49,6 @@ Errors::_init::_init() {
     possibleErrors[ERROR_RPC_JSON_PARSE_ERROR] = "JSON_PARSE_ERROR: The JSON-Object is not JSON-Valid";
     possibleErrors[ERROR_RPC_INTERNAL_ERROR] = "INTERNAL_ERROR: ";
 
-    possibleErrors[ERROR_SERVER_PROCEDURE_IS_METHOD] =
-        "PROCEDURE_IS_METHOD: The requested notification is declared as a method";
-    possibleErrors[ERROR_SERVER_PROCEDURE_IS_NOTIFICATION] =
-        "PROCEDURE_IS_NOTIFICATION: The requested method is declared as "
-        "notification";
     possibleErrors[ERROR_SERVER_PROCEDURE_POINTER_IS_NULL] =
         "PROCEDURE_POINTER_IS_NULL: Server has no function Reference registered";
     possibleErrors[ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND] = "Configuration file was not found";

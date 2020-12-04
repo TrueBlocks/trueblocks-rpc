@@ -18,7 +18,6 @@ namespace jsonrpc {
         virtual ~IProcedureInvokationHandler() {
         }
         virtual void HandleMethodCall(Procedure& proc, const Json::Value& input, Json::Value& output) = 0;
-        virtual void HandleNotificationCall(Procedure& proc, const Json::Value& input) = 0;
     };
 }  // namespace jsonrpc
 

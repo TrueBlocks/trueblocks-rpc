@@ -1,40 +1,26 @@
 # trueblocks-rpc- AbstractServerConnector
 
-- HttpServer
+- IProcedureInvokationHandler
 
-- HttpClient
+  - AbstractServer<class S>
 
-- ProtocolHandler
-
+- JsonRpcException
+- Procedure
 - Client
-
-  - StubClient
-  - XbmcRemoteClient
-
-- AbstractServer
-
-  - AbstractStubServer
+- Errors
+- HttpServer
+- ServerProtocolHandler
+- ClientProtocolHandler
+- HttpClient
+- BatchResponse
+- BatchCall
 
 - CodeGenerator
 
-  - CppServerCodeGenerator
-  - CppClientCodeGenerator
   - PythonClientCodeGenerator
   - JsClientCodeGenerator
-
-- StubGeneratorFactory
-- SpecificationParser
-- SpecificationWriter
-- CPPHelper
-
-- JsonRpcException
-
-class Procedure
-class JsonRpcException
-class Errors
-class RpcProtocolClient
-class BatchResponse
-class BatchCall
+  - CppClientCodeGenerator
+  - CppServerCodeGenerator
 
 ### On Ubuntu:
 
