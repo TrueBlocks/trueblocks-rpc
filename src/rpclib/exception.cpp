@@ -10,10 +10,12 @@
 
 using namespace jsonrpc;
 
+//---------------------------------------------------------------------------------------
 JsonRpcException::JsonRpcException(int code) : code(code), message(Errors::GetErrorMessage(code)) {
     setWhatMessage();
 }
 
+//---------------------------------------------------------------------------------------
 JsonRpcException::JsonRpcException(int code, const string& m) : code(code), message(Errors::GetErrorMessage(code)) {
     if (message != "")
         message = message + ": ";
@@ -21,6 +23,7 @@ JsonRpcException::JsonRpcException(int code, const string& m) : code(code), mess
     setWhatMessage();
 }
 
+//---------------------------------------------------------------------------------------
 JsonRpcException::JsonRpcException(int code, const string& m, const Json::Value& data)
     : code(code), message(Errors::GetErrorMessage(code)), data(data) {
     if (message != "")
@@ -29,29 +32,36 @@ JsonRpcException::JsonRpcException(int code, const string& m, const Json::Value&
     setWhatMessage();
 }
 
+//---------------------------------------------------------------------------------------
 JsonRpcException::JsonRpcException(const string& m) : code(0), message(m) {
     setWhatMessage();
 }
 
+//---------------------------------------------------------------------------------------
 JsonRpcException::~JsonRpcException() throw() {
 }
 
+//---------------------------------------------------------------------------------------
 int JsonRpcException::GetCode() const {
     return code;
 }
 
+//---------------------------------------------------------------------------------------
 const string& JsonRpcException::GetMessage() const {
     return message;
 }
 
+//---------------------------------------------------------------------------------------
 const Json::Value& JsonRpcException::GetData() const {
     return data;
 }
 
+//---------------------------------------------------------------------------------------
 const char* JsonRpcException::what() const throw() {
     return whatString.c_str();
 }
 
+//---------------------------------------------------------------------------------------
 void JsonRpcException::setWhatMessage() {
     if (code != 0) {
         stringstream ss;

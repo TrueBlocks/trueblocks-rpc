@@ -15,6 +15,7 @@
 using namespace jsonrpc;
 using namespace std;
 
+//---------------------------------------------------------------------------------------
 extern Json::Value getTestBlock(const string& id, bool fullTx);
 extern Json::Value getTestHeader(const string& id);
 extern Json::Value getTestTrans(const string& id, bool fullTx);
@@ -23,6 +24,7 @@ extern Json::Value getTestReceipt(const string& id);
 extern Json::Value getTestLogByHash(void);
 extern Json::Value getTestTrace(uint32_t which = 0);
 
+//---------------------------------------------------------------------------------------
 class EthRpcServer : public AbstractServer {
   public:
     EthRpcServer(HttpServer& connector);
@@ -128,94 +130,113 @@ class EthRpcServer : public AbstractServer {
     Json::Value shh_getMessages(const string& param01);
 };
 
+//---------------------------------------------------------------------------------------
 EthRpcServer::EthRpcServer(HttpServer& connector) : AbstractServer(connector) {
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::web3_clientVersion() {
     std::cerr << "Serviced web3_clientVersion()" << std::endl;
     return "TurboGeth/v2020.12.1-alpha/darwin/go1.15.5";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::web3_sha3(const string& param01) {
     std::cerr << "Serviced web3_sha3(" << param01 << ")" << std::endl;
     return "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::net_listening() {
     std::cerr << "Serviced net_listening()" << std::endl;
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::net_version() {
     std::cerr << "Serviced net_version()" << std::endl;
     return "1";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::net_peerCount() {
     std::cerr << "Serviced net_peerCount()" << std::endl;
     return "0x19";
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getBlockByNumber(const string& blockNumber, bool fullTx) {
     std::cerr << "Serviced eth_getBlockByNumber(" << blockNumber << ", " << fullTx << ")" << std::endl;
     return getTestBlock(blockNumber, fullTx);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getBlockByHash(const string& blockHash, bool fullTx) {
     std::cerr << "Serviced eth_getBlockByHash(" << blockHash << ", " << fullTx << ")" << std::endl;
     return getTestBlock(blockHash, fullTx);
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getBlockTransactionCountByNumber(const string& param01) {
     std::cerr << "Serviced eth_getBlockTransactionCountByNumber(" << param01 << ")" << std::endl;
     return "0x4";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getBlockTransactionCountByHash(const string& param01) {
     std::cerr << "Serviced eth_getBlockTransactionCountByHash(" << param01 << ")" << std::endl;
     return "0x4";
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getTransactionByHash(const string& param01) {
     std::cerr << "Serviced eth_getTransactionByHash(" << param01 << ")" << std::endl;
     return getTestTrans(param01, true);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getTransactionByBlockHashAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getTransactionByBlockHashAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestTrans(param01, true);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getTransactionByBlockNumberAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getTransactionByBlockNumberAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestTrans(param01, true);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getTransactionReceipt(const string& param01) {
     std::cerr << "Serviced eth_getTransactionReceipt(" << param01 << ")" << std::endl;
     return getTestReceipt(param01);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getUncleByBlockNumberAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getUncleByBlockNumberAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestUncle(param01, param02);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getUncleByBlockHashAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getUncleByBlockHashAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestUncle(param01, param02);
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getUncleCountByBlockNumber(const string& param01) {
     std::cerr << "Serviced eth_getUncleCountByBlockNumber(" << param01 << ")" << std::endl;
     return "0x1";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getUncleCountByBlockHash(const string& param01) {
     std::cerr << "Serviced eth_getUncleCountByBlockHash(" << param01 << ")" << std::endl;
     return "0x1";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_newPendingTransactionFilter() {
     std::cerr << "Serviced eth_newPendingTransactionFilter()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_newPendingTransactionFilter");
@@ -223,6 +244,7 @@ string EthRpcServer::eth_newPendingTransactionFilter() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_newBlockFilter() {
     std::cerr << "Serviced eth_newBlockFilter()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_newBlockFilter");
@@ -230,6 +252,7 @@ string EthRpcServer::eth_newBlockFilter() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_newFilter(const Json::Value& param01) {
     std::cerr << "Serviced eth_newFilter(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_newFilter");
@@ -237,6 +260,7 @@ string EthRpcServer::eth_newFilter(const Json::Value& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::eth_uninstallFilter(const string& param01) {
     std::cerr << "Serviced eth_uninstallFilter(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_uninstallFilter");
@@ -244,6 +268,7 @@ bool EthRpcServer::eth_uninstallFilter(const string& param01) {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getFilterChanges(const string& param01) {
     std::cerr << "Serviced eth_getFilterChanges(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getFilterChanges");
@@ -252,6 +277,7 @@ Json::Value EthRpcServer::eth_getFilterChanges(const string& param01) {
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getLogs(const Json::Value& param01) {
     std::cerr << "Serviced eth_getLogs(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getLog");
@@ -260,16 +286,19 @@ Json::Value EthRpcServer::eth_getLogs(const Json::Value& param01) {
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getBalance(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getBalance(" << param01 << "," << param02 << ")" << std::endl;
     return "0x7a69";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getTransactionCount(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getTransactionCount(" << param01 << "," << param02 << ")" << std::endl;
     return "0xa";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getCode(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << ")" << std::endl;
     return "0x6060604052361561001f5760e060020a600035046372ea4b8c811461010c575b61011b3460008080670de0b6b3a7640000841"
@@ -303,16 +332,19 @@ string EthRpcServer::eth_getCode(const string& param01, const string& param02) {
            "02fa57600081556001016102e6565b509056";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getStorageAt(const string& param01, const string& param02, const string& param03) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     return "0x0000000000000000000000000000000000000000000000001bc16d674ec80000";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_blockNumber() {
     std::cerr << "Serviced eth_blockNumber()" << std::endl;
     return "from eth_blockNumber";
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_syncing() {
     std::cerr << "Serviced eth_syncing()" << std::endl;
     Json::Value v1;
@@ -321,31 +353,37 @@ Json::Value EthRpcServer::eth_syncing() {
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_chainId() {
     std::cerr << "Serviced eth_chainId()" << std::endl;
     return "0x1";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_protocolVersion() {
     std::cerr << "Serviced eth_protocolVersion()" << std::endl;
     return "0x41";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_gasPrice() {
     std::cerr << "Serviced eth_gasPrice()" << std::endl;
     return "0x4e3b29200";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_call(const Json::Value& param01, const string& param02) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << ")" << std::endl;
     return "0x0000000000000000000000000000000000000000000c685fa11e01ec6f000000";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_estimateGas(const Json::Value& param01) {
     std::cerr << "Serviced eth_estimateGas(" << param01 << ")" << std::endl;
     return "0x5208";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_sendTransaction(const Json::Value& param01) {
     std::cerr << "Serviced eth_getCode(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_sendTransaction");
@@ -353,6 +391,7 @@ string EthRpcServer::eth_sendTransaction(const Json::Value& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_sendRawTransaction(const string& param01) {
     std::cerr << "Serviced eth_sendRawTransaction(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_sendRawTransaction");
@@ -360,6 +399,7 @@ string EthRpcServer::eth_sendRawTransaction(const string& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_getProof(const string& param01, const Json::Value& param02, const string& param03) {
     std::cerr << "Serviced eth_getProof(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getProof");
@@ -367,6 +407,7 @@ string EthRpcServer::eth_getProof(const string& param01, const Json::Value& para
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_coinbase() {
     std::cerr << "Serviced eth_coinbase()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_coinbase");
@@ -374,6 +415,7 @@ string EthRpcServer::eth_coinbase() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_hashrate() {
     std::cerr << "Serviced eth_hashrate()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_hashrate");
@@ -381,11 +423,13 @@ string EthRpcServer::eth_hashrate() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::eth_mining() {
     std::cerr << "Serviced eth_mining()" << std::endl;
     return false;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getWork() {
     std::cerr << "Serviced eth_getWork()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getWork");
@@ -394,6 +438,7 @@ Json::Value EthRpcServer::eth_getWork() {
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::eth_submitWork(const string& param01, const string& param02, const string& param03) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_submitWork");
@@ -401,6 +446,7 @@ bool EthRpcServer::eth_submitWork(const string& param01, const string& param02, 
     return false;
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::eth_submitHashrate(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_submitHashrate(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_submitHashrate");
@@ -408,6 +454,7 @@ bool EthRpcServer::eth_submitHashrate(const string& param01, const string& param
     return false;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_call(const Json::Value& param01, const Json::Value& param02, const string& param03) {
     std::cerr << "Serviced trace_call(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_call");
@@ -416,6 +463,7 @@ Json::Value EthRpcServer::trace_call(const Json::Value& param01, const Json::Val
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_callMany(const Json::Value& param01, const string& param02) {
     std::cerr << "Serviced trace_callMany(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_callMany");
@@ -424,6 +472,7 @@ Json::Value EthRpcServer::trace_callMany(const Json::Value& param01, const strin
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_rawTransaction(const string& param01, const Json::Value& param02) {
     std::cerr << "Serviced trace_rawTransaction(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_rawTransaction");
@@ -431,6 +480,7 @@ Json::Value EthRpcServer::trace_rawTransaction(const string& param01, const Json
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_replayBlockTransactions(const string& param01, const Json::Value& param02) {
     std::cerr << "Serviced trace_replayBlockTransactions(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_replayBlockTransactions");
@@ -438,6 +488,7 @@ Json::Value EthRpcServer::trace_replayBlockTransactions(const string& param01, c
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_replayTransaction(const string& param01, const Json::Value& param02) {
     std::cerr << "Serviced trace_replayTransaction(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_replayTransaction");
@@ -445,26 +496,31 @@ Json::Value EthRpcServer::trace_replayTransaction(const string& param01, const J
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_transaction(const string& param01) {
     std::cerr << "Serviced trace_transaction(" << param01 << ")" << std::endl;
     return getTestTrace(2);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_get(const string& param01, const Json::Value& param02) {
     std::cerr << "Serviced trace_get(" << param01 << "," << param02 << ")" << std::endl;
     return getTestTrace(1);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_block(const string& param01) {
     std::cerr << "Serviced trace_block(" << param01 << ")" << std::endl;
     return getTestTrace();
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::trace_filter(const Json::Value& param01) {
     std::cerr << "Serviced trace_filter(" << param01 << ")" << std::endl;
     return getTestTrace();
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::tg_forks() {
     std::cerr << "Serviced tg_forks()" << std::endl;
     Json::Value array;
@@ -482,21 +538,25 @@ Json::Value EthRpcServer::tg_forks() {
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::tg_getHeaderByNumber(const string& param01) {
     std::cerr << "Serviced tg_getHeaderByNumber(" << param01 << ")" << std::endl;
     return getTestHeader(param01);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::tg_getHeaderByHash(const string& param01) {
     std::cerr << "Serviced tg_getHeaderByHash(" << param01 << ")" << std::endl;
     return getTestHeader(param01);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::tg_getLogsByHash(const string& param01) {
     std::cerr << "Serviced tg_getLogsByHash(" << param01 << ")" << std::endl;
     return getTestLogByHash();
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::tg_issuance(const string& param01) {
     std::cerr << "Serviced tg_issuance(" << param01 << ")" << std::endl;
     Json::Value v1;
@@ -506,6 +566,7 @@ Json::Value EthRpcServer::tg_issuance(const string& param01) {
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::debug_storageRangeAt(const string& param01, int param02, const string& param03,
                                                const string& param04, int param05) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << "," << param04 << ","
@@ -516,6 +577,7 @@ Json::Value EthRpcServer::debug_storageRangeAt(const string& param01, int param0
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::debug_accountRange(const string& param01, const Json::Value& param02, int param03,
                                              bool param04, bool param05, bool param06) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << "," << param04 << ","
@@ -536,6 +598,7 @@ Json::Value EthRpcServer::debug_accountRange(const string& param01, const Json::
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::debug_getModifiedAccountsByNumber(const string& param01, const string& param02) {
     std::cerr << "Serviced debug_getModifiedAccountsByNumber(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "debug_getModifiedAccountsByNumber");
@@ -543,6 +606,7 @@ string EthRpcServer::debug_getModifiedAccountsByNumber(const string& param01, co
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::debug_getModifiedAccountsByHash(const string& param01, const string& param02) {
     std::cerr << "Serviced debug_getModifiedAccountsByHash(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "debug_getModifiedAccountsByHash");
@@ -550,6 +614,7 @@ string EthRpcServer::debug_getModifiedAccountsByHash(const string& param01, cons
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::debug_traceTransaction(const string& param01) {
     std::cerr << "Serviced debug_traceTransaction(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_NOTIMPLEMENTED, "debug_traceTransaction");
@@ -557,6 +622,7 @@ string EthRpcServer::debug_traceTransaction(const string& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_accounts() {
     std::cerr << "Serviced eth_accounts()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "eth_accounts");
@@ -564,6 +630,7 @@ string EthRpcServer::eth_accounts() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::eth_getCompilers() {
     std::cerr << "Serviced eth_getCompilers()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "eth_getCompilers");
@@ -572,6 +639,7 @@ Json::Value EthRpcServer::eth_getCompilers() {
     return v1;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_compileLLL(const string& param01) {
     std::cerr << "Serviced eth_compileLLL(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "eth_compileLLL");
@@ -579,6 +647,7 @@ string EthRpcServer::eth_compileLLL(const string& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_compileSolidity(const string& param01) {
     std::cerr << "Serviced eth_compileSolidity(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "eth_compileSolidity");
@@ -586,6 +655,7 @@ string EthRpcServer::eth_compileSolidity(const string& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_compileSerpent(const string& param01) {
     std::cerr << "Serviced eth_compileSerpent(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "eth_compileSerpent");
@@ -593,6 +663,7 @@ string EthRpcServer::eth_compileSerpent(const string& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::eth_sign(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_sign(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "eth_sign");
@@ -600,6 +671,7 @@ string EthRpcServer::eth_sign(const string& param01, const string& param02) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::db_getString(const string& param01, const string& param02) {
     std::cerr << "Serviced db_getString(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "db_getString");
@@ -607,6 +679,7 @@ string EthRpcServer::db_getString(const string& param01, const string& param02) 
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::db_putString(const string& param01, const string& param02, const string& param03) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "db_putString");
@@ -614,6 +687,7 @@ bool EthRpcServer::db_putString(const string& param01, const string& param02, co
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::db_getHex(const string& param01, const string& param02) {
     std::cerr << "Serviced db_getHex(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "db_getHex");
@@ -621,6 +695,7 @@ string EthRpcServer::db_getHex(const string& param01, const string& param02) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::db_putHex(const string& param01, const string& param02, const string& param03) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "db_putHex");
@@ -628,6 +703,7 @@ bool EthRpcServer::db_putHex(const string& param01, const string& param02, const
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::shh_post(const Json::Value& param01) {
     std::cerr << "Serviced shh_post(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_post");
@@ -635,6 +711,7 @@ bool EthRpcServer::shh_post(const Json::Value& param01) {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::shh_version() {
     std::cerr << "Serviced shh_version()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_version");
@@ -642,6 +719,7 @@ string EthRpcServer::shh_version() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::shh_newIdentity() {
     std::cerr << "Serviced shh_newIdentity()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_newIdentity");
@@ -649,6 +727,7 @@ string EthRpcServer::shh_newIdentity() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::shh_hasIdentity(const string& param01) {
     std::cerr << "Serviced shh_hasIdentity(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_hasIdentity");
@@ -656,6 +735,7 @@ bool EthRpcServer::shh_hasIdentity(const string& param01) {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::shh_newGroup() {
     std::cerr << "Serviced shh_newGroup()" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_newGroup");
@@ -663,6 +743,7 @@ string EthRpcServer::shh_newGroup() {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::shh_addToGroup(const string& param01) {
     std::cerr << "Serviced shh_addToGroup(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_addToGroup");
@@ -670,6 +751,7 @@ bool EthRpcServer::shh_addToGroup(const string& param01) {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 string EthRpcServer::shh_newFilter(const Json::Value& param01) {
     std::cerr << "Serviced shh_newFilter(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_newFilter");
@@ -677,6 +759,7 @@ string EthRpcServer::shh_newFilter(const Json::Value& param01) {
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 bool EthRpcServer::shh_uninstallFilter(const string& param01) {
     std::cerr << "Serviced shh_uninstallFilter(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_uninstallFilter");
@@ -684,6 +767,7 @@ bool EthRpcServer::shh_uninstallFilter(const string& param01) {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::shh_getFilterChanges(const string& param01) {
     std::cerr << "Serviced shh_getFilterChanges(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_getFilterChanges");
@@ -692,6 +776,7 @@ Json::Value EthRpcServer::shh_getFilterChanges(const string& param01) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value EthRpcServer::shh_getMessages(const string& param01) {
     std::cerr << "Serviced shh_getMessages(" << param01 << ")" << std::endl;
     JsonRpcException excep(Errors::TG_ERROR_SERVER_DEPRECATED, "shh_getMessages");
@@ -700,6 +785,7 @@ Json::Value EthRpcServer::shh_getMessages(const string& param01) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value getTestBlock(const string& id, bool txHashes) {
     Json::Value result;
     // result["author"] = "0x0c729be7c39543c3d549282a40395299d987cec2";
@@ -737,6 +823,7 @@ Json::Value getTestBlock(const string& id, bool txHashes) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value getTestUncle(const string& id, const string& index) {
     Json::Value result;
     result["difficulty"] = id;     // supress unused param warning
@@ -771,6 +858,7 @@ Json::Value getTestUncle(const string& id, const string& index) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value getTestTrans(const string& id, bool fullTx) {
     Json::Value result;
     if (!fullTx) {
@@ -795,6 +883,8 @@ Json::Value getTestTrans(const string& id, bool fullTx) {
     result["value"] = "0x0";
     return result;
 }
+
+//---------------------------------------------------------------------------------------
 Json::Value getTestLog(uint32_t which) {
     Json::Value result;
     Json::Value topics(Json::arrayValue);
@@ -829,6 +919,7 @@ Json::Value getTestLog(uint32_t which) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value getTestReceipt(const string& id) {
     Json::Value result;
     result["blockHash"] = "0xf6084155ff2022773b22df3217d16e9df53cbc42689b27ca4789e06b6339beb2";
@@ -858,6 +949,7 @@ Json::Value getTestReceipt(const string& id) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value getTestHeader(const string& id) {
     Json::Value result;
     result["difficulty"] = "0x3fe802ffe";
@@ -888,6 +980,7 @@ Json::Value getTestHeader(const string& id) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value getTestLogByHash(void) {
     Json::Value topics = Json::Value(Json::arrayValue);
     topics[0] = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
@@ -912,6 +1005,7 @@ Json::Value getTestLogByHash(void) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value getTestTrace(uint32_t which) {
     if (which == 1) {
         Json::Value action1;
@@ -1047,6 +1141,7 @@ Json::Value getTestTrace(uint32_t which) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 int main() {
     HttpServer httpserver(8383);
     EthRpcServer server(httpserver);

@@ -14,6 +14,7 @@
 #include <rpclib/exception.h>
 
 namespace jsonrpc {
+    //---------------------------------------------------------------------------------------
     class HttpClient {
       public:
         HttpClient(const string& url);
@@ -29,10 +30,6 @@ namespace jsonrpc {
       private:
         std::map<string, string> headers;
         string url;
-
-        /**
-         * @brief timeout for http request in milliseconds
-         */
         long timeout;
         CURL* curl;
     };

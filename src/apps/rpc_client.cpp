@@ -14,6 +14,7 @@
 using namespace jsonrpc;
 using namespace std;
 
+//---------------------------------------------------------------------------------------
 int main() {
     HttpClient httpclient("http://localhost:8383");
     RpctClient client(httpclient);

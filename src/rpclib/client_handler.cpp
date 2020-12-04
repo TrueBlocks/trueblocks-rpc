@@ -13,20 +13,23 @@
 using namespace std;
 using namespace jsonrpc;
 
-const string ClientProtocolHandler::KEY_PROTOCOL_VERSION = "jsonrpc";
-const string ClientProtocolHandler::KEY_PROCEDURE_NAME = "method";
-const string ClientProtocolHandler::KEY_ID = "id";
-const string ClientProtocolHandler::KEY_PARAMETER = "params";
-const string ClientProtocolHandler::KEY_AUTH = "auth";
-const string ClientProtocolHandler::KEY_RESULT = "result";
-const string ClientProtocolHandler::KEY_ERROR = "error";
-const string ClientProtocolHandler::KEY_ERROR_CODE = "code";
-const string ClientProtocolHandler::KEY_ERROR_MESSAGE = "message";
-const string ClientProtocolHandler::KEY_ERROR_DATA = "data";
+//---------------------------------------------------------------------------------------
+const char* KEY_PROTOCOL_VERSION = "jsonrpc";
+const char* KEY_PROCEDURE_NAME = "method";
+const char* KEY_ID = "id";
+const char* KEY_PARAMETER = "params";
+const char* KEY_AUTH = "auth";
+const char* KEY_RESULT = "result";
+const char* KEY_ERROR = "error";
+const char* KEY_ERROR_CODE = "code";
+const char* KEY_ERROR_MESSAGE = "message";
+const char* KEY_ERROR_DATA = "data";
 
+//---------------------------------------------------------------------------------------
 ClientProtocolHandler::ClientProtocolHandler() {
 }
 
+//---------------------------------------------------------------------------------------
 void ClientProtocolHandler::BuildRequest(const string& method, const Json::Value& parameter, string& result) {
     Json::Value request;
     Json::StreamWriterBuilder wbuilder;
@@ -35,6 +38,7 @@ void ClientProtocolHandler::BuildRequest(const string& method, const Json::Value
     result = Json::writeString(wbuilder, request);
 }
 
+//---------------------------------------------------------------------------------------
 void ClientProtocolHandler::HandleResponse(const string& response, Json::Value& result) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -53,6 +57,7 @@ void ClientProtocolHandler::HandleResponse(const string& response, Json::Value& 
     }
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value ClientProtocolHandler::HandleResponse(const Json::Value& value, Json::Value& result) {
     if (ValidateResponse(value)) {
         if (HasError(value)) {
@@ -66,6 +71,7 @@ Json::Value ClientProtocolHandler::HandleResponse(const Json::Value& value, Json
     return value[KEY_ID];
 }
 
+//---------------------------------------------------------------------------------------
 void ClientProtocolHandler::BuildRequest(int id, const string& method, const Json::Value& parameter,
                                          Json::Value& result) {
     result[KEY_PROTOCOL_VERSION] = "2.0";
@@ -75,6 +81,7 @@ void ClientProtocolHandler::BuildRequest(int id, const string& method, const Jso
     result[KEY_ID] = id;
 }
 
+//---------------------------------------------------------------------------------------
 void ClientProtocolHandler::throwErrorException(const Json::Value& response) {
     if (response[KEY_ERROR].isMember(KEY_ERROR_MESSAGE) && response[KEY_ERROR][KEY_ERROR_MESSAGE].isString()) {
         if (response[KEY_ERROR].isMember(KEY_ERROR_DATA)) {
@@ -90,6 +97,7 @@ void ClientProtocolHandler::throwErrorException(const Json::Value& response) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 bool ClientProtocolHandler::ValidateResponse(const Json::Value& response) {
     if (!response.isObject() || !response.isMember(KEY_ID))
         return false;
@@ -111,6 +119,7 @@ bool ClientProtocolHandler::ValidateResponse(const Json::Value& response) {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 bool ClientProtocolHandler::HasError(const Json::Value& response) {
     return response.isMember(KEY_ERROR);
 }

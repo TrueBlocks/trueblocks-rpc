@@ -18,6 +18,7 @@
 #include <gen/gen.h>
 
 namespace jsonrpc {
+    //---------------------------------------------------------------------------------------
     void splitPackages(const string& classname, StringVector& result) {
         string s = classname;
         string delimiter = "::";
@@ -30,6 +31,7 @@ namespace jsonrpc {
         result.push_back(s);
     }
 
+    //---------------------------------------------------------------------------------------
     string normalizeString(const string& text) {
         string result = text;
         for (unsigned int i = 0; i < text.length(); i++) {
@@ -41,6 +43,7 @@ namespace jsonrpc {
         return result;
     }
 
+    //---------------------------------------------------------------------------------------
     string toString(jsontype_t type) {
         string result;
         switch (type) {
@@ -69,6 +72,7 @@ namespace jsonrpc {
         return result;
     }
 
+    //---------------------------------------------------------------------------------------
     string toCppType(jsontype_t type, bool isReturn) {
         string result;
         switch (type) {
@@ -98,6 +102,7 @@ namespace jsonrpc {
 using namespace jsonrpc;
 using namespace std;
 
+//---------------------------------------------------------------------------------------
 string class2Filename(const string& classname, const string& ft) {
     StringVector packages;
     splitPackages(classname, packages);
@@ -106,6 +111,7 @@ string class2Filename(const string& classname, const string& ft) {
     return data + ft;
 }
 
+//---------------------------------------------------------------------------------------
 jsontype_t toJsonType(Json::Value& val) {
     jsontype_t result;
     switch (val.type()) {
@@ -135,6 +141,7 @@ jsontype_t toJsonType(Json::Value& val) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 static void GetFileContent(const string& filename, string& target) {
     ifstream config(filename.c_str());
     if (config) {
@@ -145,10 +152,12 @@ static void GetFileContent(const string& filename, string& target) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 extern const char* KEY_SPEC_PROCEDURE_NAME;
 extern const char* KEY_SPEC_PROCEDURE_PARAMETERS;
 extern const char* KEY_SPEC_RETURN_TYPE;
 
+//---------------------------------------------------------------------------------------
 void GetPositionalParameters(Json::Value& val, Procedure& result) {
     for (unsigned int i = 0; i < val[KEY_SPEC_PROCEDURE_PARAMETERS].size(); i++) {
         stringstream paramname;
@@ -157,6 +166,7 @@ void GetPositionalParameters(Json::Value& val, Procedure& result) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 void GetNamedParameters(Json::Value& val, Procedure& result) {
     StringVector parameters = val[KEY_SPEC_PROCEDURE_PARAMETERS].getMemberNames();
     for (unsigned int i = 0; i < parameters.size(); ++i) {
@@ -164,12 +174,14 @@ void GetNamedParameters(Json::Value& val, Procedure& result) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 string GetProcedureName(Json::Value& signature) {
     if (signature[KEY_SPEC_PROCEDURE_NAME].isString())
         return signature[KEY_SPEC_PROCEDURE_NAME].asString();
     return "";
 }
 
+//---------------------------------------------------------------------------------------
 void GetProcedure(Json::Value& signature, Procedure& result) {
     if (signature.isObject() && GetProcedureName(signature) != "") {
         result.SetProcedureName(GetProcedureName(signature));
@@ -198,6 +210,7 @@ void GetProcedure(Json::Value& signature, Procedure& result) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 ProcedureVector GetProceduresFromString(const string& content) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -228,12 +241,14 @@ ProcedureVector GetProceduresFromString(const string& content) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 ProcedureVector GetProceduresFromFile(const string& filename) {
     string content;
     GetFileContent(filename, content);
     return GetProceduresFromString(content);
 }
 
+//---------------------------------------------------------------------------------------
 bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, vector<CodeGenerator*>& generators,
                           FILE* _stdout, FILE* _stderr) {
     struct arg_file* inputfile = arg_file0(NULL, NULL, "<specfile>", "path of input specification file");
@@ -353,6 +368,7 @@ bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, ve
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 int main(int argc, char** argv) {
     vector<CodeGenerator*> stubgens;
     ProcedureVector procedures;
@@ -369,6 +385,7 @@ int main(int argc, char** argv) {
     return !result;
 }
 
+//---------------------------------------------------------------------------------------
 const char* KEY_SPEC_PROCEDURE_NAME = "name";
 const char* KEY_SPEC_PROCEDURE_PARAMETERS = "params";
 const char* KEY_SPEC_RETURN_TYPE = "returns";

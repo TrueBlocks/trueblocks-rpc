@@ -13,6 +13,7 @@
 #include <rpclib/procedure.h>
 
 namespace jsonrpc {
+    //---------------------------------------------------------------------------------------
     class BatchRequest {
       public:
         BatchRequest();

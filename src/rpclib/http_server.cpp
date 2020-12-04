@@ -18,8 +18,10 @@
 using namespace jsonrpc;
 using namespace std;
 
+//---------------------------------------------------------------------------------------
 #define BUFFERSIZE 65536
 
+//---------------------------------------------------------------------------------------
 struct mhd_coninfo {
     struct MHD_PostProcessor* postprocessor;
     MHD_Connection* connection;
@@ -28,6 +30,7 @@ struct mhd_coninfo {
     int code;
 };
 
+//---------------------------------------------------------------------------------------
 static void GetFileContent(const string& filename, string& target) {
     ifstream config(filename.c_str());
     if (config) {
@@ -38,6 +41,7 @@ static void GetFileContent(const string& filename, string& target) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 HttpServer::HttpServer(int p, const string& sslc, const string& sslk, int t)
     : handler(NULL),
       port(p),
@@ -49,9 +53,11 @@ HttpServer::HttpServer(int p, const string& sslc, const string& sslk, int t)
       bindlocalhost(false) {
 }
 
+//---------------------------------------------------------------------------------------
 HttpServer::~HttpServer() {
 }
 
+//---------------------------------------------------------------------------------------
 ServerProtocolHandler* HttpServer::GetHandler(const string& url) {
     if (handler != NULL)
         return handler;
@@ -61,11 +67,13 @@ ServerProtocolHandler* HttpServer::GetHandler(const string& url) {
     return NULL;
 }
 
+//---------------------------------------------------------------------------------------
 HttpServer& HttpServer::BindLocalhost() {
     bindlocalhost = true;
     return *this;
 }
 
+//---------------------------------------------------------------------------------------
 bool HttpServer::StartListening() {
     if (!running) {
         const bool has_epoll = (MHD_is_feature_supported(MHD_FEATURE_EPOLL) == MHD_YES);
@@ -116,6 +124,7 @@ bool HttpServer::StartListening() {
     return running;
 }
 
+//---------------------------------------------------------------------------------------
 bool HttpServer::StopListening() {
     if (running) {
         MHD_stop_daemon(daemon);
@@ -124,6 +133,7 @@ bool HttpServer::StopListening() {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 bool HttpServer::SendResponse(const string& response, void* addInfo) {
     struct mhd_coninfo* client_connection = static_cast<struct mhd_coninfo*>(addInfo);
     struct MHD_Response* result =
@@ -137,6 +147,7 @@ bool HttpServer::SendResponse(const string& response, void* addInfo) {
     return ret == MHD_YES;
 }
 
+//---------------------------------------------------------------------------------------
 bool HttpServer::SendOptionsResponse(void* addInfo) {
     struct mhd_coninfo* client_connection = static_cast<struct mhd_coninfo*>(addInfo);
     struct MHD_Response* result = MHD_create_response_from_buffer(0, NULL, MHD_RESPMEM_MUST_COPY);
@@ -151,11 +162,13 @@ bool HttpServer::SendOptionsResponse(void* addInfo) {
     return ret == MHD_YES;
 }
 
+//---------------------------------------------------------------------------------------
 void HttpServer::SetUrlHandler(const string& url, ServerProtocolHandler* handler) {
     urlhandler[url] = handler;
     SetHandler(NULL);
 }
 
+//---------------------------------------------------------------------------------------
 int HttpServer::callback(void* cls, MHD_Connection* connection, const char* url, const char* method,
                          const char* version, const char* upload_data, size_t* upload_data_size, void** con_cls) {
     (void)version;
@@ -201,16 +214,19 @@ int HttpServer::callback(void* cls, MHD_Connection* connection, const char* url,
     return MHD_YES;
 }
 
+//---------------------------------------------------------------------------------------
 void HttpServer::ProcessRequest(const string& request, string& response) {
     if (handler != NULL) {
         handler->HandleRequest(request, response);
     }
 }
 
+//---------------------------------------------------------------------------------------
 void HttpServer::SetHandler(ServerProtocolHandler* h) {
     handler = h;
 }
 
+//---------------------------------------------------------------------------------------
 ServerProtocolHandler* HttpServer::GetHandler() {
     return handler;
 }

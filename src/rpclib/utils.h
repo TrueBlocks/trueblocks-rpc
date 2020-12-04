@@ -10,6 +10,7 @@
 
 #include "types.h"
 
+//---------------------------------------------------------------------------------------
 inline void replaceAll(string& result, const string& find, const string& replace) {
     size_t pos = result.find(find);
     while (pos != string::npos) {
@@ -18,6 +19,7 @@ inline void replaceAll(string& result, const string& find, const string& replace
     }
 }
 
+//---------------------------------------------------------------------------------------
 inline string substitute(const string& text, const string& fnd, const string& rep) {
     string result = text;
     replaceAll(result, fnd, rep);

@@ -16,9 +16,11 @@
 using namespace std;
 using namespace jsonrpc;
 
+//---------------------------------------------------------------------------------------
 Procedure::Procedure() : procedureName(""), returntype(JSON_BOOLEAN), paramDeclaration(PARAMS_BY_NAME) {
 }
 
+//---------------------------------------------------------------------------------------
 Procedure::Procedure(const string& name, parameterDeclaration_t paramType, jsontype_t returntype, ...) {
     va_list parameters;
 #pragma clang diagnostic push
@@ -38,6 +40,7 @@ Procedure::Procedure(const string& name, parameterDeclaration_t paramType, jsont
     paramDeclaration = paramType;
 }
 
+//---------------------------------------------------------------------------------------
 bool Procedure::ValdiateParameters(const Json::Value& parameters) const {
     if (parametersName.empty()) {
         return true;
@@ -50,35 +53,49 @@ bool Procedure::ValdiateParameters(const Json::Value& parameters) const {
         return false;
     }
 }
+
+//---------------------------------------------------------------------------------------
 const parameterNameList_t& Procedure::GetParameters() const {
     return parametersName;
 }
+
+//---------------------------------------------------------------------------------------
 const string& Procedure::GetProcedureName() const {
     return procedureName;
 }
+
+//---------------------------------------------------------------------------------------
 parameterDeclaration_t Procedure::GetParameterDeclarationType() const {
     return paramDeclaration;
 }
+
+//---------------------------------------------------------------------------------------
 jsontype_t Procedure::GetReturnType() const {
     return returntype;
 }
 
+//---------------------------------------------------------------------------------------
 void Procedure::SetProcedureName(const string& name) {
     procedureName = name;
 }
 
+//---------------------------------------------------------------------------------------
 void Procedure::SetReturnType(jsontype_t type) {
     returntype = type;
 }
 
+//---------------------------------------------------------------------------------------
 void Procedure::SetParameterDeclarationType(parameterDeclaration_t type) {
     paramDeclaration = type;
 }
 
+//---------------------------------------------------------------------------------------
 void Procedure::AddParameter(const string& name, jsontype_t type) {
     parametersName[name] = type;
     parametersPosition.push_back(type);
 }
+
+//---------------------------------------------------------------------------------------
 bool Procedure::ValidateNamedParameters(const Json::Value& parameters) const {
     bool ok = parameters.isObject() || parameters.isNull();
     for (map<string, jsontype_t>::const_iterator it = parametersName.begin(); ok == true && it != parametersName.end();
@@ -91,6 +108,8 @@ bool Procedure::ValidateNamedParameters(const Json::Value& parameters) const {
     }
     return ok;
 }
+
+//---------------------------------------------------------------------------------------
 bool Procedure::ValidatePositionalParameters(const Json::Value& parameters) const {
     bool ok = true;
 
@@ -103,6 +122,8 @@ bool Procedure::ValidatePositionalParameters(const Json::Value& parameters) cons
     }
     return ok;
 }
+
+//---------------------------------------------------------------------------------------
 bool Procedure::ValidateSingleParameter(jsontype_t expectedType, const Json::Value& value) const {
     bool ok = true;
     switch (expectedType) {

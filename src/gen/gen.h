@@ -17,11 +17,13 @@
 #include <rpclib/procedure.h>
 
 namespace jsonrpc {
+    //---------------------------------------------------------------------------------------
     extern void splitPackages(const string& classname, StringVector& result);
     extern string normalizeString(const string& text);
     extern string toString(jsontype_t type);
     extern string toCppType(jsontype_t type, bool isReturn = false);
 
+    //---------------------------------------------------------------------------------------
     class CodeGenerator {
       public:
         CodeGenerator(const string& sn, ProcedureVector& pv, const string& filename)
@@ -30,6 +32,7 @@ namespace jsonrpc {
             output = &file;
             indentSymbol = "    ";
         }
+
         virtual ~CodeGenerator() {
             output->flush();
             if (file.is_open()) {
@@ -113,6 +116,7 @@ namespace jsonrpc {
         bool atBeginning;
     };
 
+    //---------------------------------------------------------------------------------------
     class PythonClientCodeGenerator : public CodeGenerator {
       public:
         PythonClientCodeGenerator(const string& stubname, ProcedureVector& procedures, const string filename)
@@ -136,6 +140,7 @@ namespace jsonrpc {
         }
     };
 
+    //---------------------------------------------------------------------------------------
     class JsClientCodeGenerator : public CodeGenerator {
       public:
         JsClientCodeGenerator(const string& stubname, ProcedureVector& procedures, const string& filename)
@@ -149,6 +154,7 @@ namespace jsonrpc {
         static string noramlizeJsLiteral(const string& literal);
     };
 
+    //---------------------------------------------------------------------------------------
     class CppClientCodeGenerator : public CodeGenerator {
       public:
         CppClientCodeGenerator(const string& stubname, ProcedureVector& procedures, const string filename)

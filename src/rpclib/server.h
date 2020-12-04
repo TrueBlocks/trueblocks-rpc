@@ -19,6 +19,7 @@
 
 namespace jsonrpc {
 
+    //---------------------------------------------------------------------------------------
     template <class S>
     class Server : public Server_base {
       public:

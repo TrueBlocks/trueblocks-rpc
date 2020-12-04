@@ -13,23 +13,26 @@
 using namespace jsonrpc;
 using namespace std;
 
+//---------------------------------------------------------------------------------------
 BatchRequest::BatchRequest() : id(1) {
 }
 
+//---------------------------------------------------------------------------------------
 int BatchRequest::addCall(const string& methodname, const Json::Value& params) {
     Json::Value call;
-    call[ClientProtocolHandler::KEY_PROTOCOL_VERSION] = "2.0";
-    call[ClientProtocolHandler::KEY_PROCEDURE_NAME] = methodname;
+    call[KEY_PROTOCOL_VERSION] = "2.0";
+    call[KEY_PROCEDURE_NAME] = methodname;
 
     if (params.isNull() || params.size() > 0)
-        call[ClientProtocolHandler::KEY_PARAMETER] = params;
+        call[KEY_PARAMETER] = params;
 
-    call[ClientProtocolHandler::KEY_ID] = id++;
+    call[KEY_ID] = id++;
     result.append(call);
 
-    return call[ClientProtocolHandler::KEY_ID].asInt();
+    return call[KEY_ID].asInt();
 }
 
+//---------------------------------------------------------------------------------------
 string BatchRequest::toString(bool fast) const {
     string res;
     if (fast) {

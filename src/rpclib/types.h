@@ -14,8 +14,10 @@ using std::string;
 using std::stringstream;
 using StringVector = std::vector<string>;
 
+//---------------------------------------------------------------------------------------
 typedef enum { PARAMS_BY_NAME, PARAMS_BY_POSITION } parameterDeclaration_t;
 
+//---------------------------------------------------------------------------------------
 enum jsontype_t {
     JSON_STRING = Json::stringValue,
     JSON_BOOLEAN = Json::booleanValue,
@@ -25,5 +27,7 @@ enum jsontype_t {
     JSON_ARRAY = Json::arrayValue,
     JSON_NUMERIC = Json::intValue
 };
+
+//---------------------------------------------------------------------------------------
 typedef std::map<string, jsontype_t> parameterNameList_t;
 typedef std::vector<jsontype_t> parameterPositionList_t;

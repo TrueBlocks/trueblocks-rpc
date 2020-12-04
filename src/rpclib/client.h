@@ -18,7 +18,7 @@
 
 namespace jsonrpc {
     class ClientProtocolHandler;
-
+    //---------------------------------------------------------------------------------------
     class Client {
       public:
         Client(HttpClient& connector);

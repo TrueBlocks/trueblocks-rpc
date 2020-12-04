@@ -14,9 +14,11 @@
 using namespace std;
 using namespace jsonrpc;
 
+//---------------------------------------------------------------------------------------
 ServerProtocolHandler::ServerProtocolHandler(Server_base& h) : handler(h) {
 }
 
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::HandleJsonRequest(const Json::Value& req, Json::Value& response) {
     // It could be a Batch Request
     if (req.isArray()) {
@@ -29,6 +31,8 @@ void ServerProtocolHandler::HandleJsonRequest(const Json::Value& req, Json::Valu
                   Errors::GetErrorMessage(Errors::ERROR_RPC_INVALID_REQUEST), response);
     }
 }
+
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::HandleSingleRequest(const Json::Value& req, Json::Value& response) {
     int error = ValidateRequest(req);
     if (error == 0) {
@@ -41,6 +45,8 @@ void ServerProtocolHandler::HandleSingleRequest(const Json::Value& req, Json::Va
         WrapError(req, error, Errors::GetErrorMessage(error), response);
     }
 }
+
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::HandleBatchRequest(const Json::Value& req, Json::Value& response) {
     if (req.size() == 0)
         WrapError(Json::nullValue, Errors::ERROR_RPC_INVALID_REQUEST,
@@ -55,6 +61,7 @@ void ServerProtocolHandler::HandleBatchRequest(const Json::Value& req, Json::Val
     }
 }
 
+//---------------------------------------------------------------------------------------
 extern const char* KEY_REQUEST_METHODNAME;
 extern const char* KEY_REQUEST_ID;
 extern const char* KEY_REQUEST_PARAMETERS;
@@ -63,6 +70,7 @@ extern const char* KEY_RESPONSE_RESULT;
 extern const char* KEY_REQUEST_VERSION;
 extern const char* JSON_RPC_VERSION2;
 
+//---------------------------------------------------------------------------------------
 bool ServerProtocolHandler::ValidateRequestFields(const Json::Value& request) {
     if (!request.isObject())
         return false;
@@ -81,12 +89,14 @@ bool ServerProtocolHandler::ValidateRequestFields(const Json::Value& request) {
     return true;
 }
 
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::WrapResult(const Json::Value& request, Json::Value& response, Json::Value& result) {
     response[KEY_REQUEST_VERSION] = JSON_RPC_VERSION2;
     response[KEY_RESPONSE_RESULT] = result;
     response[KEY_REQUEST_ID] = request[KEY_REQUEST_ID];
 }
 
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::WrapError(const Json::Value& request, int code, const string& message,
                                       Json::Value& result) {
     result["jsonrpc"] = "2.0";
@@ -104,16 +114,19 @@ void ServerProtocolHandler::WrapError(const Json::Value& request, int code, cons
     }
 }
 
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::WrapException(const Json::Value& request, const JsonRpcException& exception,
                                           Json::Value& result) {
     WrapError(request, exception.GetCode(), exception.GetMessage(), result);
     result["error"]["data"] = exception.GetData();
 }
 
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::AddProcedure(const Procedure& procedure) {
     procedures[procedure.GetProcedureName()] = procedure;
 }
 
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::HandleRequest(const string& request, string& retValue) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -140,6 +153,7 @@ void ServerProtocolHandler::HandleRequest(const string& request, string& retValu
         retValue = Json::writeString(wbuilder, resp);
 }
 
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::ProcessRequest(const Json::Value& request, Json::Value& response) {
     Procedure& method = procedures[request[KEY_REQUEST_METHODNAME].asString()];
     Json::Value result;
@@ -148,6 +162,7 @@ void ServerProtocolHandler::ProcessRequest(const Json::Value& request, Json::Val
     WrapResult(request, response, result);
 }
 
+//---------------------------------------------------------------------------------------
 int ServerProtocolHandler::ValidateRequest(const Json::Value& request) {
     int error = 0;
     Procedure proc;
@@ -167,6 +182,7 @@ int ServerProtocolHandler::ValidateRequest(const Json::Value& request) {
     return error;
 }
 
+//---------------------------------------------------------------------------------------
 const char* KEY_REQUEST_METHODNAME = "method";
 const char* KEY_REQUEST_ID = "id";
 const char* KEY_REQUEST_PARAMETERS = "params";

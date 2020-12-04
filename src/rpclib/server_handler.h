@@ -18,6 +18,7 @@
 
 namespace jsonrpc {
 
+    //---------------------------------------------------------------------------------------
     class ServerProtocolHandler {
       public:
         ServerProtocolHandler(Server_base& handler);
@@ -38,11 +39,10 @@ namespace jsonrpc {
         std::map<string, Procedure> procedures;
         void HandleSingleRequest(const Json::Value& request, Json::Value& response);
         void HandleBatchRequest(const Json::Value& requests, Json::Value& response);
-        // no copies
         ServerProtocolHandler(const ServerProtocolHandler& c) : handler(c.handler){};  // no copy
         ServerProtocolHandler& operator=(const ServerProtocolHandler&) {
             return *this;
-        }  // no assignment
+        }
     };
 
 } /* namespace jsonrpc */

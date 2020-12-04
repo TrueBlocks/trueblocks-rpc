@@ -8,6 +8,7 @@
  *---------------------------------------------------------------------*/
 #pragma once
 
+//---------------------------------------------------------------------------------------
 #define JSONRPC_CPP_MAJOR_VERSION 0
 #define JSONRPC_CPP_MINOR_VERSION 1
 #define JSONRPC_CPP_PATCH_VERSION 0

@@ -8,8 +8,7 @@
  *---------------------------------------------------------------------*/
 #include <rpclib/server.h>
 
-using namespace jsonrpc;
-
+//---------------------------------------------------------------------------------------
 bool unused_to_avoid_linker_warning(void) {
     return true;
 }

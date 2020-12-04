@@ -11,6 +11,7 @@
 #include <rpclib/procedure.h>
 
 namespace jsonrpc {
+    //---------------------------------------------------------------------------------------
     class Server_base {
       public:
         virtual ~Server_base() {

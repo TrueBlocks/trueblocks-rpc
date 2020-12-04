@@ -10,6 +10,10 @@
 
 #include <gen/gen.h>
 
+using namespace std;
+using namespace jsonrpc;
+
+//---------------------------------------------------------------------------------------
 extern const char* TEMPLATE_CPPCLIENT_SIGCLASS;
 extern const char* TEMPLATE_CPPCLIENT_SIGCONSTRUCTOR;
 extern const char* TEMPLATE_CPPCLIENT_SIGMETHOD;
@@ -21,9 +25,7 @@ extern const char* TEMPLATE_RETURNCHECK;
 extern const char* TEMPLATE_RETURN;
 extern const char* TEMPLATE_CPPSERVER_GUARD;
 
-using namespace std;
-using namespace jsonrpc;
-
+//---------------------------------------------------------------------------------------
 void CppClientCodeGenerator::generateStub() {
     StringVector classname;
     splitPackages(stubname, classname);
@@ -61,6 +63,7 @@ void CppClientCodeGenerator::generateStub() {
     namespaceClose(depth);
 }
 
+//---------------------------------------------------------------------------------------
 void CppClientCodeGenerator::generateMethod(Procedure& proc) {
     string procsignature = TEMPLATE_CPPCLIENT_SIGMETHOD;
     string proccomment = TEMPLATE_CPPCLIENT_SIGCOMMENT;
@@ -88,6 +91,7 @@ void CppClientCodeGenerator::generateMethod(Procedure& proc) {
     writeLine("}");
 }
 
+//---------------------------------------------------------------------------------------
 void CppClientCodeGenerator::generateAssignments(Procedure& proc) {
     string assignment;
     parameterNameList_t list = proc.GetParameters();
@@ -106,6 +110,7 @@ void CppClientCodeGenerator::generateAssignments(Procedure& proc) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 string isCppConversion(jsontype_t type) {
     string result;
     switch (type) {
@@ -134,6 +139,7 @@ string isCppConversion(jsontype_t type) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 string toCppConversion(jsontype_t type) {
     string result;
     switch (type) {
@@ -159,6 +165,7 @@ string toCppConversion(jsontype_t type) {
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 void CppClientCodeGenerator::generateProcCall(Procedure& proc) {
     string call;
     call = TEMPLATE_METHODCALL;
@@ -180,6 +187,7 @@ void CppClientCodeGenerator::generateProcCall(Procedure& proc) {
     decreaseIndentation();
 }
 
+//---------------------------------------------------------------------------------------
 const char* TEMPLATE_CPPCLIENT_SIGCLASS = "class <stubname> : public jsonrpc::Client";
 const char* TEMPLATE_CPPCLIENT_SIGCONSTRUCTOR = "<stubname>(jsonrpc::HttpClient &conn) : jsonrpc::Client(conn) {}";
 const char* TEMPLATE_CPPCLIENT_SIGMETHOD = "<returntype> <methodname>(<parameters>) ";

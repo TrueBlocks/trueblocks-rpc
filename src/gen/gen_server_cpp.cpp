@@ -14,6 +14,7 @@
 using namespace std;
 using namespace jsonrpc;
 
+//---------------------------------------------------------------------------------------
 extern const char* TEMPLATE_CPPSERVER_METHODBINDING;
 extern const char* TEMPLATE_CPPSERVER_SIGCLASS;
 extern const char* TEMPLATE_CPPSERVER_SIGCONSTRUCTOR;
@@ -22,6 +23,7 @@ extern const char* TEMPLATE_CPPSERVER_SIGMETHOD_WITHOUT_PARAMS;
 extern const char* TEMPLATE_SERVER_ABSTRACTDEFINITION;
 extern const char* TEMPLATE_CPPSERVER_GUARD;
 
+//---------------------------------------------------------------------------------------
 void CppServerCodeGenerator::generateStub() {
     StringVector classname;
     splitPackages(stubname, classname);
@@ -63,6 +65,7 @@ void CppServerCodeGenerator::generateStub() {
     namespaceClose(depth);
 }
 
+//---------------------------------------------------------------------------------------
 void CppServerCodeGenerator::generateBindings() {
     string tmp;
     increaseIndentation();
@@ -86,6 +89,7 @@ void CppServerCodeGenerator::generateBindings() {
     decreaseIndentation();
 }
 
+//---------------------------------------------------------------------------------------
 void CppServerCodeGenerator::generateProcedureDefinitions() {
     for (ProcedureVector::const_iterator it = procedures.begin(); it != procedures.end(); ++it) {
         const Procedure& proc = *it;
@@ -110,6 +114,7 @@ void CppServerCodeGenerator::generateProcedureDefinitions() {
     }
 }
 
+//---------------------------------------------------------------------------------------
 void CppServerCodeGenerator::generateAbstractDefinitions() {
     string tmp;
     for (ProcedureVector::iterator it = procedures.begin(); it != procedures.end(); ++it) {
@@ -124,6 +129,7 @@ void CppServerCodeGenerator::generateAbstractDefinitions() {
     }
 }
 
+//---------------------------------------------------------------------------------------
 string CppServerCodeGenerator::generateBindingParameterlist(const Procedure& proc) {
     stringstream parameter;
     const parameterNameList_t& list = proc.GetParameters();
@@ -134,8 +140,10 @@ string CppServerCodeGenerator::generateBindingParameterlist(const Procedure& pro
     return parameter.str();
 }
 
+//---------------------------------------------------------------------------------------
 extern string toCppConversion(jsontype_t type);
 
+//---------------------------------------------------------------------------------------
 void CppServerCodeGenerator::generateParameterMapping(const Procedure& proc) {
     string tmp;
     const parameterNameList_t& params = proc.GetParameters();
@@ -156,6 +164,7 @@ void CppServerCodeGenerator::generateParameterMapping(const Procedure& proc) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 const char* TEMPLATE_CPPSERVER_METHODBINDING =
     "bindAndAddMethod(jsonrpc::Procedure(\"<rawprocedurename>\", <paramtype>, <returntype>, <parameterlist> "
     "NULL), &<stubname>::<procedurename>I);";

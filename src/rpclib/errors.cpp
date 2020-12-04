@@ -14,23 +14,22 @@ using namespace jsonrpc;
 std::map<int, string> Errors::possibleErrors;
 Errors::_init Errors::_initializer;
 
+//---------------------------------------------------------------------------------------
 const int Errors::ERROR_RPC_JSON_PARSE_ERROR = -32700;
 const int Errors::ERROR_RPC_METHOD_NOT_FOUND = -32601;
 const int Errors::ERROR_RPC_INVALID_REQUEST = -32600;
 const int Errors::ERROR_RPC_INVALID_PARAMS = -32602;
 const int Errors::ERROR_RPC_INTERNAL_ERROR = -32603;
-
 const int Errors::ERROR_SERVER_PROCEDURE_POINTER_IS_NULL = -32606;
 const int Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND = -32000;
 const int Errors::ERROR_SERVER_CONNECTOR = -32002;
 const int Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX = -32007;
-
 const int Errors::ERROR_CLIENT_CONNECTOR = -32003;
 const int Errors::ERROR_CLIENT_INVALID_RESPONSE = -32001;
-
 const int Errors::TG_ERROR_SERVER_DEPRECATED = -132001;
 const int Errors::TG_ERROR_SERVER_NOTIMPLEMENTED = -132002;
 
+//---------------------------------------------------------------------------------------
 Errors::_init::_init() {
     // Official Errors
     possibleErrors[ERROR_RPC_INVALID_REQUEST] =
@@ -62,6 +61,7 @@ Errors::_init::_init() {
     possibleErrors[TG_ERROR_SERVER_NOTIMPLEMENTED] = "the method is currently not implemented";
 }
 
+//---------------------------------------------------------------------------------------
 string Errors::GetErrorMessage(int errorCode) {
     if (possibleErrors.find(errorCode) == possibleErrors.end()) {
         return "";

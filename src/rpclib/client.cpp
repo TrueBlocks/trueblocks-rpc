@@ -11,14 +11,17 @@
 
 using namespace jsonrpc;
 
+//---------------------------------------------------------------------------------------
 Client::Client(HttpClient& connector) : connector(connector) {
     protocol = new ClientProtocolHandler();
 }
 
+//---------------------------------------------------------------------------------------
 Client::~Client() {
     delete protocol;
 }
 
+//---------------------------------------------------------------------------------------
 void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
     string request, response;
     request = calls.toString();
@@ -55,12 +58,14 @@ void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
     }
 }
 
+//---------------------------------------------------------------------------------------
 BatchResponse Client::CallProcedures(const BatchRequest& calls) {
     BatchResponse result;
     CallProcedures(calls, result);
     return result;
 }
 
+//---------------------------------------------------------------------------------------
 void Client::CallMethod(const string& name, const Json::Value& parameter, Json::Value& result) {
     string request, response;
     protocol->BuildRequest(name, parameter, request);
@@ -68,6 +73,7 @@ void Client::CallMethod(const string& name, const Json::Value& parameter, Json::
     protocol->HandleResponse(response, result);
 }
 
+//---------------------------------------------------------------------------------------
 Json::Value Client::CallMethod(const string& name, const Json::Value& parameter) {
     Json::Value result;
     CallMethod(name, parameter, result);

@@ -15,6 +15,7 @@
 #include <rpclib/errors.h>
 
 namespace jsonrpc {
+    //---------------------------------------------------------------------------------------
     class JsonRpcException : public std::exception {
       public:
         JsonRpcException(int code);
