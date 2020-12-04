@@ -32,7 +32,7 @@ class curl_initializer {
 static curl_initializer _curl_init = curl_initializer();
 
 //---------------------------------------------------------------------------------------
-// http :  // stackoverflow.com/questions/2329571/c-libcurl-get-output-into-a-string
+// http:// stackoverflow.com/questions/2329571/c-libcurl-get-output-into-a-string
 
 //---------------------------------------------------------------------------------------
 struct loc_str {
@@ -105,14 +105,14 @@ void HttpClient::SendRPCMessage(const string& message, string& result) {
             str << " -> Could not connect to " << url << " (is server running?)";
         else if (res == 28)
             str << " -> Operation timed out";
-        throw JsonRpcException(Errors::ERROR_CLIENT_CONNECTOR, str.str());
+        throw JsonRpcException(ERROR_CLIENT_CONNECTOR, str.str());
     }
 
     long http_code = 0;
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
 
     if (http_code / 100 != 2) {
-        throw JsonRpcException(Errors::ERROR_RPC_INTERNAL_ERROR, result);
+        throw JsonRpcException(ERROR_RPC_INTERNAL_ERROR, result);
     }
 }
 

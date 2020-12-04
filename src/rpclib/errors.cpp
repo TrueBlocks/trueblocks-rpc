@@ -15,19 +15,21 @@ std::map<int, string> Errors::possibleErrors;
 Errors::_init Errors::_initializer;
 
 //---------------------------------------------------------------------------------------
-const int Errors::ERROR_RPC_JSON_PARSE_ERROR = -32700;
-const int Errors::ERROR_RPC_METHOD_NOT_FOUND = -32601;
-const int Errors::ERROR_RPC_INVALID_REQUEST = -32600;
-const int Errors::ERROR_RPC_INVALID_PARAMS = -32602;
-const int Errors::ERROR_RPC_INTERNAL_ERROR = -32603;
-const int Errors::ERROR_SERVER_PROCEDURE_POINTER_IS_NULL = -32606;
-const int Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND = -32000;
-const int Errors::ERROR_SERVER_CONNECTOR = -32002;
-const int Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX = -32007;
-const int Errors::ERROR_CLIENT_CONNECTOR = -32003;
-const int Errors::ERROR_CLIENT_INVALID_RESPONSE = -32001;
-const int Errors::TG_ERROR_SERVER_DEPRECATED = -132001;
-const int Errors::TG_ERROR_SERVER_NOTIMPLEMENTED = -132002;
+namespace jsonrpc {
+    const int ERROR_RPC_JSON_PARSE_ERROR = -32700;
+    const int ERROR_RPC_METHOD_NOT_FOUND = -32601;
+    const int ERROR_RPC_INVALID_REQUEST = -32600;
+    const int ERROR_RPC_INVALID_PARAMS = -32602;
+    const int ERROR_RPC_INTERNAL_ERROR = -32603;
+    const int ERROR_SERVER_PROCEDURE_POINTER_IS_NULL = -32606;
+    const int ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND = -32000;
+    const int ERROR_SERVER_CONNECTOR = -32002;
+    const int ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX = -32007;
+    const int ERROR_CLIENT_CONNECTOR = -32003;
+    const int ERROR_CLIENT_INVALID_RESPONSE = -32001;
+    const int TG_ERROR_SERVER_DEPRECATED = -132001;
+    const int TG_ERROR_SERVER_NOTIMPLEMENTED = -132002;
+}  // namespace jsonrpc
 
 //---------------------------------------------------------------------------------------
 Errors::_init::_init() {

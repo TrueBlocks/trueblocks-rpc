@@ -180,10 +180,7 @@ void CppClientCodeGenerator::generateProcCall(Procedure& proc) {
     decreaseIndentation();
     writeLine("else");
     increaseIndentation();
-    writeLine(
-        "throw "
-        "jsonrpc::JsonRpcException(jsonrpc::Errors::ERROR_CLIENT_"
-        "INVALID_RESPONSE, result.toStyledString());");
+    writeLine("throw jsonrpc::JsonRpcException(jsonrpc::ERROR_CLIENT_INVALID_RESPONSE, result.toStyledString());");
     decreaseIndentation();
 }
 

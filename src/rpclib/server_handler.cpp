@@ -27,8 +27,8 @@ void ServerProtocolHandler::HandleJsonRequest(const Json::Value& req, Json::Valu
     else if (req.isObject()) {
         HandleSingleRequest(req, response);
     } else {
-        WrapError(Json::nullValue, Errors::ERROR_RPC_INVALID_REQUEST,
-                  Errors::GetErrorMessage(Errors::ERROR_RPC_INVALID_REQUEST), response);
+        WrapError(Json::nullValue, ERROR_RPC_INVALID_REQUEST, Errors::GetErrorMessage(ERROR_RPC_INVALID_REQUEST),
+                  response);
     }
 }
 
@@ -49,8 +49,8 @@ void ServerProtocolHandler::HandleSingleRequest(const Json::Value& req, Json::Va
 //---------------------------------------------------------------------------------------
 void ServerProtocolHandler::HandleBatchRequest(const Json::Value& req, Json::Value& response) {
     if (req.size() == 0)
-        WrapError(Json::nullValue, Errors::ERROR_RPC_INVALID_REQUEST,
-                  Errors::GetErrorMessage(Errors::ERROR_RPC_INVALID_REQUEST), response);
+        WrapError(Json::nullValue, ERROR_RPC_INVALID_REQUEST, Errors::GetErrorMessage(ERROR_RPC_INVALID_REQUEST),
+                  response);
     else {
         for (unsigned int i = 0; i < req.size(); i++) {
             Json::Value result;
@@ -100,7 +100,7 @@ void ServerProtocolHandler::WrapResult(const Json::Value& request, Json::Value& 
 void ServerProtocolHandler::WrapError(const Json::Value& request, int code, const string& message,
                                       Json::Value& result) {
     result["jsonrpc"] = "2.0";
-    if (code == Errors::TG_ERROR_SERVER_DEPRECATED || code == Errors::TG_ERROR_SERVER_NOTIMPLEMENTED)
+    if (code == TG_ERROR_SERVER_DEPRECATED || code == TG_ERROR_SERVER_NOTIMPLEMENTED)
         code = -32000;  // why? because possibleErrors is indexed by error code, but more than one error code has
                         // different message
     result["error"]["code"] = code;
@@ -141,12 +141,12 @@ void ServerProtocolHandler::HandleRequest(const string& request, string& retValu
         if (reader.parse(request, req, false)) {
             HandleJsonRequest(req, resp);
         } else {
-            WrapError(Json::nullValue, Errors::ERROR_RPC_JSON_PARSE_ERROR,
-                      Errors::GetErrorMessage(Errors::ERROR_RPC_JSON_PARSE_ERROR), resp);
+            WrapError(Json::nullValue, ERROR_RPC_JSON_PARSE_ERROR, Errors::GetErrorMessage(ERROR_RPC_JSON_PARSE_ERROR),
+                      resp);
         }
     } catch (const Json::Exception& e) {
-        WrapError(Json::nullValue, Errors::ERROR_RPC_JSON_PARSE_ERROR,
-                  Errors::GetErrorMessage(Errors::ERROR_RPC_JSON_PARSE_ERROR), resp);
+        WrapError(Json::nullValue, ERROR_RPC_JSON_PARSE_ERROR, Errors::GetErrorMessage(ERROR_RPC_JSON_PARSE_ERROR),
+                  resp);
     }
 
     if (resp != Json::nullValue)
@@ -167,16 +167,16 @@ int ServerProtocolHandler::ValidateRequest(const Json::Value& request) {
     int error = 0;
     Procedure proc;
     if (!ValidateRequestFields(request)) {
-        error = Errors::ERROR_RPC_INVALID_REQUEST;
+        error = ERROR_RPC_INVALID_REQUEST;
     } else {
         map<string, Procedure>::iterator it = procedures.find(request[KEY_REQUEST_METHODNAME].asString());
         if (it != procedures.end()) {
             proc = it->second;
             if (!proc.ValdiateParameters(request[KEY_REQUEST_PARAMETERS])) {
-                error = Errors::ERROR_RPC_INVALID_PARAMS;
+                error = ERROR_RPC_INVALID_PARAMS;
             }
         } else {
-            error = Errors::ERROR_RPC_METHOD_NOT_FOUND;
+            error = ERROR_RPC_METHOD_NOT_FOUND;
         }
     }
     return error;

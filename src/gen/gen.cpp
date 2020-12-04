@@ -135,7 +135,7 @@ jsontype_t toJsonType(Json::Value& val) {
             result = JSON_OBJECT;
             break;
         default:
-            throw JsonRpcException(Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
+            throw JsonRpcException(ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
                                    "Unknown parameter type: " + val.toStyledString());
     }
     return result;
@@ -148,7 +148,7 @@ static void GetFileContent(const string& filename, string& target) {
         config.open(filename.c_str(), ios::in);
         target.assign((std::istreambuf_iterator<char>(config)), (std::istreambuf_iterator<char>()));
     } else {
-        throw JsonRpcException(Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND, filename);
+        throw JsonRpcException(ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND, filename);
     }
 }
 
@@ -199,13 +199,13 @@ void GetProcedure(Json::Value& signature, Procedure& result) {
                     GetNamedParameters(signature, result);
                 }
             } else {
-                throw JsonRpcException(Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
+                throw JsonRpcException(ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
                                        "Invalid signature types in fileds: " + signature.toStyledString());
             }
         }
     } else {
         throw JsonRpcException(
-            Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
+            ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
             "procedure declaration does not contain name or parameters: " + signature.toStyledString());
     }
 }
@@ -218,12 +218,11 @@ ProcedureVector GetProceduresFromString(const string& content) {
 #pragma clang diagnostic pop
     Json::Value val;
     if (!reader.parse(content, val)) {
-        throw JsonRpcException(Errors::ERROR_RPC_JSON_PARSE_ERROR, " specification file contains syntax errors");
+        throw JsonRpcException(ERROR_RPC_JSON_PARSE_ERROR, " specification file contains syntax errors");
     }
 
     if (!val.isArray()) {
-        throw JsonRpcException(Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
-                               " top level json value is not an array");
+        throw JsonRpcException(ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX, " top level json value is not an array");
     }
 
     ProcedureVector result;
@@ -232,7 +231,7 @@ ProcedureVector GetProceduresFromString(const string& content) {
         Procedure proc;
         GetProcedure(val[i], proc);
         if (procnames.find(proc.GetProcedureName()) != procnames.end()) {
-            throw JsonRpcException(Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
+            throw JsonRpcException(ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
                                    "Procedurename not unique: " + proc.GetProcedureName());
         }
         procnames[proc.GetProcedureName()] = proc;

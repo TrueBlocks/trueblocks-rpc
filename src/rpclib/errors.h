@@ -25,23 +25,24 @@ namespace jsonrpc {
         } _initializer;
         static string GetErrorMessage(int errorCode);
 
-        static const int ERROR_RPC_METHOD_NOT_FOUND;
-        static const int ERROR_RPC_INVALID_REQUEST;
-        static const int ERROR_RPC_INVALID_PARAMS;
-        static const int ERROR_RPC_INTERNAL_ERROR;
-
-        static const int ERROR_SERVER_PROCEDURE_POINTER_IS_NULL;
-        static const int ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND;
-        static const int ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX;
-        static const int ERROR_SERVER_CONNECTOR;
-
-        static const int ERROR_CLIENT_CONNECTOR;
-        static const int ERROR_CLIENT_INVALID_RESPONSE;
-
-        static const int TG_ERROR_SERVER_DEPRECATED;
-        static const int TG_ERROR_SERVER_NOTIMPLEMENTED;
-
       private:
         static std::map<int, string> possibleErrors;
     };
+
+    extern const int ERROR_RPC_JSON_PARSE_ERROR;
+    extern const int ERROR_RPC_METHOD_NOT_FOUND;
+    extern const int ERROR_RPC_INVALID_REQUEST;
+    extern const int ERROR_RPC_INVALID_PARAMS;
+    extern const int ERROR_RPC_INTERNAL_ERROR;
+
+    extern const int ERROR_SERVER_PROCEDURE_POINTER_IS_NULL;
+    extern const int ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND;
+    extern const int ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX;
+    extern const int ERROR_SERVER_CONNECTOR;
+
+    extern const int ERROR_CLIENT_CONNECTOR;
+    extern const int ERROR_CLIENT_INVALID_RESPONSE;
+
+    extern const int TG_ERROR_SERVER_DEPRECATED;
+    extern const int TG_ERROR_SERVER_NOTIMPLEMENTED;
 } /* namespace jsonrpc */

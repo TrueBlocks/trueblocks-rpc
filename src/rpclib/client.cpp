@@ -34,11 +34,11 @@ void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
 
     try {
         if (!reader.parse(response, tmpresult) || !tmpresult.isArray()) {
-            throw JsonRpcException(Errors::ERROR_CLIENT_INVALID_RESPONSE, "Array expected.");
+            throw JsonRpcException(ERROR_CLIENT_INVALID_RESPONSE, "Array expected.");
         }
     } catch (const Json::Exception& e) {
-        throw JsonRpcException(Errors::ERROR_RPC_JSON_PARSE_ERROR,
-                               Errors::GetErrorMessage(Errors::ERROR_RPC_JSON_PARSE_ERROR), response);
+        throw JsonRpcException(ERROR_RPC_JSON_PARSE_ERROR, Errors::GetErrorMessage(ERROR_RPC_JSON_PARSE_ERROR),
+                               response);
     }
 
     for (unsigned int i = 0; i < tmpresult.size(); i++) {
@@ -54,7 +54,7 @@ void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
                 result.addResponse(id, tmpresult[i]["error"], true);
             }
         } else
-            throw JsonRpcException(Errors::ERROR_CLIENT_INVALID_RESPONSE, "Object in Array expected.");
+            throw JsonRpcException(ERROR_CLIENT_INVALID_RESPONSE, "Object in Array expected.");
     }
 }
 

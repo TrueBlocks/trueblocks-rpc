@@ -37,7 +37,7 @@ static void GetFileContent(const string& filename, string& target) {
         config.open(filename.c_str(), ios::in);
         target.assign((std::istreambuf_iterator<char>(config)), (std::istreambuf_iterator<char>()));
     } else {
-        throw JsonRpcException(Errors::ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND, filename);
+        throw JsonRpcException(ERROR_SERVER_PROCEDURE_SPECIFICATION_NOT_FOUND, filename);
     }
 }
 

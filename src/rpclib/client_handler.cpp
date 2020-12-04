@@ -14,16 +14,18 @@ using namespace std;
 using namespace jsonrpc;
 
 //---------------------------------------------------------------------------------------
-const char* KEY_PROTOCOL_VERSION = "jsonrpc";
-const char* KEY_PROCEDURE_NAME = "method";
-const char* KEY_ID = "id";
-const char* KEY_PARAMETER = "params";
-const char* KEY_AUTH = "auth";
-const char* KEY_RESULT = "result";
-const char* KEY_ERROR = "error";
-const char* KEY_ERROR_CODE = "code";
-const char* KEY_ERROR_MESSAGE = "message";
-const char* KEY_ERROR_DATA = "data";
+namespace jsonrpc {
+    const char* KEY_PROTOCOL_VERSION = "jsonrpc";
+    const char* KEY_PROCEDURE_NAME = "method";
+    const char* KEY_ID = "id";
+    const char* KEY_PARAMETER = "params";
+    const char* KEY_AUTH = "auth";
+    const char* KEY_RESULT = "result";
+    const char* KEY_ERROR = "error";
+    const char* KEY_ERROR_CODE = "code";
+    const char* KEY_ERROR_MESSAGE = "message";
+    const char* KEY_ERROR_DATA = "data";
+}  // namespace jsonrpc
 
 //---------------------------------------------------------------------------------------
 ClientProtocolHandler::ClientProtocolHandler() {
@@ -50,10 +52,10 @@ void ClientProtocolHandler::HandleResponse(const string& response, Json::Value& 
         if (reader.parse(response, value)) {
             HandleResponse(value, result);
         } else {
-            throw JsonRpcException(Errors::ERROR_RPC_JSON_PARSE_ERROR, " " + response);
+            throw JsonRpcException(ERROR_RPC_JSON_PARSE_ERROR, " " + response);
         }
     } catch (Json::Exception& e) {
-        throw JsonRpcException(Errors::ERROR_RPC_JSON_PARSE_ERROR, " " + response);
+        throw JsonRpcException(ERROR_RPC_JSON_PARSE_ERROR, " " + response);
     }
 }
 
@@ -66,7 +68,7 @@ Json::Value ClientProtocolHandler::HandleResponse(const Json::Value& value, Json
             result = value[KEY_RESULT];
         }
     } else {
-        throw JsonRpcException(Errors::ERROR_CLIENT_INVALID_RESPONSE, " " + value.toStyledString());
+        throw JsonRpcException(ERROR_CLIENT_INVALID_RESPONSE, " " + value.toStyledString());
     }
     return value[KEY_ID];
 }
