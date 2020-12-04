@@ -6,9 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_CPP_PROCEDURE_H_
-#define JSONRPC_CPP_PROCEDURE_H_
+#pragma once
 
 #include <map>
 #include <string>
@@ -21,14 +19,6 @@ namespace jsonrpc {
     class Procedure {
       public:
         Procedure();
-
-        /**
-         * @brief Constructor for notificaiton with parameters as va_list. The last
-         * parameter must be NULL. If no parameters are passed, parameters either do
-         * not exist, or cannot be checked for type compliance by the library.
-         * @param name
-         */
-        Procedure(const string& name, parameterDeclaration_t paramType, ...);
 
         /**
          * @brief Constructor for method with parameters as va_list. The last
@@ -92,8 +82,7 @@ namespace jsonrpc {
         parameterPositionList_t parametersPosition;
 
         /**
-         * @brief this field is only valid if procedure is of type method (not
-         * notification).
+         * @brief this field is only valid if procedure is of type method.
          */
         jsontype_t returntype;
 
@@ -107,4 +96,3 @@ namespace jsonrpc {
     };
     typedef std::vector<Procedure> ProcedureVector;
 } /* namespace jsonrpc */
-#endif /* JSONRPC_CPP_PROCEDURE_H_ */

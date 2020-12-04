@@ -24,7 +24,7 @@ extern Json::Value getTestReceipt(const string& id);
 extern Json::Value getTestLogByHash(void);
 extern Json::Value getTestTrace(uint32_t which = 0);
 
-class EthRpcServer : public AbstractStubServer {
+class EthRpcServer : public AbstractServer {
   public:
     EthRpcServer(HttpServer& connector);
 
@@ -129,7 +129,7 @@ class EthRpcServer : public AbstractStubServer {
     Json::Value shh_getMessages(const string& param01);
 };
 
-EthRpcServer::EthRpcServer(HttpServer& connector) : AbstractStubServer(connector) {
+EthRpcServer::EthRpcServer(HttpServer& connector) : AbstractServer(connector) {
 }
 
 string EthRpcServer::web3_clientVersion() {

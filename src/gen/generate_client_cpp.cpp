@@ -19,9 +19,7 @@ extern const char* TEMPLATE_POSITION_ASSIGNMENT;
 extern const char* TEMPLATE_METHODCALL;
 extern const char* TEMPLATE_RETURNCHECK;
 extern const char* TEMPLATE_RETURN;
-extern const char* TEMPLATE_CPPSERVER_GUARD1;
-extern const char* TEMPLATE_CPPSERVER_GUARD2;
-extern const char* TEMPLATE_EPILOG;
+extern const char* TEMPLATE_CPPSERVER_GUARD;
 
 using namespace std;
 using namespace jsonrpc;
@@ -34,12 +32,7 @@ void CppClientCodeGenerator::generateStub() {
     writeLine(" */");
     writeNewLine();
 
-    string stub_upper = stubname;
-    std::transform(stub_upper.begin(), stub_upper.end(), stub_upper.begin(), ::toupper);
-    replaceAll(stub_upper, "::", "_");
-
-    writeLine(substitute(TEMPLATE_CPPSERVER_GUARD1, "<STUBNAME>", stub_upper));
-    writeLine(substitute(TEMPLATE_CPPSERVER_GUARD2, "<STUBNAME>", stub_upper));
+    writeLine(TEMPLATE_CPPSERVER_GUARD);
 
     writeNewLine();
     writeLine("#include <rpct/rpctlib.h>");
@@ -66,10 +59,6 @@ void CppClientCodeGenerator::generateStub() {
     writeNewLine();
 
     namespaceClose(depth);
-    stub_upper = stubname;
-    std::transform(stub_upper.begin(), stub_upper.end(), stub_upper.begin(), ::toupper);
-    replaceAll(stub_upper, "::", "_");
-    writeLine(substitute(TEMPLATE_EPILOG, "<STUBNAME>", stub_upper));
 }
 
 void CppClientCodeGenerator::generateMethod(Procedure& proc) {

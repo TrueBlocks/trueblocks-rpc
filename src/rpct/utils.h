@@ -1,5 +1,4 @@
-#ifndef JSONRPC_CPP_COMMON_UTILS_H_
-#define JSONRPC_CPP_COMMON_UTILS_H_
+#pragma once
 
 #include "types.h"
 
@@ -16,5 +15,3 @@ inline string substitute(const string& text, const string& fnd, const string& re
     replaceAll(result, fnd, rep);
     return result;
 }
-
-#endif /* JSONRPC_CPP_COMMON_UTILS_H_ */

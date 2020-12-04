@@ -6,9 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_CPP_CODEGENERATOR_H
-#define JSONRPC_CPP_CODEGENERATOR_H
+#pragma once
 
 #include <string>
 #include <ostream>
@@ -180,5 +178,3 @@ namespace jsonrpc {
         string generateBindingParameterlist(const Procedure& proc);
     };
 }  // namespace jsonrpc
-
-#endif  // JSONRPC_CPP_CODEGENERATOR_H

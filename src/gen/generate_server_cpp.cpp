@@ -21,9 +21,7 @@ extern const char* TEMPLATE_CPPSERVER_SIGCONSTRUCTOR;
 extern const char* TEMPLATE_CPPSERVER_SIGMETHOD;
 extern const char* TEMPLATE_CPPSERVER_SIGMETHOD_WITHOUT_PARAMS;
 extern const char* TEMPLATE_SERVER_ABSTRACTDEFINITION;
-extern const char* TEMPLATE_CPPSERVER_GUARD1;
-extern const char* TEMPLATE_CPPSERVER_GUARD2;
-extern const char* TEMPLATE_EPILOG;
+extern const char* TEMPLATE_CPPSERVER_GUARD;
 
 void CppServerCodeGenerator::generateStub() {
     StringVector classname;
@@ -33,12 +31,7 @@ void CppServerCodeGenerator::generateStub() {
     writeLine(" */");
     writeNewLine();
 
-    string stub_upper = stubname;
-    std::transform(stub_upper.begin(), stub_upper.end(), stub_upper.begin(), ::toupper);
-    replaceAll(stub_upper, "::", "_");
-
-    writeLine(substitute(TEMPLATE_CPPSERVER_GUARD1, "<STUBNAME>", stub_upper));
-    writeLine(substitute(TEMPLATE_CPPSERVER_GUARD2, "<STUBNAME>", stub_upper));
+    writeLine(TEMPLATE_CPPSERVER_GUARD);
     writeNewLine();
 
     writeLine("#include <rpct/rpctlib.h>");
@@ -69,10 +62,6 @@ void CppServerCodeGenerator::generateStub() {
     writeNewLine();
 
     namespaceClose(depth);
-    stub_upper = stubname;
-    std::transform(stub_upper.begin(), stub_upper.end(), stub_upper.begin(), ::toupper);
-    replaceAll(stub_upper, "::", "_");
-    writeLine(substitute(TEMPLATE_EPILOG, "<STUBNAME>", stub_upper));
 }
 
 void CppServerCodeGenerator::generateBindings() {
@@ -171,14 +160,12 @@ void CppServerCodeGenerator::generateParameterMapping(const Procedure& proc) {
 const char* TEMPLATE_CPPSERVER_METHODBINDING =
     "bindAndAddMethod(jsonrpc::Procedure(\"<rawprocedurename>\", <paramtype>, <returntype>, <parameterlist> "
     "NULL), &<stubname>::<procedurename>I);";
-const char* TEMPLATE_CPPSERVER_SIGCLASS = "class <stubname> : public jsonrpc::AbstractServer<<stubname>>";
+const char* TEMPLATE_CPPSERVER_SIGCLASS = "class <stubname> : public jsonrpc::Server<<stubname>>";
 const char* TEMPLATE_CPPSERVER_SIGCONSTRUCTOR =
-    "<stubname>(jsonrpc::HttpServer &conn) : jsonrpc::AbstractServer<<stubname>>(conn)";
+    "<stubname>(jsonrpc::HttpServer &conn) : jsonrpc::Server<<stubname>>(conn)";
 const char* TEMPLATE_CPPSERVER_SIGMETHOD =
     "inline virtual void <procedurename>I(const Json::Value &request, Json::Value &response)";
 const char* TEMPLATE_CPPSERVER_SIGMETHOD_WITHOUT_PARAMS =
     "inline virtual void <procedurename>I(const Json::Value &/*request*/, Json::Value &response)";
 const char* TEMPLATE_SERVER_ABSTRACTDEFINITION = "virtual <returntype> <procedurename>(<parameterlist>) = 0;";
-const char* TEMPLATE_CPPSERVER_GUARD1 = "#ifndef JSONRPC_CPP_STUB_<STUBNAME>_H_";
-const char* TEMPLATE_CPPSERVER_GUARD2 = "#define JSONRPC_CPP_STUB_<STUBNAME>_H_";
-const char* TEMPLATE_EPILOG = "#endif //JSONRPC_CPP_STUB_<STUBNAME>_H_";
+const char* TEMPLATE_CPPSERVER_GUARD = "#pragma once";

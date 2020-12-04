@@ -1,14 +1,12 @@
 /*************************************************************************
  * libjson-rpc-cpp
  *************************************************************************
- * @file    abstractserver.h
+ * @file    server.h
  * @date    30.12.2012
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_CPP_ABSTRACTSERVER_H_
-#define JSONRPC_CPP_ABSTRACTSERVER_H_
+#pragma once
 
 #include <rpct/procedure.h>
 
@@ -23,16 +21,16 @@
 namespace jsonrpc {
 
     template <class S>
-    class AbstractServer : public IProcedureInvokationHandler {
+    class Server : public IProcedureInvokationHandler {
       public:
         typedef void (S::*methodPointer_t)(const Json::Value& parameter, Json::Value& result);
 
-        AbstractServer(HttpServer& connector) : connection(connector) {
+        Server(HttpServer& connector) : connection(connector) {
             handler = new ServerProtocolHandler(*this);
             connector.SetHandler(handler);
         }
 
-        virtual ~AbstractServer() {
+        virtual ~Server() {
             delete handler;
         }
 
@@ -72,4 +70,3 @@ namespace jsonrpc {
     };
 
 } /* namespace jsonrpc */
-#endif /* JSONRPC_CPP_ABSTRACTSERVER_H_ */

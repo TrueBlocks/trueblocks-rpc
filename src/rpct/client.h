@@ -6,9 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_CPP_CLIENT_H_
-#define JSONRPC_CPP_CLIENT_H_
+#pragma once
 
 #include <json/json.h>
 
@@ -41,4 +39,3 @@ namespace jsonrpc {
     };
 
 } /* namespace jsonrpc */
-#endif /* JSONRPC_CPP_CLIENT_H_ */

@@ -6,9 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_CPP_ERRORS_H_
-#define JSONRPC_CPP_ERRORS_H_
+#pragma once
 
 #include <map>
 #include <string>
@@ -64,4 +62,3 @@ namespace jsonrpc {
         static std::map<int, string> possibleErrors;
     };
 } /* namespace jsonrpc */
-#endif /* JSONRPC_CPP_ERRORS_H_ */

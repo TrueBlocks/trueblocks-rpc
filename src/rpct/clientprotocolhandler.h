@@ -31,7 +31,7 @@ namespace jsonrpc {
          * passed parameters. The id starts at 1 and is incremented for each
          * request. To reset this value to one, call the
          * jsonrpc::RpcProRpcProtocolClient::resetId() method.
-         * @param method - name of method or notification to be called
+         * @param method - name of method to be called
          * @param parameter - parameters represented as json objects
          * @return the string representation of the request to be built.
          */
@@ -42,7 +42,7 @@ namespace jsonrpc {
          * jsonrpc::RpcProRpcProtocolClient::BuildRequest(const string& method,
          * const Json::Value& parameter); The only difference here is that the
          * result is returend by value, using the result parameter.
-         * @param method - name of method or notification to be called
+         * @param method - name of method to be called
          * @param parameter - parameters represented as json objects
          * @param result - the string representation will be hold within this
          * reference.

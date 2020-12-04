@@ -38,25 +38,6 @@ Procedure::Procedure(const string& name, parameterDeclaration_t paramType, jsont
     paramDeclaration = paramType;
 }
 
-Procedure::Procedure(const string& name, parameterDeclaration_t paramType, ...) {
-    va_list parameters;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wvarargs"
-    va_start(parameters, paramType);
-#pragma clang diagnostic pop
-    const char* paramname = va_arg(parameters, const char*);
-    jsontype_t type;
-    while (paramname != NULL) {
-        type = (jsontype_t)va_arg(parameters, int);
-        AddParameter(paramname, type);
-        paramname = va_arg(parameters, const char*);
-    }
-    va_end(parameters);
-    procedureName = name;
-    paramDeclaration = paramType;
-    returntype = JSON_BOOLEAN;
-}
-
 bool Procedure::ValdiateParameters(const Json::Value& parameters) const {
     if (parametersName.empty()) {
         return true;

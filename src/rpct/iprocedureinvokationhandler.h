@@ -6,9 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_CPP_IPROCEDUREINVOKATIONHANDLER_H
-#define JSONRPC_CPP_IPROCEDUREINVOKATIONHANDLER_H
+#pragma once
 
 #include <rpct/procedure.h>
 
@@ -20,5 +18,3 @@ namespace jsonrpc {
         virtual void HandleMethodCall(Procedure& proc, const Json::Value& input, Json::Value& output) = 0;
     };
 }  // namespace jsonrpc
-
-#endif  // JSONRPC_CPP_IPROCEDUREINVOKATIONHANDLER_H

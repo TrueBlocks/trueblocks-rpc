@@ -6,9 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_BATCHRESPONSE_H
-#define JSONRPC_BATCHRESPONSE_H
+#pragma once
 
 #include <map>
 #include <json/json.h>
@@ -61,5 +59,3 @@ namespace jsonrpc {
     };
 
 }  // namespace jsonrpc
-
-#endif  // JSONRPC_BATCHRESPONSE_H

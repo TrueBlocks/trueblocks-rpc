@@ -6,9 +6,7 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
  ************************************************************************/
-
-#ifndef JSONRPC_CPP_BATCHCALL_H
-#define JSONRPC_CPP_BATCHCALL_H
+#pragma once
 
 #include <json/json.h>
 #include <rpct/procedure.h>
@@ -33,5 +31,3 @@ namespace jsonrpc {
         int id;
     };
 }  // namespace jsonrpc
-
-#endif  // JSONRPC_CPP_BATCHCALL_H

@@ -1,10 +1,6 @@
 file(GLOB jsonrpc_header_libs *.h)
 file(GLOB jsonrpc_source_libs *.c*)
 
-file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/gen/rpct")
-configure_file("${PROJECT_SOURCE_DIR}/rpct/version.h.in" "${CMAKE_BINARY_DIR}/gen/rpct/version.h")
-install(FILES "${CMAKE_BINARY_DIR}/gen/rpct/version.h" DESTINATION include/rpct)
-
 include_directories(..)
 include_directories(${MHD_INCLUDE_DIRS})
 
