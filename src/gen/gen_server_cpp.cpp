@@ -7,7 +7,7 @@
  * @license See attached LICENSE.txt
  ************************************************************************/
 
-#include "generate.h"
+#include "gen.h"
 
 #include <algorithm>
 #include <sstream>

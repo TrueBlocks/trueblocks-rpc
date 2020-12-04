@@ -1,7 +1,7 @@
 /*************************************************************************
  * libjson-rpc-cpp
  *************************************************************************
- * @file    generate.cpp
+ * @file    gen.cpp
  * @date    29.09.2013
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @license See attached LICENSE.txt
@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <algorithm>
 
-#include "generate.h"
+#include "gen.h"
 #include <argtable2.h>
 #include <rpclib/version.h>
 #include <rpclib/exception.h>

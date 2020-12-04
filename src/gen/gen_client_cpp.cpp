@@ -8,7 +8,7 @@
  ************************************************************************/
 
 #include <algorithm>
-#include "generate.h"
+#include "gen.h"
 
 extern const char* TEMPLATE_CPPCLIENT_SIGCLASS;
 extern const char* TEMPLATE_CPPCLIENT_SIGCONSTRUCTOR;
