@@ -1,11 +1,11 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    rpcprotocolserverv2.h
- * @date    31.12.2012
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #pragma once
 
 #include <string>
@@ -13,12 +13,14 @@
 #include <map>
 
 #include <rpclib/exception.h>
-#include <rpclib/iprocedureinvokationhandler.h>
+#include <rpclib/procedure.h>
+#include <rpclib/server_base.h>
 
 namespace jsonrpc {
+
     class ServerProtocolHandler {
       public:
-        ServerProtocolHandler(IProcedureInvokationHandler& handler);
+        ServerProtocolHandler(Server_base& handler);
 
         void HandleJsonRequest(const Json::Value& request, Json::Value& response);
         void HandleRequest(const string& request, string& retValue);
@@ -32,7 +34,7 @@ namespace jsonrpc {
         void ProcessRequest(const Json::Value& request, Json::Value& retValue);
         int ValidateRequest(const Json::Value& val);
 
-        IProcedureInvokationHandler& handler;
+        Server_base& handler;
         std::map<string, Procedure> procedures;
         void HandleSingleRequest(const Json::Value& request, Json::Value& response);
         void HandleBatchRequest(const Json::Value& requests, Json::Value& response);

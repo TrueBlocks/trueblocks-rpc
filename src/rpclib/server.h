@@ -1,27 +1,26 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    server.h
- * @date    30.12.2012
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #pragma once
-
-#include <rpclib/procedure.h>
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include "iprocedureinvokationhandler.h"
-#include "serverprotocolhandler.h"
-#include "httpserver.h"
+#include <rpclib/procedure.h>
+#include <rpclib/server_base.h>
+#include <rpclib/server_handler.h>
+#include <rpclib/http_server.h>
 
 namespace jsonrpc {
 
     template <class S>
-    class Server : public IProcedureInvokationHandler {
+    class Server : public Server_base {
       public:
         typedef void (S::*methodPointer_t)(const Json::Value& parameter, Json::Value& result);
 
@@ -61,7 +60,6 @@ namespace jsonrpc {
         HttpServer& connection;
         ServerProtocolHandler* handler;
         std::map<string, methodPointer_t> methods;
-
         bool symbolExists(const string& name) {
             if (methods.find(name) != methods.end())
                 return true;

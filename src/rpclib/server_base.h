@@ -8,5 +8,13 @@
  *---------------------------------------------------------------------*/
 #pragma once
 
-#include <rpclib/client.h>
-#include <rpclib/server.h>
+#include <rpclib/procedure.h>
+
+namespace jsonrpc {
+    class Server_base {
+      public:
+        virtual ~Server_base() {
+        }
+        virtual void HandleMethodCall(Procedure& proc, const Json::Value& input, Json::Value& output) = 0;
+    };
+}  // namespace jsonrpc

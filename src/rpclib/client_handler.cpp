@@ -1,15 +1,14 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    responsehandler.cpp
- * @date    13.03.2013
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
-#include <rpclib/clientprotocolhandler.h>
-
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #include <json/json.h>
+
+#include <rpclib/client_handler.h>
 
 using namespace std;
 using namespace jsonrpc;
@@ -25,16 +24,14 @@ const string ClientProtocolHandler::KEY_ERROR_CODE = "code";
 const string ClientProtocolHandler::KEY_ERROR_MESSAGE = "message";
 const string ClientProtocolHandler::KEY_ERROR_DATA = "data";
 
-ClientProtocolHandler::ClientProtocolHandler(bool omitEndingLineFeed) : omitEndingLineFeed(omitEndingLineFeed) {
+ClientProtocolHandler::ClientProtocolHandler() {
 }
 
-void ClientProtocolHandler::BuildRequest(const string& method, const Json::Value& parameter, string& result,
-                                         bool isNotification) {
+void ClientProtocolHandler::BuildRequest(const string& method, const Json::Value& parameter, string& result) {
     Json::Value request;
     Json::StreamWriterBuilder wbuilder;
     wbuilder["indentation"] = "";
-    BuildRequest(1, method, parameter, request, isNotification);
-
+    BuildRequest(1, method, parameter, request);
     result = Json::writeString(wbuilder, request);
 }
 
@@ -70,13 +67,12 @@ Json::Value ClientProtocolHandler::HandleResponse(const Json::Value& value, Json
 }
 
 void ClientProtocolHandler::BuildRequest(int id, const string& method, const Json::Value& parameter,
-                                         Json::Value& result, bool isNotification) {
+                                         Json::Value& result) {
     result[KEY_PROTOCOL_VERSION] = "2.0";
     result[KEY_PROCEDURE_NAME] = method;
     if (parameter != Json::nullValue)
         result[KEY_PARAMETER] = parameter;
-    if (!isNotification)
-        result[KEY_ID] = id;
+    result[KEY_ID] = id;
 }
 
 void ClientProtocolHandler::throwErrorException(const Json::Value& response) {

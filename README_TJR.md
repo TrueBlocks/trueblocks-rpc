@@ -34,4 +34,4 @@ class JsonRpcException
 class Errors
 class RpcProtocolClient
 class BatchResponse
-class BatchCall
+class BatchRequest

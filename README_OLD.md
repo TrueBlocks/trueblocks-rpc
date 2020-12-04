@@ -34,7 +34,7 @@ class JsonRpcException
 class Errors
 class RpcProtocolClient
 class BatchResponse
-class BatchCall
+class BatchRequest
 
 **I am currently working on a new C++17 implementation -> [json-rpc-cxx](https://github.com/jsonrpcx/json-rpc-cxx).**
 
@@ -179,14 +179,11 @@ This example will show the most simple way to create a rpc server and client. If
       "name": "Peter"
     },
     "returns": "Hello Peter"
-  },
-  {
-    "name": "notifyServer"
   }
 ]
 ```
 
-The type of a return value or parameter is defined by the literal assigned to it. The generated stubs will will use the "returns" type to validate the response. In this example you can see how to specify methods and notifications.
+The type of a return value or parameter is defined by the literal assigned to it. The generated stubs will will use the "returns" type to validate the response. In this example you can see how to specify methods.
 
 ### Step 2: Generate the stubs for client and server
 

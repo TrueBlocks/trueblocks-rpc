@@ -1,23 +1,22 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    batchcall.cpp
- * @date    15.10.2013
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
-#include <rpclib/batchcall.h>
-#include <rpclib/clientprotocolhandler.h>
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
+#include <rpclib/batch_request.h>
+#include <rpclib/client_handler.h>
 #include <rpclib/procedure.h>
 
 using namespace jsonrpc;
 using namespace std;
 
-BatchCall::BatchCall() : id(1) {
+BatchRequest::BatchRequest() : id(1) {
 }
 
-int BatchCall::addCall(const string& methodname, const Json::Value& params, bool isNotification) {
+int BatchRequest::addCall(const string& methodname, const Json::Value& params) {
     Json::Value call;
     call[ClientProtocolHandler::KEY_PROTOCOL_VERSION] = "2.0";
     call[ClientProtocolHandler::KEY_PROCEDURE_NAME] = methodname;
@@ -25,17 +24,13 @@ int BatchCall::addCall(const string& methodname, const Json::Value& params, bool
     if (params.isNull() || params.size() > 0)
         call[ClientProtocolHandler::KEY_PARAMETER] = params;
 
-    if (!isNotification) {
-        call[ClientProtocolHandler::KEY_ID] = id++;
-    }
+    call[ClientProtocolHandler::KEY_ID] = id++;
     result.append(call);
 
-    if (isNotification)
-        return -1;
     return call[ClientProtocolHandler::KEY_ID].asInt();
 }
 
-string BatchCall::toString(bool fast) const {
+string BatchRequest::toString(bool fast) const {
     string res;
     if (fast) {
         Json::StreamWriterBuilder wbuilder;

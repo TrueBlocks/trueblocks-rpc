@@ -1,15 +1,16 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    batchresponse.h
- * @date    10/9/2014
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #pragma once
 
 #include <map>
 #include <json/json.h>
+
 #include <rpclib/utils.h>
 
 namespace jsonrpc {
@@ -29,7 +30,7 @@ namespace jsonrpc {
         void addResponse(Json::Value& id, Json::Value response, bool isError = false);
 
         /**
-         * @brief getResult method gets the result for a given request id (returned by BatchCall::addCall.
+         * @brief getResult method gets the result for a given request id (returned by BatchRequest::addCall.
          * You should always invoke getErrorCode() first to check if the result is valid.
          * @param id
          * @return

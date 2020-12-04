@@ -1,14 +1,14 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    generate_client_js.cpp
- * @date    10/22/2014
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
-#include "gen.h"
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #include <algorithm>
+
+#include <gen/gen.h>
 
 using namespace jsonrpc;
 using namespace std;

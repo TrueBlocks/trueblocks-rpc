@@ -6,7 +6,10 @@
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
  * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
  *---------------------------------------------------------------------*/
-#pragma once
-
-#include <rpclib/client.h>
 #include <rpclib/server.h>
+
+using namespace jsonrpc;
+
+bool unused_to_avoid_linker_warning(void) {
+    return true;
+}

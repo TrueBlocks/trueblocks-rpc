@@ -1,22 +1,21 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    gen.cpp
- * @date    29.09.2013
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #include <iostream>
 #include <string>
 #include <iomanip>
 #include <algorithm>
-
-#include "gen.h"
 #include <argtable2.h>
+
 #include <rpclib/version.h>
 #include <rpclib/exception.h>
 #include <rpclib/procedure.h>
+#include <gen/gen.h>
 
 namespace jsonrpc {
     void splitPackages(const string& classname, StringVector& result) {

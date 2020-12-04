@@ -1,8 +1,8 @@
 # trueblocks-rpc- AbstractServerConnector
 
-- IProcedureInvokationHandler
+- Server_base
 
-  - AbstractServer<class S>
+  - Server<class S>
 
 - JsonRpcException
 - Procedure
@@ -13,7 +13,7 @@
 - ClientProtocolHandler
 - HttpClient
 - BatchResponse
-- BatchCall
+- BatchRequest
 
 - CodeGenerator
 

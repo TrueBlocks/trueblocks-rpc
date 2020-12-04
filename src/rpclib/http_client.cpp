@@ -1,19 +1,18 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    httpclient.cpp
- * @date    02.01.2013
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
-#include <rpclib/httpclient.h>
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #include <cstdlib>
 #include <curl/curl.h>
 #include <string.h>
 #include <string>
-
 #include <iostream>
+
+#include <rpclib/http_client.h>
 
 using namespace jsonrpc;
 

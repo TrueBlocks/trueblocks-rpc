@@ -1,20 +1,20 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    rpcprotocolserverv2.cpp
- * @date    31.12.2012
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
-#include <rpclib/serverprotocolhandler.h>
-#include <rpclib/errors.h>
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #include <iostream>
+
+#include <rpclib/server_handler.h>
+#include <rpclib/errors.h>
 
 using namespace std;
 using namespace jsonrpc;
 
-ServerProtocolHandler::ServerProtocolHandler(IProcedureInvokationHandler& h) : handler(h) {
+ServerProtocolHandler::ServerProtocolHandler(Server_base& h) : handler(h) {
 }
 
 void ServerProtocolHandler::HandleJsonRequest(const Json::Value& req, Json::Value& response) {

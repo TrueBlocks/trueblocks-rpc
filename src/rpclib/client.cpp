@@ -1,33 +1,25 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    client.cpp
- * @date    03.01.2013
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #include <rpclib/client.h>
-#include <rpclib/clientprotocolhandler.h>
+#include <rpclib/client_handler.h>
 
 using namespace jsonrpc;
 
-Client::Client(HttpClient& connector, bool omitEndingLineFeed) : connector(connector) {
-    protocol = new ClientProtocolHandler(omitEndingLineFeed);
+Client::Client(HttpClient& connector) : connector(connector) {
+    protocol = new ClientProtocolHandler();
 }
 
 Client::~Client() {
     delete protocol;
 }
 
-void Client::CallMethod(const string& name, const Json::Value& parameter, Json::Value& result) {
-    string request, response;
-    protocol->BuildRequest(name, parameter, request, false);
-    connector.SendRPCMessage(request, response);
-    protocol->HandleResponse(response, result);
-}
-
-void Client::CallProcedures(const BatchCall& calls, BatchResponse& result) {
+void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
     string request, response;
     request = calls.toString();
     connector.SendRPCMessage(request, response);
@@ -63,20 +55,21 @@ void Client::CallProcedures(const BatchCall& calls, BatchResponse& result) {
     }
 }
 
-BatchResponse Client::CallProcedures(const BatchCall& calls) {
+BatchResponse Client::CallProcedures(const BatchRequest& calls) {
     BatchResponse result;
     CallProcedures(calls, result);
     return result;
+}
+
+void Client::CallMethod(const string& name, const Json::Value& parameter, Json::Value& result) {
+    string request, response;
+    protocol->BuildRequest(name, parameter, request);
+    connector.SendRPCMessage(request, response);
+    protocol->HandleResponse(response, result);
 }
 
 Json::Value Client::CallMethod(const string& name, const Json::Value& parameter) {
     Json::Value result;
     CallMethod(name, parameter, result);
     return result;
-}
-
-void Client::CallNotification(const string& name, const Json::Value& parameter) {
-    string request, response;
-    protocol->BuildRequest(name, parameter, request, true);
-    connector.SendRPCMessage(request, response);
 }

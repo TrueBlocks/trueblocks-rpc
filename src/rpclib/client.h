@@ -1,37 +1,34 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    client.h
- * @date    03.01.2013
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #pragma once
-
-#include <json/json.h>
 
 #include <map>
 #include <vector>
+#include <json/json.h>
 
-#include "batchcall.h"
-#include "batchresponse.h"
-#include "httpclient.h"
+#include <rpclib/batch_request.h>
+#include <rpclib/batch_response.h>
+#include <rpclib/http_client.h>
 
 namespace jsonrpc {
     class ClientProtocolHandler;
 
     class Client {
       public:
-        Client(HttpClient& connector, bool omitEndingLineFeed = false);
+        Client(HttpClient& connector);
         virtual ~Client();
 
         void CallMethod(const string& name, const Json::Value& parameter, Json::Value& result);
         Json::Value CallMethod(const string& name, const Json::Value& parameter);
 
-        void CallProcedures(const BatchCall& calls, BatchResponse& response);
-        BatchResponse CallProcedures(const BatchCall& calls);
-
-        void CallNotification(const string& name, const Json::Value& parameter);
+        void CallProcedures(const BatchRequest& calls, BatchResponse& response);
+        BatchResponse CallProcedures(const BatchRequest& calls);
 
       private:
         HttpClient& connector;

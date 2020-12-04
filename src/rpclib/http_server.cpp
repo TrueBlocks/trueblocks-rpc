@@ -1,20 +1,19 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    httpserver.cpp
- * @date    31.12.2012
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-
-#include <rpclib/httpserver.h>
-#include <rpclib/exception.h>
-
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
+#include <rpclib/http_server.h>
+#include <rpclib/exception.h>
 
 using namespace jsonrpc;
 using namespace std;

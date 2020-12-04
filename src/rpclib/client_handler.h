@@ -1,20 +1,18 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    responsehandler.h
- * @date    13.03.2013
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
-#ifndef RESPONSEHANDLER_H
-#define RESPONSEHANDLER_H
-
-#include <json/json.h>
-#include <rpclib/exception.h>
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
+#pragma once
 
 #include <string>
+#include <json/json.h>
 
-#include "client.h"
+#include <rpclib/exception.h>
+#include <rpclib/client.h>
 
 namespace jsonrpc {
 
@@ -24,7 +22,7 @@ namespace jsonrpc {
      */
     class ClientProtocolHandler {
       public:
-        ClientProtocolHandler(bool omitEndingLineFeed = false);
+        ClientProtocolHandler();
 
         /**
          * @brief This method builds a valid json-rpc 2.0 request object based on
@@ -35,7 +33,7 @@ namespace jsonrpc {
          * @param parameter - parameters represented as json objects
          * @return the string representation of the request to be built.
          */
-        string BuildRequest(const string& method, const Json::Value& parameter, bool isNotification);
+        string BuildRequest(const string& method, const Json::Value& parameter);
 
         /**
          * @brief BuildRequest does the same as string
@@ -47,7 +45,7 @@ namespace jsonrpc {
          * @param result - the string representation will be hold within this
          * reference.
          */
-        void BuildRequest(const string& method, const Json::Value& parameter, string& result, bool isNotification);
+        void BuildRequest(const string& method, const Json::Value& parameter, string& result);
 
         /**
          * @brief Does the same as Json::Value
@@ -77,13 +75,9 @@ namespace jsonrpc {
         static const string KEY_ERROR_DATA;
 
       private:
-        bool omitEndingLineFeed;
-
-        void BuildRequest(int id, const string& method, const Json::Value& parameter, Json::Value& result,
-                          bool isNotification);
+        void BuildRequest(int id, const string& method, const Json::Value& parameter, Json::Value& result);
         bool ValidateResponse(const Json::Value& response);
         bool HasError(const Json::Value& response);
         void throwErrorException(const Json::Value& response);
     };
 }  // namespace jsonrpc
-#endif  // RESPONSEHANDLER_H

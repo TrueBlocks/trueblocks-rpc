@@ -1,18 +1,18 @@
-/*************************************************************************
- * libjson-rpc-cpp
- *************************************************************************
- * @file    exception.h
- * @date    31.12.2012
+/*-----------------------------------------------------------------------
+ * This file was originally part of libjson-rpc-cpp which has been
+ * almost completely re-written to remove anything not directly needed
+ * by the Ethereum RPC. It retains the original license as described in
+ * LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @license See attached LICENSE.txt
- ************************************************************************/
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2020)
+ *---------------------------------------------------------------------*/
 #pragma once
 
 #include <string>
 #include <sstream>
 #include <exception>
 
-#include "errors.h"
+#include <rpclib/errors.h>
 
 namespace jsonrpc {
     class JsonRpcException : public std::exception {
