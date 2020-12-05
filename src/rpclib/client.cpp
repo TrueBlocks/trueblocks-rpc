@@ -22,6 +22,21 @@ Client::~Client() {
 }
 
 //---------------------------------------------------------------------------------------
+void Client::CallMethod(const string& name, const jsonval_t& parameter, jsonval_t& result) {
+    string request, response;
+    protocol->BuildRequest(name, parameter, request);
+    connector.SendRPCMessage(request, response);
+    protocol->HandleResponse(response, result);
+}
+
+//---------------------------------------------------------------------------------------
+jsonval_t Client::CallMethod(const string& name, const jsonval_t& parameter) {
+    jsonval_t result;
+    CallMethod(name, parameter, result);
+    return result;
+}
+
+//---------------------------------------------------------------------------------------
 void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
     string request, response;
     request = calls.toString();
@@ -62,20 +77,5 @@ void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
 BatchResponse Client::CallProcedures(const BatchRequest& calls) {
     BatchResponse result;
     CallProcedures(calls, result);
-    return result;
-}
-
-//---------------------------------------------------------------------------------------
-void Client::CallMethod(const string& name, const jsonval_t& parameter, jsonval_t& result) {
-    string request, response;
-    protocol->BuildRequest(name, parameter, request);
-    connector.SendRPCMessage(request, response);
-    protocol->HandleResponse(response, result);
-}
-
-//---------------------------------------------------------------------------------------
-jsonval_t Client::CallMethod(const string& name, const jsonval_t& parameter) {
-    jsonval_t result;
-    CallMethod(name, parameter, result);
     return result;
 }

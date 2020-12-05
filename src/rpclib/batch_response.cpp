@@ -18,7 +18,7 @@ BatchResponse::BatchResponse() {
 }
 
 //---------------------------------------------------------------------------------------
-void BatchResponse::addResponse(jsonval_t& id, jsonval_t response, bool isError) {
+void BatchResponse::addResponse(const jsonval_t& id, const jsonval_t& response, bool isError) {
     if (isError) {
         errorResponses.push_back(id);
     }
@@ -34,7 +34,7 @@ jsonval_t BatchResponse::getResult(int id) {
 }
 
 //---------------------------------------------------------------------------------------
-void BatchResponse::getResult(jsonval_t& id, jsonval_t& result) {
+void BatchResponse::getResult(const jsonval_t& id, jsonval_t& result) {
     if (getErrorCode(id) == 0)
         result = responses[id];
     else
@@ -42,7 +42,7 @@ void BatchResponse::getResult(jsonval_t& id, jsonval_t& result) {
 }
 
 //---------------------------------------------------------------------------------------
-int BatchResponse::getErrorCode(jsonval_t& id) {
+int BatchResponse::getErrorCode(const jsonval_t& id) {
     if (std::find(errorResponses.begin(), errorResponses.end(), id) != errorResponses.end()) {
         return responses[id]["code"].asInt();
     }
@@ -50,7 +50,7 @@ int BatchResponse::getErrorCode(jsonval_t& id) {
 }
 
 //---------------------------------------------------------------------------------------
-string BatchResponse::getErrorMessage(jsonval_t& id) {
+string BatchResponse::getErrorMessage(const jsonval_t& id) {
     if (std::find(errorResponses.begin(), errorResponses.end(), id) != errorResponses.end()) {
         return responses[id]["message"].asString();
     }
