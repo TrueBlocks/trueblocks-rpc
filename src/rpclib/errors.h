@@ -1,9 +1,10 @@
 /*-----------------------------------------------------------------------
- * This file was originally part of libjson-rpc-cpp which has been almost
- * entirely re-written to remove anything not directly needed by the Ethereum
- * RPC. It retains the original license as described in LICENSE.txt
+ * This file is part of TrueBlocks-RPC, which is a near-complete rewrite
+ * of libjson-rpc-cpp removing anything not directly needed to support
+ * an Ethereum RPC client and server. It retains the original license
+ * as described in LICENSE.txt
  * @author  Peter Spiess-Knafl <dev@spiessknafl.at>
- * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite circa 2021)
+ * @author  Thomas Jay Rush <jrush@quickblocks.io> (rewrite 2021)
  *---------------------------------------------------------------------*/
 #pragma once
 
