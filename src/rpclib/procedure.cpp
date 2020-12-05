@@ -21,7 +21,7 @@ Procedure::Procedure() : procedureName(""), returntype(JSON_BOOLEAN), paramDecla
 }
 
 //---------------------------------------------------------------------------------------
-Procedure::Procedure(const string& name, parameterDeclaration_t paramType, jsontype_t returntype, ...) {
+Procedure::Procedure(const string& name, param_t paramType, jsontype_t rt, ...) {
     va_list parameters;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wvarargs"
@@ -36,7 +36,7 @@ Procedure::Procedure(const string& name, parameterDeclaration_t paramType, jsont
     }
     va_end(parameters);
     procedureName = name;
-    returntype = returntype;
+    returntype = rt;
     paramDeclaration = paramType;
 }
 
@@ -65,7 +65,7 @@ const string& Procedure::GetProcedureName() const {
 }
 
 //---------------------------------------------------------------------------------------
-parameterDeclaration_t Procedure::GetParameterDeclarationType() const {
+param_t Procedure::GetParameterDeclarationType() const {
     return paramDeclaration;
 }
 
@@ -85,7 +85,7 @@ void Procedure::SetReturnType(jsontype_t type) {
 }
 
 //---------------------------------------------------------------------------------------
-void Procedure::SetParameterDeclarationType(parameterDeclaration_t type) {
+void Procedure::SetParameterDeclarationType(param_t type) {
     paramDeclaration = type;
 }
 

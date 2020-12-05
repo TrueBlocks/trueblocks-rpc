@@ -28,21 +28,23 @@ namespace jsonrpc {
         void AddProcedure(const Procedure& procedure);
 
       private:
+        void ProcessRequest(const Json::Value& request, Json::Value& retValue);
+        void HandleSingleRequest(const Json::Value& request, Json::Value& response);
+        void HandleBatchRequest(const Json::Value& requests, Json::Value& response);
+
         bool ValidateRequestFields(const Json::Value& val);
+        int ValidateRequest(const Json::Value& val);
+
         void WrapResult(const Json::Value& request, Json::Value& response, Json::Value& retValue);
         void WrapError(const Json::Value& request, int code, const string& message, Json::Value& result);
         void WrapException(const Json::Value& request, const JsonRpcException& exception, Json::Value& result);
-        void ProcessRequest(const Json::Value& request, Json::Value& retValue);
-        int ValidateRequest(const Json::Value& val);
 
         Server_base& handler;
         std::map<string, Procedure> procedures;
-        void HandleSingleRequest(const Json::Value& request, Json::Value& response);
-        void HandleBatchRequest(const Json::Value& requests, Json::Value& response);
-        ServerProtocolHandler(const ServerProtocolHandler& c) : handler(c.handler){};  // no copy
-        ServerProtocolHandler& operator=(const ServerProtocolHandler&) {
-            return *this;
-        }
+
+      private:  // no copies
+        ServerProtocolHandler(const ServerProtocolHandler& c) : handler(c.handler){};
+        ServerProtocolHandler& operator=(const ServerProtocolHandler&);
     };
 
 } /* namespace jsonrpc */

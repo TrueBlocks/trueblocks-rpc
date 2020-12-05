@@ -1145,9 +1145,12 @@ Json::Value getTestTrace(uint32_t which) {
 int main() {
     HttpServer httpserver(8383);
     EthRpcServer server(httpserver);
-    server.StartListening();
-    cout << "Listening on :8383. Hit enter to stop the server" << endl;
-    getchar();
-    server.StopListening();
+    if (server.StartListening()) {
+        cout << "Listening on :8383. Hit enter to stop the server" << endl;
+        getchar();
+        server.StopListening();
+    } else {
+        cerr << "Could not start listening. Quitting..." << endl;
+    }
     return 0;
 }

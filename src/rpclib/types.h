@@ -15,7 +15,7 @@ using std::stringstream;
 using StringVector = std::vector<string>;
 
 //---------------------------------------------------------------------------------------
-typedef enum { PARAMS_BY_NAME, PARAMS_BY_POSITION } parameterDeclaration_t;
+typedef enum { PARAMS_BY_NAME, PARAMS_BY_POSITION } param_t;
 
 //---------------------------------------------------------------------------------------
 enum jsontype_t {

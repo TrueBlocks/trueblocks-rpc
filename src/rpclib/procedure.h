@@ -20,27 +20,30 @@ namespace jsonrpc {
     class Procedure {
       public:
         Procedure();
-        Procedure(const string& name, parameterDeclaration_t paramType, jsontype_t returntype, ...);
+        Procedure(const string& name, param_t paramType, jsontype_t returntype, ...);
 
-        bool ValdiateParameters(const Json::Value& parameters) const;
         const parameterNameList_t& GetParameters() const;
         const string& GetProcedureName() const;
         jsontype_t GetReturnType() const;
-        parameterDeclaration_t GetParameterDeclarationType() const;
+        param_t GetParameterDeclarationType() const;
+
         void SetProcedureName(const string& name);
         void SetReturnType(jsontype_t type);
-        void SetParameterDeclarationType(parameterDeclaration_t type);
+        void SetParameterDeclarationType(param_t type);
+
         void AddParameter(const string& name, jsontype_t type);
+        bool ValdiateParameters(const Json::Value& parameters) const;
+
+      private:
+        bool ValidateSingleParameter(jsontype_t expectedType, const Json::Value& value) const;
         bool ValidateNamedParameters(const Json::Value& parameters) const;
         bool ValidatePositionalParameters(const Json::Value& parameters) const;
 
-      private:
         string procedureName;
         parameterNameList_t parametersName;
         parameterPositionList_t parametersPosition;
         jsontype_t returntype;
-        parameterDeclaration_t paramDeclaration;
-        bool ValidateSingleParameter(jsontype_t expectedType, const Json::Value& value) const;
+        param_t paramDeclaration;
     };
     typedef std::vector<Procedure> ProcedureVector;
 } /* namespace jsonrpc */

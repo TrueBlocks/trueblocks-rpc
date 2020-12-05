@@ -19,6 +19,11 @@ ServerProtocolHandler::ServerProtocolHandler(Server_base& h) : handler(h) {
 }
 
 //---------------------------------------------------------------------------------------
+ServerProtocolHandler& ServerProtocolHandler::operator=(const ServerProtocolHandler&) {
+    return *this;
+}
+
+//---------------------------------------------------------------------------------------
 void ServerProtocolHandler::HandleJsonRequest(const Json::Value& req, Json::Value& response) {
     // It could be a Batch Request
     if (req.isArray()) {

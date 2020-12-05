@@ -74,7 +74,7 @@ void PythonClientCodeGenerator::generateAssignments(Procedure& proc) {
     string assignment;
     parameterNameList_t list = proc.GetParameters();
     if (list.size() > 0) {
-        parameterDeclaration_t declType = proc.GetParameterDeclarationType();
+        param_t declType = proc.GetParameterDeclarationType();
         if (proc.GetParameterDeclarationType() == PARAMS_BY_NAME) {
             writeLine("parameters = {}");
         } else if (proc.GetParameterDeclarationType() == PARAMS_BY_POSITION) {
