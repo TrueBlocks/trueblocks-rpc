@@ -30,7 +30,7 @@ void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     Json::Reader reader;
 #pragma clang diagnostic pop
-    Json::Value tmpresult;
+    jsonval_t tmpresult;
 
     try {
         if (!reader.parse(response, tmpresult) || !tmpresult.isArray()) {
@@ -43,12 +43,12 @@ void Client::CallProcedures(const BatchRequest& calls, BatchResponse& result) {
 
     for (unsigned int i = 0; i < tmpresult.size(); i++) {
         if (tmpresult[i].isObject()) {
-            Json::Value singleResult;
+            jsonval_t singleResult;
             try {
-                Json::Value id = protocol->HandleResponse(tmpresult[i], singleResult);
+                jsonval_t id = protocol->HandleResponse(tmpresult[i], singleResult);
                 result.addResponse(id, singleResult, false);
             } catch (JsonRpcException& ex) {
-                Json::Value id = -1;
+                jsonval_t id = -1;
                 if (tmpresult[i].isMember("id"))
                     id = tmpresult[i]["id"];
                 result.addResponse(id, tmpresult[i]["error"], true);
@@ -66,7 +66,7 @@ BatchResponse Client::CallProcedures(const BatchRequest& calls) {
 }
 
 //---------------------------------------------------------------------------------------
-void Client::CallMethod(const string& name, const Json::Value& parameter, Json::Value& result) {
+void Client::CallMethod(const string& name, const jsonval_t& parameter, jsonval_t& result) {
     string request, response;
     protocol->BuildRequest(name, parameter, request);
     connector.SendRPCMessage(request, response);
@@ -74,8 +74,8 @@ void Client::CallMethod(const string& name, const Json::Value& parameter, Json::
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value Client::CallMethod(const string& name, const Json::Value& parameter) {
-    Json::Value result;
+jsonval_t Client::CallMethod(const string& name, const jsonval_t& parameter) {
+    jsonval_t result;
     CallMethod(name, parameter, result);
     return result;
 }

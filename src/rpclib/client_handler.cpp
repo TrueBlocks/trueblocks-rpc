@@ -32,8 +32,8 @@ ClientProtocolHandler::ClientProtocolHandler() {
 }
 
 //---------------------------------------------------------------------------------------
-void ClientProtocolHandler::BuildRequest(const string& method, const Json::Value& parameter, string& result) {
-    Json::Value request;
+void ClientProtocolHandler::BuildRequest(const string& method, const jsonval_t& parameter, string& result) {
+    jsonval_t request;
     Json::StreamWriterBuilder wbuilder;
     wbuilder["indentation"] = "";
     BuildRequest(1, method, parameter, request);
@@ -41,12 +41,12 @@ void ClientProtocolHandler::BuildRequest(const string& method, const Json::Value
 }
 
 //---------------------------------------------------------------------------------------
-void ClientProtocolHandler::HandleResponse(const string& response, Json::Value& result) {
+void ClientProtocolHandler::HandleResponse(const string& response, jsonval_t& result) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     Json::Reader reader;
 #pragma clang diagnostic pop
-    Json::Value value;
+    jsonval_t value;
 
     try {
         if (reader.parse(response, value)) {
@@ -60,7 +60,7 @@ void ClientProtocolHandler::HandleResponse(const string& response, Json::Value& 
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value ClientProtocolHandler::HandleResponse(const Json::Value& value, Json::Value& result) {
+jsonval_t ClientProtocolHandler::HandleResponse(const jsonval_t& value, jsonval_t& result) {
     if (ValidateResponse(value)) {
         if (HasError(value)) {
             throwErrorException(value);
@@ -74,8 +74,7 @@ Json::Value ClientProtocolHandler::HandleResponse(const Json::Value& value, Json
 }
 
 //---------------------------------------------------------------------------------------
-void ClientProtocolHandler::BuildRequest(int id, const string& method, const Json::Value& parameter,
-                                         Json::Value& result) {
+void ClientProtocolHandler::BuildRequest(int id, const string& method, const jsonval_t& parameter, jsonval_t& result) {
     result[KEY_PROTOCOL_VERSION] = "2.0";
     result[KEY_PROCEDURE_NAME] = method;
     if (parameter != Json::nullValue)
@@ -84,7 +83,7 @@ void ClientProtocolHandler::BuildRequest(int id, const string& method, const Jso
 }
 
 //---------------------------------------------------------------------------------------
-void ClientProtocolHandler::throwErrorException(const Json::Value& response) {
+void ClientProtocolHandler::throwErrorException(const jsonval_t& response) {
     if (response[KEY_ERROR].isMember(KEY_ERROR_MESSAGE) && response[KEY_ERROR][KEY_ERROR_MESSAGE].isString()) {
         if (response[KEY_ERROR].isMember(KEY_ERROR_DATA)) {
             throw JsonRpcException(response[KEY_ERROR][KEY_ERROR_CODE].asInt(),
@@ -100,7 +99,7 @@ void ClientProtocolHandler::throwErrorException(const Json::Value& response) {
 }
 
 //---------------------------------------------------------------------------------------
-bool ClientProtocolHandler::ValidateResponse(const Json::Value& response) {
+bool ClientProtocolHandler::ValidateResponse(const jsonval_t& response) {
     if (!response.isObject() || !response.isMember(KEY_ID))
         return false;
 
@@ -122,6 +121,6 @@ bool ClientProtocolHandler::ValidateResponse(const Json::Value& response) {
 }
 
 //---------------------------------------------------------------------------------------
-bool ClientProtocolHandler::HasError(const Json::Value& response) {
+bool ClientProtocolHandler::HasError(const jsonval_t& response) {
     return response.isMember(KEY_ERROR);
 }

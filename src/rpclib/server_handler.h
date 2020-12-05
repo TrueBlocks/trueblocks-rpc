@@ -23,21 +23,21 @@ namespace jsonrpc {
       public:
         ServerProtocolHandler(Server_base& handler);
 
-        void HandleJsonRequest(const Json::Value& request, Json::Value& response);
+        void HandleJsonRequest(const jsonval_t& request, jsonval_t& response);
         void HandleRequest(const string& request, string& retValue);
         void AddProcedure(const Procedure& procedure);
 
       private:
-        void ProcessRequest(const Json::Value& request, Json::Value& retValue);
-        void HandleSingleRequest(const Json::Value& request, Json::Value& response);
-        void HandleBatchRequest(const Json::Value& requests, Json::Value& response);
+        void ProcessRequest(const jsonval_t& request, jsonval_t& retValue);
+        void HandleSingleRequest(const jsonval_t& request, jsonval_t& response);
+        void HandleBatchRequest(const jsonval_t& requests, jsonval_t& response);
 
-        bool ValidateRequestFields(const Json::Value& val);
-        int ValidateRequest(const Json::Value& val);
+        bool ValidateRequestFields(const jsonval_t& val);
+        int ValidateRequest(const jsonval_t& val);
 
-        void WrapResult(const Json::Value& request, Json::Value& response, Json::Value& retValue);
-        void WrapError(const Json::Value& request, int code, const string& message, Json::Value& result);
-        void WrapException(const Json::Value& request, const JsonRpcException& exception, Json::Value& result);
+        void WrapResult(const jsonval_t& request, jsonval_t& response, jsonval_t& retValue);
+        void WrapError(const jsonval_t& request, int code, const string& message, jsonval_t& result);
+        void WrapException(const jsonval_t& request, const JsonRpcException& exception, jsonval_t& result);
 
         Server_base& handler;
         std::map<string, Procedure> procedures;

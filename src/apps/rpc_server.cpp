@@ -16,13 +16,13 @@ using namespace jsonrpc;
 using namespace std;
 
 //---------------------------------------------------------------------------------------
-extern Json::Value getTestBlock(const string& id, bool fullTx);
-extern Json::Value getTestHeader(const string& id);
-extern Json::Value getTestTrans(const string& id, bool fullTx);
-extern Json::Value getTestUncle(const string& id, const string& index);
-extern Json::Value getTestReceipt(const string& id);
-extern Json::Value getTestLogByHash(void);
-extern Json::Value getTestTrace(uint32_t which = 0);
+extern jsonval_t getTestBlock(const string& id, bool fullTx);
+extern jsonval_t getTestHeader(const string& id);
+extern jsonval_t getTestTrans(const string& id, bool fullTx);
+extern jsonval_t getTestUncle(const string& id, const string& index);
+extern jsonval_t getTestReceipt(const string& id);
+extern jsonval_t getTestLogByHash(void);
+extern jsonval_t getTestTrace(uint32_t which = 0);
 
 //---------------------------------------------------------------------------------------
 class EthRpcServer : public AbstractServer {
@@ -36,27 +36,27 @@ class EthRpcServer : public AbstractServer {
     string net_version();
     string net_peerCount();
 
-    Json::Value eth_getBlockByNumber(const string& param01, bool param02);
-    Json::Value eth_getBlockByHash(const string& param01, bool param02);
+    jsonval_t eth_getBlockByNumber(const string& param01, bool param02);
+    jsonval_t eth_getBlockByHash(const string& param01, bool param02);
     string eth_getBlockTransactionCountByNumber(const string& param01);
     string eth_getBlockTransactionCountByHash(const string& param01);
 
-    Json::Value eth_getTransactionByHash(const string& param01);
-    Json::Value eth_getTransactionByBlockHashAndIndex(const string& param01, const string& param02);
-    Json::Value eth_getTransactionByBlockNumberAndIndex(const string& param01, const string& param02);
-    Json::Value eth_getTransactionReceipt(const string& param01);
+    jsonval_t eth_getTransactionByHash(const string& param01);
+    jsonval_t eth_getTransactionByBlockHashAndIndex(const string& param01, const string& param02);
+    jsonval_t eth_getTransactionByBlockNumberAndIndex(const string& param01, const string& param02);
+    jsonval_t eth_getTransactionReceipt(const string& param01);
 
-    Json::Value eth_getUncleByBlockNumberAndIndex(const string& param01, const string& param02);
-    Json::Value eth_getUncleByBlockHashAndIndex(const string& param01, const string& param02);
+    jsonval_t eth_getUncleByBlockNumberAndIndex(const string& param01, const string& param02);
+    jsonval_t eth_getUncleByBlockHashAndIndex(const string& param01, const string& param02);
     string eth_getUncleCountByBlockNumber(const string& param01);
     string eth_getUncleCountByBlockHash(const string& param01);
 
     string eth_newPendingTransactionFilter();
     string eth_newBlockFilter();
-    string eth_newFilter(const Json::Value& param01);
+    string eth_newFilter(const jsonval_t& param01);
     bool eth_uninstallFilter(const string& param01);
-    Json::Value eth_getFilterChanges(const string& param01);
-    Json::Value eth_getLogs(const Json::Value& param01);
+    jsonval_t eth_getFilterChanges(const string& param01);
+    jsonval_t eth_getLogs(const jsonval_t& param01);
 
     string eth_getBalance(const string& param01, const string& param02);
     string eth_getTransactionCount(const string& param01, const string& param02);
@@ -64,50 +64,50 @@ class EthRpcServer : public AbstractServer {
     string eth_getStorageAt(const string& param01, const string& param02, const string& param03);
 
     string eth_blockNumber();
-    Json::Value eth_syncing();
+    jsonval_t eth_syncing();
     string eth_chainId();
     string eth_protocolVersion();
     string eth_gasPrice();
 
-    string eth_call(const Json::Value& param01, const string& param02);
-    string eth_estimateGas(const Json::Value& param01);
-    string eth_sendTransaction(const Json::Value& param01);
+    string eth_call(const jsonval_t& param01, const string& param02);
+    string eth_estimateGas(const jsonval_t& param01);
+    string eth_sendTransaction(const jsonval_t& param01);
     string eth_sendRawTransaction(const string& param01);
-    string eth_getProof(const string& param01, const Json::Value& param02, const string& param03);
+    string eth_getProof(const string& param01, const jsonval_t& param02, const string& param03);
 
     string eth_coinbase();
     string eth_hashrate();
     bool eth_mining();
-    Json::Value eth_getWork();
+    jsonval_t eth_getWork();
     bool eth_submitWork(const string& param01, const string& param02, const string& param03);
     bool eth_submitHashrate(const string& param01, const string& param02);
 
-    Json::Value trace_call(const Json::Value& param01, const Json::Value& param02, const string& param03);
-    Json::Value trace_callMany(const Json::Value& param01, const string& param02);
-    Json::Value trace_rawTransaction(const string& param01, const Json::Value& param02);
-    Json::Value trace_replayBlockTransactions(const string& param01, const Json::Value& param02);
-    Json::Value trace_replayTransaction(const string& param01, const Json::Value& param02);
-    Json::Value trace_transaction(const string& param01);
-    Json::Value trace_get(const string& param01, const Json::Value& param02);
-    Json::Value trace_block(const string& param01);
-    Json::Value trace_filter(const Json::Value& param01);
+    jsonval_t trace_call(const jsonval_t& param01, const jsonval_t& param02, const string& param03);
+    jsonval_t trace_callMany(const jsonval_t& param01, const string& param02);
+    jsonval_t trace_rawTransaction(const string& param01, const jsonval_t& param02);
+    jsonval_t trace_replayBlockTransactions(const string& param01, const jsonval_t& param02);
+    jsonval_t trace_replayTransaction(const string& param01, const jsonval_t& param02);
+    jsonval_t trace_transaction(const string& param01);
+    jsonval_t trace_get(const string& param01, const jsonval_t& param02);
+    jsonval_t trace_block(const string& param01);
+    jsonval_t trace_filter(const jsonval_t& param01);
 
-    Json::Value tg_forks();
-    Json::Value tg_getHeaderByNumber(const string& param01);
-    Json::Value tg_getHeaderByHash(const string& param01);
-    Json::Value tg_getLogsByHash(const string& param01);
-    Json::Value tg_issuance(const string& param01);
+    jsonval_t tg_forks();
+    jsonval_t tg_getHeaderByNumber(const string& param01);
+    jsonval_t tg_getHeaderByHash(const string& param01);
+    jsonval_t tg_getLogsByHash(const string& param01);
+    jsonval_t tg_issuance(const string& param01);
 
-    Json::Value debug_storageRangeAt(const string& param01, int param02, const string& param03, const string& param04,
-                                     int param05);
-    Json::Value debug_accountRange(const string& param01, const Json::Value& param02, int param03, bool param04,
-                                   bool param05, bool param06);
+    jsonval_t debug_storageRangeAt(const string& param01, int param02, const string& param03, const string& param04,
+                                   int param05);
+    jsonval_t debug_accountRange(const string& param01, const jsonval_t& param02, int param03, bool param04,
+                                 bool param05, bool param06);
     string debug_getModifiedAccountsByNumber(const string& param01, const string& param02);
     string debug_getModifiedAccountsByHash(const string& param01, const string& param02);
     string debug_traceTransaction(const string& param01);
     string eth_accounts();
 
-    Json::Value eth_getCompilers();
+    jsonval_t eth_getCompilers();
     string eth_compileLLL(const string& param01);
     string eth_compileSolidity(const string& param01);
     string eth_compileSerpent(const string& param01);
@@ -118,16 +118,16 @@ class EthRpcServer : public AbstractServer {
     string db_getHex(const string& param01, const string& param02);
     bool db_putHex(const string& param01, const string& param02, const string& param03);
 
-    bool shh_post(const Json::Value& param01);
+    bool shh_post(const jsonval_t& param01);
     string shh_version();
     string shh_newIdentity();
     bool shh_hasIdentity(const string& param01);
     string shh_newGroup();
     bool shh_addToGroup(const string& param01);
-    string shh_newFilter(const Json::Value& param01);
+    string shh_newFilter(const jsonval_t& param01);
     bool shh_uninstallFilter(const string& param01);
-    Json::Value shh_getFilterChanges(const string& param01);
-    Json::Value shh_getMessages(const string& param01);
+    jsonval_t shh_getFilterChanges(const string& param01);
+    jsonval_t shh_getMessages(const string& param01);
 };
 
 //---------------------------------------------------------------------------------------
@@ -165,13 +165,13 @@ string EthRpcServer::net_peerCount() {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getBlockByNumber(const string& blockNumber, bool fullTx) {
+jsonval_t EthRpcServer::eth_getBlockByNumber(const string& blockNumber, bool fullTx) {
     std::cerr << "Serviced eth_getBlockByNumber(" << blockNumber << ", " << fullTx << ")" << std::endl;
     return getTestBlock(blockNumber, fullTx);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getBlockByHash(const string& blockHash, bool fullTx) {
+jsonval_t EthRpcServer::eth_getBlockByHash(const string& blockHash, bool fullTx) {
     std::cerr << "Serviced eth_getBlockByHash(" << blockHash << ", " << fullTx << ")" << std::endl;
     return getTestBlock(blockHash, fullTx);
 }
@@ -189,37 +189,37 @@ string EthRpcServer::eth_getBlockTransactionCountByHash(const string& param01) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getTransactionByHash(const string& param01) {
+jsonval_t EthRpcServer::eth_getTransactionByHash(const string& param01) {
     std::cerr << "Serviced eth_getTransactionByHash(" << param01 << ")" << std::endl;
     return getTestTrans(param01, true);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getTransactionByBlockHashAndIndex(const string& param01, const string& param02) {
+jsonval_t EthRpcServer::eth_getTransactionByBlockHashAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getTransactionByBlockHashAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestTrans(param01, true);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getTransactionByBlockNumberAndIndex(const string& param01, const string& param02) {
+jsonval_t EthRpcServer::eth_getTransactionByBlockNumberAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getTransactionByBlockNumberAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestTrans(param01, true);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getTransactionReceipt(const string& param01) {
+jsonval_t EthRpcServer::eth_getTransactionReceipt(const string& param01) {
     std::cerr << "Serviced eth_getTransactionReceipt(" << param01 << ")" << std::endl;
     return getTestReceipt(param01);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getUncleByBlockNumberAndIndex(const string& param01, const string& param02) {
+jsonval_t EthRpcServer::eth_getUncleByBlockNumberAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getUncleByBlockNumberAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestUncle(param01, param02);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getUncleByBlockHashAndIndex(const string& param01, const string& param02) {
+jsonval_t EthRpcServer::eth_getUncleByBlockHashAndIndex(const string& param01, const string& param02) {
     std::cerr << "Serviced eth_getUncleByBlockHashAndIndex(" << param01 << "," << param02 << ")" << std::endl;
     return getTestUncle(param01, param02);
 }
@@ -253,7 +253,7 @@ string EthRpcServer::eth_newBlockFilter() {
 }
 
 //---------------------------------------------------------------------------------------
-string EthRpcServer::eth_newFilter(const Json::Value& param01) {
+string EthRpcServer::eth_newFilter(const jsonval_t& param01) {
     std::cerr << "Serviced eth_newFilter(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_newFilter");
     throw excep;
@@ -269,20 +269,20 @@ bool EthRpcServer::eth_uninstallFilter(const string& param01) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getFilterChanges(const string& param01) {
+jsonval_t EthRpcServer::eth_getFilterChanges(const string& param01) {
     std::cerr << "Serviced eth_getFilterChanges(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getFilterChanges");
     throw excep;
-    Json::Value v1;
+    jsonval_t v1;
     return v1;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getLogs(const Json::Value& param01) {
+jsonval_t EthRpcServer::eth_getLogs(const jsonval_t& param01) {
     std::cerr << "Serviced eth_getLogs(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getLog");
     throw excep;
-    Json::Value v1;
+    jsonval_t v1;
     return v1;
 }
 
@@ -345,9 +345,9 @@ string EthRpcServer::eth_blockNumber() {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_syncing() {
+jsonval_t EthRpcServer::eth_syncing() {
     std::cerr << "Serviced eth_syncing()" << std::endl;
-    Json::Value v1;
+    jsonval_t v1;
     v1["currentBlock"] = "0xad7b02";
     v1["highestBlock"] = "0xad7e17";
     return v1;
@@ -372,19 +372,19 @@ string EthRpcServer::eth_gasPrice() {
 }
 
 //---------------------------------------------------------------------------------------
-string EthRpcServer::eth_call(const Json::Value& param01, const string& param02) {
+string EthRpcServer::eth_call(const jsonval_t& param01, const string& param02) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << ")" << std::endl;
     return "0x0000000000000000000000000000000000000000000c685fa11e01ec6f000000";
 }
 
 //---------------------------------------------------------------------------------------
-string EthRpcServer::eth_estimateGas(const Json::Value& param01) {
+string EthRpcServer::eth_estimateGas(const jsonval_t& param01) {
     std::cerr << "Serviced eth_estimateGas(" << param01 << ")" << std::endl;
     return "0x5208";
 }
 
 //---------------------------------------------------------------------------------------
-string EthRpcServer::eth_sendTransaction(const Json::Value& param01) {
+string EthRpcServer::eth_sendTransaction(const jsonval_t& param01) {
     std::cerr << "Serviced eth_getCode(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_sendTransaction");
     throw excep;
@@ -400,7 +400,7 @@ string EthRpcServer::eth_sendRawTransaction(const string& param01) {
 }
 
 //---------------------------------------------------------------------------------------
-string EthRpcServer::eth_getProof(const string& param01, const Json::Value& param02, const string& param03) {
+string EthRpcServer::eth_getProof(const string& param01, const jsonval_t& param02, const string& param03) {
     std::cerr << "Serviced eth_getProof(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getProof");
     throw excep;
@@ -430,11 +430,11 @@ bool EthRpcServer::eth_mining() {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getWork() {
+jsonval_t EthRpcServer::eth_getWork() {
     std::cerr << "Serviced eth_getWork()" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "eth_getWork");
     throw excep;
-    Json::Value v1;
+    jsonval_t v1;
     return v1;
 }
 
@@ -455,25 +455,25 @@ bool EthRpcServer::eth_submitHashrate(const string& param01, const string& param
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_call(const Json::Value& param01, const Json::Value& param02, const string& param03) {
+jsonval_t EthRpcServer::trace_call(const jsonval_t& param01, const jsonval_t& param02, const string& param03) {
     std::cerr << "Serviced trace_call(" << param01 << "," << param02 << "," << param03 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_call");
     throw excep;
-    Json::Value v1;
+    jsonval_t v1;
     return v1;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_callMany(const Json::Value& param01, const string& param02) {
+jsonval_t EthRpcServer::trace_callMany(const jsonval_t& param01, const string& param02) {
     std::cerr << "Serviced trace_callMany(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_callMany");
     throw excep;
-    Json::Value v1;
+    jsonval_t v1;
     return v1;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_rawTransaction(const string& param01, const Json::Value& param02) {
+jsonval_t EthRpcServer::trace_rawTransaction(const string& param01, const jsonval_t& param02) {
     std::cerr << "Serviced trace_rawTransaction(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_rawTransaction");
     throw excep;
@@ -481,7 +481,7 @@ Json::Value EthRpcServer::trace_rawTransaction(const string& param01, const Json
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_replayBlockTransactions(const string& param01, const Json::Value& param02) {
+jsonval_t EthRpcServer::trace_replayBlockTransactions(const string& param01, const jsonval_t& param02) {
     std::cerr << "Serviced trace_replayBlockTransactions(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_replayBlockTransactions");
     throw excep;
@@ -489,7 +489,7 @@ Json::Value EthRpcServer::trace_replayBlockTransactions(const string& param01, c
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_replayTransaction(const string& param01, const Json::Value& param02) {
+jsonval_t EthRpcServer::trace_replayTransaction(const string& param01, const jsonval_t& param02) {
     std::cerr << "Serviced trace_replayTransaction(" << param01 << "," << param02 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "trace_replayTransaction");
     throw excep;
@@ -497,33 +497,33 @@ Json::Value EthRpcServer::trace_replayTransaction(const string& param01, const J
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_transaction(const string& param01) {
+jsonval_t EthRpcServer::trace_transaction(const string& param01) {
     std::cerr << "Serviced trace_transaction(" << param01 << ")" << std::endl;
     return getTestTrace(2);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_get(const string& param01, const Json::Value& param02) {
+jsonval_t EthRpcServer::trace_get(const string& param01, const jsonval_t& param02) {
     std::cerr << "Serviced trace_get(" << param01 << "," << param02 << ")" << std::endl;
     return getTestTrace(1);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_block(const string& param01) {
+jsonval_t EthRpcServer::trace_block(const string& param01) {
     std::cerr << "Serviced trace_block(" << param01 << ")" << std::endl;
     return getTestTrace();
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::trace_filter(const Json::Value& param01) {
+jsonval_t EthRpcServer::trace_filter(const jsonval_t& param01) {
     std::cerr << "Serviced trace_filter(" << param01 << ")" << std::endl;
     return getTestTrace();
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::tg_forks() {
+jsonval_t EthRpcServer::tg_forks() {
     std::cerr << "Serviced tg_forks()" << std::endl;
-    Json::Value array;
+    jsonval_t array;
     array[0] = 1150000;
     array[1] = 1920000;
     array[2] = 2463000;
@@ -532,34 +532,34 @@ Json::Value EthRpcServer::tg_forks() {
     array[5] = 7280000;
     array[6] = 9069000;
     array[7] = 9200000;
-    Json::Value v1;
+    jsonval_t v1;
     v1["genesis"] = "0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3";
     v1["forks"] = array;
     return v1;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::tg_getHeaderByNumber(const string& param01) {
+jsonval_t EthRpcServer::tg_getHeaderByNumber(const string& param01) {
     std::cerr << "Serviced tg_getHeaderByNumber(" << param01 << ")" << std::endl;
     return getTestHeader(param01);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::tg_getHeaderByHash(const string& param01) {
+jsonval_t EthRpcServer::tg_getHeaderByHash(const string& param01) {
     std::cerr << "Serviced tg_getHeaderByHash(" << param01 << ")" << std::endl;
     return getTestHeader(param01);
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::tg_getLogsByHash(const string& param01) {
+jsonval_t EthRpcServer::tg_getLogsByHash(const string& param01) {
     std::cerr << "Serviced tg_getLogsByHash(" << param01 << ")" << std::endl;
     return getTestLogByHash();
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::tg_issuance(const string& param01) {
+jsonval_t EthRpcServer::tg_issuance(const string& param01) {
     std::cerr << "Serviced tg_issuance(" << param01 << ")" << std::endl;
-    Json::Value v1;
+    jsonval_t v1;
     v1["blockReward"] = "0x478eae0e571ba000";
     v1["uncleReward"] = "0x340aad21b3b70000";
     v1["issuance"] = "0x7b995b300ad2a000";
@@ -567,31 +567,31 @@ Json::Value EthRpcServer::tg_issuance(const string& param01) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::debug_storageRangeAt(const string& param01, int param02, const string& param03,
-                                               const string& param04, int param05) {
+jsonval_t EthRpcServer::debug_storageRangeAt(const string& param01, int param02, const string& param03,
+                                             const string& param04, int param05) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << "," << param04 << ","
               << param05 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_NOTIMPLEMENTED, "debug_storageRangeAt");
     throw excep;
-    Json::Value v1;
+    jsonval_t v1;
     return v1;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::debug_accountRange(const string& param01, const Json::Value& param02, int param03,
-                                             bool param04, bool param05, bool param06) {
+jsonval_t EthRpcServer::debug_accountRange(const string& param01, const jsonval_t& param02, int param03, bool param04,
+                                           bool param05, bool param06) {
     std::cerr << "Serviced eth_getCode(" << param01 << "," << param02 << "," << param03 << "," << param04 << ","
               << param05 << "," << param06 << ")" << std::endl;
-    Json::Value one = Json::objectValue;
+    jsonval_t one = Json::objectValue;
     one["balance"] = "0";
     one["nonce"] = 0;
     one["root"] = "0000000000000000000000000000000000000000000000000000000000000000";
     one["codeHash"] = "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470";
 
-    Json::Value accounts = Json::objectValue;
+    jsonval_t accounts = Json::objectValue;
     accounts["0x0000000000000000000000000000000000000001"] = one;
 
-    Json::Value v1;
+    jsonval_t v1;
     v1["root"] = "0x8d8f6ffa5f2e55c0f8f0b88c3421d647e497f3ee0d66825f3f7433d7e244dde8";
     v1["accounts"] = accounts;
     v1["next"] = "AAAAAAAAAAAAAAAAAAAAAAAAAAI=";
@@ -631,11 +631,11 @@ string EthRpcServer::eth_accounts() {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::eth_getCompilers() {
+jsonval_t EthRpcServer::eth_getCompilers() {
     std::cerr << "Serviced eth_getCompilers()" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_DEPRECATED, "eth_getCompilers");
     throw excep;
-    Json::Value v1;
+    jsonval_t v1;
     return v1;
 }
 
@@ -704,7 +704,7 @@ bool EthRpcServer::db_putHex(const string& param01, const string& param02, const
 }
 
 //---------------------------------------------------------------------------------------
-bool EthRpcServer::shh_post(const Json::Value& param01) {
+bool EthRpcServer::shh_post(const jsonval_t& param01) {
     std::cerr << "Serviced shh_post(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_DEPRECATED, "shh_post");
     throw excep;
@@ -752,7 +752,7 @@ bool EthRpcServer::shh_addToGroup(const string& param01) {
 }
 
 //---------------------------------------------------------------------------------------
-string EthRpcServer::shh_newFilter(const Json::Value& param01) {
+string EthRpcServer::shh_newFilter(const jsonval_t& param01) {
     std::cerr << "Serviced shh_newFilter(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_DEPRECATED, "shh_newFilter");
     throw excep;
@@ -768,26 +768,26 @@ bool EthRpcServer::shh_uninstallFilter(const string& param01) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::shh_getFilterChanges(const string& param01) {
+jsonval_t EthRpcServer::shh_getFilterChanges(const string& param01) {
     std::cerr << "Serviced shh_getFilterChanges(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_DEPRECATED, "shh_getFilterChanges");
     throw excep;
-    Json::Value result;
+    jsonval_t result;
     return result;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value EthRpcServer::shh_getMessages(const string& param01) {
+jsonval_t EthRpcServer::shh_getMessages(const string& param01) {
     std::cerr << "Serviced shh_getMessages(" << param01 << ")" << std::endl;
     JsonRpcException excep(TG_ERROR_SERVER_DEPRECATED, "shh_getMessages");
     throw excep;
-    Json::Value result;
+    jsonval_t result;
     return result;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestBlock(const string& id, bool txHashes) {
-    Json::Value result;
+jsonval_t getTestBlock(const string& id, bool txHashes) {
+    jsonval_t result;
     // result["author"] = "0x0c729be7c39543c3d549282a40395299d987cec2";
     result["difficulty"] = "0xb5708d578a6";
     result["extraData"] = "0xd783010400844765746887676f312e352e31856c696e7578";
@@ -813,19 +813,19 @@ Json::Value getTestBlock(const string& id, bool txHashes) {
     result["totalDifficulty"] = "0x6332227c16fd7c67";
     result["timestamp"] = "0x56bff9bb";
     result["transactionsRoot"] = "0xb779480508401ddd57f1f1e83a54715dcafc6ccec4e4d842c1b68cb418e6560d";
-    Json::Value txs;
+    jsonval_t txs;
     txs[0u] = getTestTrans("0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08", txHashes);
     txs[1u] = getTestTrans("0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a", txHashes);
     txs[2u] = getTestTrans("0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63", txHashes);
     txs[3u] = getTestTrans("0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521", txHashes);
     result["transactions"] = txs;
-    result["uncles"] = Json::Value(Json::arrayValue);
+    result["uncles"] = jsonval_t(Json::arrayValue);
     return result;
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestUncle(const string& id, const string& index) {
-    Json::Value result;
+jsonval_t getTestUncle(const string& id, const string& index) {
+    jsonval_t result;
     result["difficulty"] = id;     // supress unused param warning
     result["difficulty"] = index;  // supress unused param warning
     result["difficulty"] = "0x3ff800000";
@@ -859,8 +859,8 @@ Json::Value getTestUncle(const string& id, const string& index) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestTrans(const string& id, bool fullTx) {
-    Json::Value result;
+jsonval_t getTestTrans(const string& id, bool fullTx) {
+    jsonval_t result;
     if (!fullTx) {
         result = id;
         return result;
@@ -885,9 +885,9 @@ Json::Value getTestTrans(const string& id, bool fullTx) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestLog(uint32_t which) {
-    Json::Value result;
-    Json::Value topics(Json::arrayValue);
+jsonval_t getTestLog(uint32_t which) {
+    jsonval_t result;
+    jsonval_t topics(Json::arrayValue);
     switch (which) {
         case 0:
             result["address"] = "0xd6df5935cd03a768b7b9e92637a01b25e24cb709";
@@ -920,11 +920,11 @@ Json::Value getTestLog(uint32_t which) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestReceipt(const string& id) {
-    Json::Value result;
+jsonval_t getTestReceipt(const string& id) {
+    jsonval_t result;
     result["blockHash"] = "0xf6084155ff2022773b22df3217d16e9df53cbc42689b27ca4789e06b6339beb2";
     result["blockNumber"] = "0x52a975";
-    result["contractAddress"] = Json::Value(Json::nullValue);
+    result["contractAddress"] = jsonval_t(Json::nullValue);
     result["cumulativeGasUsed"] = "0x797db0";
     result["from"] = "0xd907941c8b3b966546fc408b8c942eb10a4f98df";
     result["gasUsed"] = "0x1308c";
@@ -942,7 +942,7 @@ Json::Value getTestReceipt(const string& id) {
     result["to"] = "0xd6df5935cd03a768b7b9e92637a01b25e24cb709";
     result["transactionHash"] = id;
     result["transactionIndex"] = "0x29";
-    Json::Value logs = Json::Value(Json::arrayValue);
+    jsonval_t logs = jsonval_t(Json::arrayValue);
     logs[0u] = getTestLog(0);
     logs[1u] = getTestLog(1);
     result["logs"] = logs;
@@ -950,8 +950,8 @@ Json::Value getTestReceipt(const string& id) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestHeader(const string& id) {
-    Json::Value result;
+jsonval_t getTestHeader(const string& id) {
+    jsonval_t result;
     result["difficulty"] = "0x3fe802ffe";
     result["extraData"] = "0x476574682f76312e302e302d66633739643332642f6c696e75782f676f312e34";
     result["gasLimit"] = "0x1388";
@@ -981,13 +981,13 @@ Json::Value getTestHeader(const string& id) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestLogByHash(void) {
-    Json::Value topics = Json::Value(Json::arrayValue);
+jsonval_t getTestLogByHash(void) {
+    jsonval_t topics = jsonval_t(Json::arrayValue);
     topics[0] = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
     topics[1] = "0x000000000000000000000000001866ae5b3de6caa5a51543fd9fb64f524f5478";
     topics[2] = "0x00000000000000000000000016a9c11e229ce221578a9adb3e7c0a48482e8063";
 
-    Json::Value logs = Json::Value(Json::arrayValue);
+    jsonval_t logs = jsonval_t(Json::arrayValue);
     logs[0]["address"] = "0xb8c77482e45f1f44de1745f52c74426c631bdd52";
     logs[0]["topics"] = topics;
     logs[0]["data"] = "0x00000000000000000000000000000000000000000000021ea4a7ecbf3c280000";
@@ -998,7 +998,7 @@ Json::Value getTestLogByHash(void) {
     logs[0]["logIndex"] = "0x0";
     logs[0]["removed"] = false;
 
-    Json::Value result = Json::Value(Json::arrayValue);
+    jsonval_t result = jsonval_t(Json::arrayValue);
     result[0] = Json::nullValue;
     result[1] = Json::nullValue;
     result[2] = logs;
@@ -1006,19 +1006,19 @@ Json::Value getTestLogByHash(void) {
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value getTestTrace(uint32_t which) {
+jsonval_t getTestTrace(uint32_t which) {
     if (which == 1) {
-        Json::Value action1;
+        jsonval_t action1;
         action1["callType"] = "call";
         action1["from"] = "0x1c39ba39e4735cb65978d4db400ddd70a72dc750";
         action1["gas"] = "0x13e99";
         action1["input"] = "0x16c72721";
         action1["to"] = "0x2bd2326c993dfaef84f696526064ff22eba5b362";
         action1["value"] = "0x0";
-        Json::Value res1;
+        jsonval_t res1;
         res1["gasUsed"] = "0x183";
         res1["output"] = "0x0000000000000000000000000000000000000000000000000000000000000001";
-        Json::Value trace1;
+        jsonval_t trace1;
         trace1["action"] = action1;
         trace1["blockHash"] = "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add";
         trace1["blockNumber"] = 3068185;
@@ -1032,17 +1032,17 @@ Json::Value getTestTrace(uint32_t which) {
         return trace1;
 
     } else if (which == 2) {
-        Json::Value action2;
+        jsonval_t action2;
         action2["callType"] = "call";
         action2["from"] = "0x83806d539d4ea1c140489a06660319c9a303f874";
         action2["gas"] = "0x1a1f8";
         action2["input"] = "0x";
         action2["to"] = "0x1c39ba39e4735cb65978d4db400ddd70a72dc750";
         action2["value"] = "0x7a16c911b4d00000";
-        Json::Value res2;
+        jsonval_t res2;
         res2["gasUsed"] = "0x2982";
         res2["output"] = "0x";
-        Json::Value trace2;
+        jsonval_t trace2;
         trace2["action"] = action2;
         trace2["blockHash"] = "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add";
         trace2["blockNumber"] = 3068185;
@@ -1053,17 +1053,17 @@ Json::Value getTestTrace(uint32_t which) {
         trace2["transactionPosition"] = 2;
         trace2["type"] = "call";
 
-        Json::Value action3;
+        jsonval_t action3;
         action3["callType"] = "call";
         action3["from"] = "0x1c39ba39e4735cb65978d4db400ddd70a72dc750";
         action3["gas"] = "0x13e99";
         action3["input"] = "0x16c72721";
         action3["to"] = "0x2bd2326c993dfaef84f696526064ff22eba5b362";
         action3["value"] = "0x0";
-        Json::Value res3;
+        jsonval_t res3;
         res3["gasUsed"] = "0x183";
         res3["output"] = "0x0000000000000000000000000000000000000000000000000000000000000001";
-        Json::Value trace3;
+        jsonval_t trace3;
         trace3["action"] = action3;
         trace3["blockHash"] = "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add";
         trace3["blockNumber"] = 3068185;
@@ -1075,17 +1075,17 @@ Json::Value getTestTrace(uint32_t which) {
         trace3["transactionPosition"] = 2;
         trace3["type"] = "call";
 
-        Json::Value action4;
+        jsonval_t action4;
         action4["callType"] = "call";
         action4["from"] = "0x1c39ba39e4735cb65978d4db400ddd70a72dc750";
         action4["gas"] = "0x8fc";
         action4["input"] = "0x";
         action4["to"] = "0x70faa28a6b8d6829a4b1e649d26ec9a2a39ba413";
         action4["value"] = "0x7a16c911b4d00000";
-        Json::Value res4;
+        jsonval_t res4;
         res4["gasUsed"] = "0x0";
         res4["output"] = "0x";
-        Json::Value trace4;
+        jsonval_t trace4;
         trace4["action"] = action4;
         trace4["blockHash"] = "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add";
         trace4["blockNumber"] = 3068185;
@@ -1097,18 +1097,18 @@ Json::Value getTestTrace(uint32_t which) {
         trace4["transactionPosition"] = 2;
         trace4["type"] = "call";
 
-        Json::Value result = Json::arrayValue;
+        jsonval_t result = Json::arrayValue;
         result[0] = trace2;
         result[1] = trace3;
         result[2] = trace4;
         return result;
     }
-    Json::Value action1;
+    jsonval_t action1;
     action1["author"] = "0x5088d623ba0fcf0131e0897a91734a4d83596aa0";
     action1["rewardType"] = "block";
     action1["value"] = "0x478eae0e571ba000";
-    Json::Value res1 = Json::objectValue;
-    Json::Value trace1;
+    jsonval_t res1 = Json::objectValue;
+    jsonval_t trace1;
     trace1["action"] = action1;
     trace1["result"] = res1;
     trace1["blockHash"] = "0x3d6122660cc824376f11ee842f83addc3525e2dd6756b9bcf0affa6aa88cf741";
@@ -1119,12 +1119,12 @@ Json::Value getTestTrace(uint32_t which) {
     trace1["transactionPosition"] = 0;
     trace1["type"] = "reward";
 
-    Json::Value action2;
+    jsonval_t action2;
     action2["author"] = "0xc8ebccc5f5689fa8659d83713341e5ad19349448";
     action2["rewardType"] = "uncle";
     action2["value"] = "0x340aad21b3b70000";
-    Json::Value res2 = Json::objectValue;
-    Json::Value trace2;
+    jsonval_t res2 = Json::objectValue;
+    jsonval_t trace2;
     trace2["action"] = action2;
     trace2["result"] = res2;
     trace2["blockHash"] = "0x3d6122660cc824376f11ee842f83addc3525e2dd6756b9bcf0affa6aa88cf741";
@@ -1135,7 +1135,7 @@ Json::Value getTestTrace(uint32_t which) {
     trace2["transactionPosition"] = 0;
     trace2["type"] = "reward";
 
-    Json::Value result;
+    jsonval_t result;
     result[0] = trace1;
     result[1] = trace2;
     return result;

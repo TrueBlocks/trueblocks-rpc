@@ -32,12 +32,12 @@ namespace jsonrpc {
         void SetParameterDeclarationType(param_t type);
 
         void AddParameter(const string& name, jsontype_t type);
-        bool ValdiateParameters(const Json::Value& parameters) const;
+        bool ValdiateParameters(const jsonval_t& parameters) const;
 
       private:
-        bool ValidateSingleParameter(jsontype_t expectedType, const Json::Value& value) const;
-        bool ValidateNamedParameters(const Json::Value& parameters) const;
-        bool ValidatePositionalParameters(const Json::Value& parameters) const;
+        bool ValidateSingleParameter(jsontype_t expectedType, const jsonval_t& value) const;
+        bool ValidateNamedParameters(const jsonval_t& parameters) const;
+        bool ValidatePositionalParameters(const jsonval_t& parameters) const;
 
         string procedureName;
         parameterNameList_t parametersName;

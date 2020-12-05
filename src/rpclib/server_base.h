@@ -16,6 +16,6 @@ namespace jsonrpc {
       public:
         virtual ~Server_base() {
         }
-        virtual void HandleMethodCall(Procedure& proc, const Json::Value& input, Json::Value& output) = 0;
+        virtual void HandleMethodCall(Procedure& proc, const jsonval_t& input, jsonval_t& output) = 0;
     };
 }  // namespace jsonrpc

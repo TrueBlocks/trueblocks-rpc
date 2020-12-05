@@ -172,8 +172,8 @@ const char* TEMPLATE_CPPSERVER_SIGCLASS = "class <stubname> : public jsonrpc::Se
 const char* TEMPLATE_CPPSERVER_SIGCONSTRUCTOR =
     "<stubname>(jsonrpc::HttpServer &conn) : jsonrpc::Server<<stubname>>(conn)";
 const char* TEMPLATE_CPPSERVER_SIGMETHOD =
-    "inline virtual void <procedurename>I(const Json::Value &request, Json::Value &response)";
+    "inline virtual void <procedurename>I(const jsonval_t &request, jsonval_t &response)";
 const char* TEMPLATE_CPPSERVER_SIGMETHOD_WITHOUT_PARAMS =
-    "inline virtual void <procedurename>I(const Json::Value &/*request*/, Json::Value &response)";
+    "inline virtual void <procedurename>I(const jsonval_t &/*request*/, jsonval_t &response)";
 const char* TEMPLATE_SERVER_ABSTRACTDEFINITION = "virtual <returntype> <procedurename>(<parameterlist>) = 0;";
 const char* TEMPLATE_CPPSERVER_GUARD = "#pragma once";

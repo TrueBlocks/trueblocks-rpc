@@ -82,7 +82,7 @@ void CppClientCodeGenerator::generateMethod(Procedure& proc) {
     writeLine("{");
     increaseIndentation();
 
-    writeLine("Json::Value p;");
+    writeLine("jsonval_t p;");
 
     generateAssignments(proc);
     generateProcCall(proc);
@@ -191,6 +191,6 @@ const char* TEMPLATE_CPPCLIENT_SIGMETHOD = "<returntype> <methodname>(<parameter
 const char* TEMPLATE_CPPCLIENT_SIGCOMMENT = "// Implements client side of <methodname>";
 const char* TEMPLATE_NAMED_ASSIGNMENT = "p[\"<paramname>\"] = <paramname>;";
 const char* TEMPLATE_POSITION_ASSIGNMENT = "p.append(<paramname>);";
-const char* TEMPLATE_METHODCALL = "Json::Value result = CallMethod(\"<name>\",p);";
+const char* TEMPLATE_METHODCALL = "jsonval_t result = CallMethod(\"<name>\",p);";
 const char* TEMPLATE_RETURNCHECK = "if (result<cast>)";
 const char* TEMPLATE_RETURN = "return result<cast>;";

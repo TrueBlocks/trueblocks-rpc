@@ -47,8 +47,8 @@ int main() {
     TRY_ONE(client.eth_getUncleCountByBlockHash("0x12"));
     // // client.eth_newPendingTransactionFilter();
     // // client.eth_newBlockFilter();
-    // Json::Value v1;
-    // Json::Value v2;
+    // jsonval_t v1;
+    // jsonval_t v2;
     // // client.eth_newFilter("0x12", "0x12", "0x12", v1, v2))
     // // client.eth_newFilter("0x12", "0x2", "0x2", v1, v2);
     // // client.eth_uninstallFilter("0x12");

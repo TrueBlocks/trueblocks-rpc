@@ -23,7 +23,7 @@ namespace jsonrpc {
     template <class S>
     class Server : public Server_base {
       public:
-        typedef void (S::*methodPointer_t)(const Json::Value& parameter, Json::Value& result);
+        typedef void (S::*methodPointer_t)(const jsonval_t& parameter, jsonval_t& result);
 
         Server(HttpServer& connector) : connection(connector) {
             handler = new ServerProtocolHandler(*this);
@@ -42,7 +42,7 @@ namespace jsonrpc {
             return connection.StopListening();
         }
 
-        virtual void HandleMethodCall(Procedure& proc, const Json::Value& input, Json::Value& output) {
+        virtual void HandleMethodCall(Procedure& proc, const jsonval_t& input, jsonval_t& output) {
             S* instance = dynamic_cast<S*>(this);
             (instance->*methods[proc.GetProcedureName()])(input, output);
         }

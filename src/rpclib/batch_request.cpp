@@ -18,8 +18,8 @@ BatchRequest::BatchRequest() : id(1) {
 }
 
 //---------------------------------------------------------------------------------------
-int BatchRequest::addCall(const string& methodname, const Json::Value& params) {
-    Json::Value call;
+int BatchRequest::addCall(const string& methodname, const jsonval_t& params) {
+    jsonval_t call;
     call[KEY_PROTOCOL_VERSION] = "2.0";
     call[KEY_PROCEDURE_NAME] = methodname;
 

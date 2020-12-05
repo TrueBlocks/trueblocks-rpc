@@ -18,7 +18,7 @@ BatchResponse::BatchResponse() {
 }
 
 //---------------------------------------------------------------------------------------
-void BatchResponse::addResponse(Json::Value& id, Json::Value response, bool isError) {
+void BatchResponse::addResponse(jsonval_t& id, jsonval_t response, bool isError) {
     if (isError) {
         errorResponses.push_back(id);
     }
@@ -26,15 +26,15 @@ void BatchResponse::addResponse(Json::Value& id, Json::Value response, bool isEr
 }
 
 //---------------------------------------------------------------------------------------
-Json::Value BatchResponse::getResult(int id) {
-    Json::Value result;
-    Json::Value i = id;
+jsonval_t BatchResponse::getResult(int id) {
+    jsonval_t result;
+    jsonval_t i = id;
     getResult(i, result);
     return result;
 }
 
 //---------------------------------------------------------------------------------------
-void BatchResponse::getResult(Json::Value& id, Json::Value& result) {
+void BatchResponse::getResult(jsonval_t& id, jsonval_t& result) {
     if (getErrorCode(id) == 0)
         result = responses[id];
     else
@@ -42,7 +42,7 @@ void BatchResponse::getResult(Json::Value& id, Json::Value& result) {
 }
 
 //---------------------------------------------------------------------------------------
-int BatchResponse::getErrorCode(Json::Value& id) {
+int BatchResponse::getErrorCode(jsonval_t& id) {
     if (std::find(errorResponses.begin(), errorResponses.end(), id) != errorResponses.end()) {
         return responses[id]["code"].asInt();
     }
@@ -50,7 +50,7 @@ int BatchResponse::getErrorCode(Json::Value& id) {
 }
 
 //---------------------------------------------------------------------------------------
-string BatchResponse::getErrorMessage(Json::Value& id) {
+string BatchResponse::getErrorMessage(jsonval_t& id) {
     if (std::find(errorResponses.begin(), errorResponses.end(), id) != errorResponses.end()) {
         return responses[id]["message"].asString();
     }
@@ -59,7 +59,7 @@ string BatchResponse::getErrorMessage(Json::Value& id) {
 
 //---------------------------------------------------------------------------------------
 string BatchResponse::getErrorMessage(int id) {
-    Json::Value i = id;
+    jsonval_t i = id;
     return getErrorMessage(i);
 }
 

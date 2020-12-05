@@ -20,16 +20,16 @@ namespace jsonrpc {
       public:
         ClientProtocolHandler();
 
-        string BuildRequest(const string& method, const Json::Value& parameter);
-        void BuildRequest(const string& method, const Json::Value& parameter, string& result);
-        void HandleResponse(const string& response, Json::Value& result);
-        Json::Value HandleResponse(const Json::Value& response, Json::Value& result);
+        string BuildRequest(const string& method, const jsonval_t& parameter);
+        void BuildRequest(const string& method, const jsonval_t& parameter, string& result);
+        void HandleResponse(const string& response, jsonval_t& result);
+        jsonval_t HandleResponse(const jsonval_t& response, jsonval_t& result);
 
       private:
-        void BuildRequest(int id, const string& method, const Json::Value& parameter, Json::Value& result);
-        bool ValidateResponse(const Json::Value& response);
-        bool HasError(const Json::Value& response);
-        void throwErrorException(const Json::Value& response);
+        void BuildRequest(int id, const string& method, const jsonval_t& parameter, jsonval_t& result);
+        bool ValidateResponse(const jsonval_t& response);
+        bool HasError(const jsonval_t& response);
+        void throwErrorException(const jsonval_t& response);
     };
 
     extern const char* KEY_PROTOCOL_VERSION;

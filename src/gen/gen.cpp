@@ -92,7 +92,7 @@ namespace jsonrpc {
                 result = isReturn ? "string" : "const string&";
                 break;
             default:
-                result = isReturn ? "Json::Value" : "const Json::Value&";
+                result = isReturn ? "jsonval_t" : "const jsonval_t&";
                 break;
         }
         return result;
@@ -112,7 +112,7 @@ string class2Filename(const string& classname, const string& ft) {
 }
 
 //---------------------------------------------------------------------------------------
-jsontype_t toJsonType(Json::Value& val) {
+jsontype_t toJsonType(jsonval_t& val) {
     jsontype_t result;
     switch (val.type()) {
         case Json::uintValue:
@@ -158,7 +158,7 @@ extern const char* KEY_SPEC_PROCEDURE_PARAMETERS;
 extern const char* KEY_SPEC_RETURN_TYPE;
 
 //---------------------------------------------------------------------------------------
-void GetPositionalParameters(Json::Value& val, Procedure& result) {
+void GetPositionalParameters(jsonval_t& val, Procedure& result) {
     for (unsigned int i = 0; i < val[KEY_SPEC_PROCEDURE_PARAMETERS].size(); i++) {
         stringstream paramname;
         paramname << "param" << std::setfill('0') << std::setw(2) << (i + 1);
@@ -167,7 +167,7 @@ void GetPositionalParameters(Json::Value& val, Procedure& result) {
 }
 
 //---------------------------------------------------------------------------------------
-void GetNamedParameters(Json::Value& val, Procedure& result) {
+void GetNamedParameters(jsonval_t& val, Procedure& result) {
     StringVector parameters = val[KEY_SPEC_PROCEDURE_PARAMETERS].getMemberNames();
     for (unsigned int i = 0; i < parameters.size(); ++i) {
         result.AddParameter(parameters.at(i), toJsonType(val[KEY_SPEC_PROCEDURE_PARAMETERS][parameters.at(i)]));
@@ -175,14 +175,14 @@ void GetNamedParameters(Json::Value& val, Procedure& result) {
 }
 
 //---------------------------------------------------------------------------------------
-string GetProcedureName(Json::Value& signature) {
+string GetProcedureName(jsonval_t& signature) {
     if (signature[KEY_SPEC_PROCEDURE_NAME].isString())
         return signature[KEY_SPEC_PROCEDURE_NAME].asString();
     return "";
 }
 
 //---------------------------------------------------------------------------------------
-void GetProcedure(Json::Value& signature, Procedure& result) {
+void GetProcedure(jsonval_t& signature, Procedure& result) {
     if (signature.isObject() && GetProcedureName(signature) != "") {
         result.SetProcedureName(GetProcedureName(signature));
         if (signature.isMember(KEY_SPEC_RETURN_TYPE)) {
@@ -216,7 +216,7 @@ ProcedureVector GetProceduresFromString(const string& content) {
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     Json::Reader reader;
 #pragma clang diagnostic pop
-    Json::Value val;
+    jsonval_t val;
     if (!reader.parse(content, val)) {
         throw JsonRpcException(ERROR_RPC_JSON_PARSE_ERROR, " specification file contains syntax errors");
     }

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.2)
 
 set(DEBUG_BUILD YES)
 
@@ -29,9 +29,9 @@ function (debug_value name value)
     endif()
 endfunction()
 
-debug_value("CMAKE_SOURCE_DIR:  " ${CMAKE_SOURCE_DIR})
-debug_value("CMAKE_MODULE_PATH: " ${CMAKE_MODULE_PATH})
-debug_value("VERSION_STRING:    " ${VERSION_STRING})
+debug_value("CMAKE_SOURCE_DIR:     " ${CMAKE_SOURCE_DIR})
+debug_value("CMAKE_MODULE_PATH:    " ${CMAKE_MODULE_PATH})
+debug_value("VERSION_STRING:       " ${VERSION_STRING})
 
 set(LIB_SUFFIX "" CACHE STRING "Suffix for library directory (32/64)")
 
@@ -51,20 +51,20 @@ endif()
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "${CMAKE_SOURCE_DIR}/win32-deps")
 
 find_package(Jsoncpp REQUIRED)
-debug_value("Jsoncpp header:  " ${JSONCPP_INCLUDE_DIR})
-debug_value("Jsoncpp lib:     " ${JSONCPP_LIBRARY})
+debug_value("JSONCPP_INCLUDE_DIR:  " ${JSONCPP_INCLUDE_DIR})
+debug_value("JSONCPP_LIBRARY:      " ${JSONCPP_LIBRARY})
 
 find_package(Argtable REQUIRED)
-debug_value("Argtable header: " ${ARGTABLE_INCLUDE_DIRS})
-debug_value("Argtable lib:    " ${ARGTABLE_LIBRARIES})
+debug_value("ARGTABLE_INCLUDE_DIRS:" ${ARGTABLE_INCLUDE_DIRS})
+debug_value("ARGTABLE_LIBRARIES:   " ${ARGTABLE_LIBRARIES})
 
 find_package(CURL REQUIRED)
-debug_value("CURL header:     " ${CURL_INCLUDE_DIRS})
-debug_value("CURL lib:        " ${CURL_LIBRARIES})
+debug_value("CURL_INCLUDE_DIRS:    " ${CURL_INCLUDE_DIRS})
+debug_value("CURL_LIBRARIES:       " ${CURL_LIBRARIES})
 
 find_package(MHD REQUIRED)
-debug_value("MHD header:      " ${MHD_INCLUDE_DIRS})
-debug_value("MHD lib:         " ${MHD_LIBRARIES})
+debug_value("MHD_INCLUDE_DIRS:     " ${MHD_INCLUDE_DIRS})
+debug_value("MHD_LIBRARIES:        " ${MHD_LIBRARIES})
 
 find_package(Threads REQUIRED)
 # debug_value("Threads header:  " ${THREADS_INCLUDE_DIRS})

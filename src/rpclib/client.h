@@ -24,8 +24,8 @@ namespace jsonrpc {
         Client(HttpClient& connector);
         virtual ~Client();
 
-        void CallMethod(const string& name, const Json::Value& parameter, Json::Value& result);
-        Json::Value CallMethod(const string& name, const Json::Value& parameter);
+        void CallMethod(const string& name, const jsonval_t& parameter, jsonval_t& result);
+        jsonval_t CallMethod(const string& name, const jsonval_t& parameter);
 
         void CallProcedures(const BatchRequest& calls, BatchResponse& response);
         BatchResponse CallProcedures(const BatchRequest& calls);

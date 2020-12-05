@@ -24,7 +24,7 @@ JsonRpcException::JsonRpcException(int code, const string& m) : code(code), mess
 }
 
 //---------------------------------------------------------------------------------------
-JsonRpcException::JsonRpcException(int code, const string& m, const Json::Value& data)
+JsonRpcException::JsonRpcException(int code, const string& m, const jsonval_t& data)
     : code(code), message(Errors::GetErrorMessage(code)), data(data) {
     if (message != "")
         message = message + ": ";
@@ -52,7 +52,7 @@ const string& JsonRpcException::GetMessage() const {
 }
 
 //---------------------------------------------------------------------------------------
-const Json::Value& JsonRpcException::GetData() const {
+const jsonval_t& JsonRpcException::GetData() const {
     return data;
 }
 

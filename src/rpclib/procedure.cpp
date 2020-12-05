@@ -41,7 +41,7 @@ Procedure::Procedure(const string& name, param_t paramType, jsontype_t rt, ...) 
 }
 
 //---------------------------------------------------------------------------------------
-bool Procedure::ValdiateParameters(const Json::Value& parameters) const {
+bool Procedure::ValdiateParameters(const jsonval_t& parameters) const {
     if (parametersName.empty()) {
         return true;
     }
@@ -96,7 +96,7 @@ void Procedure::AddParameter(const string& name, jsontype_t type) {
 }
 
 //---------------------------------------------------------------------------------------
-bool Procedure::ValidateNamedParameters(const Json::Value& parameters) const {
+bool Procedure::ValidateNamedParameters(const jsonval_t& parameters) const {
     bool ok = parameters.isObject() || parameters.isNull();
     for (map<string, jsontype_t>::const_iterator it = parametersName.begin(); ok == true && it != parametersName.end();
          ++it) {
@@ -110,7 +110,7 @@ bool Procedure::ValidateNamedParameters(const Json::Value& parameters) const {
 }
 
 //---------------------------------------------------------------------------------------
-bool Procedure::ValidatePositionalParameters(const Json::Value& parameters) const {
+bool Procedure::ValidatePositionalParameters(const jsonval_t& parameters) const {
     bool ok = true;
 
     if (parameters.size() != parametersPosition.size()) {
@@ -124,7 +124,7 @@ bool Procedure::ValidatePositionalParameters(const Json::Value& parameters) cons
 }
 
 //---------------------------------------------------------------------------------------
-bool Procedure::ValidateSingleParameter(jsontype_t expectedType, const Json::Value& value) const {
+bool Procedure::ValidateSingleParameter(jsontype_t expectedType, const jsonval_t& value) const {
     bool ok = true;
     switch (expectedType) {
         case JSON_STRING:

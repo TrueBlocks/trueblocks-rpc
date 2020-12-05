@@ -17,18 +17,11 @@ namespace jsonrpc {
     class BatchRequest {
       public:
         BatchRequest();
-
-        /**
-         * @brief addCall
-         * @param methodname
-         * @param params
-         * @return the id of the geneared request inside the BatchRequest
-         */
-        int addCall(const string& methodname, const Json::Value& params);
+        int addCall(const string& methodname, const jsonval_t& params);
         string toString(bool fast = true) const;
 
       private:
-        Json::Value result;
+        jsonval_t result;
         int id;
     };
 }  // namespace jsonrpc

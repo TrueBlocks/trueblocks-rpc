@@ -19,17 +19,17 @@ namespace jsonrpc {
       public:
         BatchResponse();
 
-        void addResponse(Json::Value& id, Json::Value response, bool isError = false);
-        Json::Value getResult(int id);
-        void getResult(Json::Value& id, Json::Value& result);
-        int getErrorCode(Json::Value& id);
-        string getErrorMessage(Json::Value& id);
+        void addResponse(jsonval_t& id, jsonval_t response, bool isError = false);
+        jsonval_t getResult(int id);
+        void getResult(jsonval_t& id, jsonval_t& result);
+        int getErrorCode(jsonval_t& id);
+        string getErrorMessage(jsonval_t& id);
         string getErrorMessage(int id);
         bool hasErrors();
 
       private:
-        std::map<Json::Value, Json::Value> responses;
-        std::vector<Json::Value> errorResponses;
+        std::map<jsonval_t, jsonval_t> responses;
+        std::vector<jsonval_t> errorResponses;
     };
 
 }  // namespace jsonrpc
