@@ -19,8 +19,8 @@
 
 namespace jsonrpc {
     //---------------------------------------------------------------------------------------
-    void splitPackages(const string& classname, StringVector& result) {
-        string s = classname;
+    void splitPackages(const string& stubname, StringVector& result) {
+        string s = stubname;
         string delimiter = "::";
         size_t pos = 0;
         while ((pos = s.find(delimiter)) != string::npos) {
@@ -32,7 +32,7 @@ namespace jsonrpc {
     }
 
     //---------------------------------------------------------------------------------------
-    string normalizeString(const string& text) {
+    string normalize(const string& text) {
         string result = text;
         for (unsigned int i = 0; i < text.length(); i++) {
             if (!((text[i] >= 'a' && text[i] <= 'z') || (text[i] >= 'A' && text[i] <= 'Z') ||
@@ -72,31 +72,6 @@ namespace jsonrpc {
         return result;
     }
 
-    //---------------------------------------------------------------------------------------
-    string toCppType(jsontype_t type, bool isReturn) {
-        string result;
-        switch (type) {
-            case JSON_BOOLEAN:
-                result = "bool";
-                break;
-            case JSON_INTEGER:
-                result = "int";
-                break;
-            case JSON_REAL:
-                result = "double";
-                break;
-            case JSON_NUMERIC:
-                result = "double";
-                break;
-            case JSON_STRING:
-                result = isReturn ? "string" : "const string&";
-                break;
-            default:
-                result = isReturn ? "jsonval_t" : "const jsonval_t&";
-                break;
-        }
-        return result;
-    }
 }  // namespace jsonrpc
 
 using namespace jsonrpc;
@@ -175,7 +150,7 @@ void GetNamedParameters(jsonval_t& val, Procedure& result) {
 }
 
 //---------------------------------------------------------------------------------------
-string GetProcedureName(jsonval_t& signature) {
+string GetName(jsonval_t& signature) {
     if (signature[KEY_SPEC_PROCEDURE_NAME].isString())
         return signature[KEY_SPEC_PROCEDURE_NAME].asString();
     return "";
@@ -183,8 +158,8 @@ string GetProcedureName(jsonval_t& signature) {
 
 //---------------------------------------------------------------------------------------
 void GetProcedure(jsonval_t& signature, Procedure& result) {
-    if (signature.isObject() && GetProcedureName(signature) != "") {
-        result.SetProcedureName(GetProcedureName(signature));
+    if (signature.isObject() && GetName(signature) != "") {
+        result.SetProcedureName(GetName(signature));
         if (signature.isMember(KEY_SPEC_RETURN_TYPE)) {
             result.SetReturnType(toJsonType(signature[KEY_SPEC_RETURN_TYPE]));
         }
@@ -230,11 +205,11 @@ ProcedureVector GetProceduresFromString(const string& content) {
     for (unsigned int i = 0; i < val.size(); i++) {
         Procedure proc;
         GetProcedure(val[i], proc);
-        if (procnames.find(proc.GetProcedureName()) != procnames.end()) {
+        if (procnames.find(proc.GetName()) != procnames.end()) {
             throw JsonRpcException(ERROR_SERVER_PROCEDURE_SPECIFICATION_SYNTAX,
-                                   "Procedurename not unique: " + proc.GetProcedureName());
+                                   "Procedurename not unique: " + proc.GetName());
         }
-        procnames[proc.GetProcedureName()] = proc;
+        procnames[proc.GetName()] = proc;
         result.push_back(proc);
     }
     return result;
@@ -308,7 +283,7 @@ bool createStubGenerators(int argc, char** argv, ProcedureVector& procedures, ve
             fprintf(_stdout, "Found %zu procedures in %s\n", procedures.size(), inputfile->filename[0]);
             for (unsigned int i = 0; i < procedures.size(); ++i) {
                 fprintf(_stdout, "\t[Method]         ");
-                fprintf(_stdout, "%s\n", procedures.at(i).GetProcedureName().c_str());
+                fprintf(_stdout, "%s\n", procedures.at(i).GetName().c_str());
             }
             fprintf(_stdout, "\n");
         }

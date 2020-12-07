@@ -4,7 +4,7 @@ set(DEBUG_BUILD YES)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake")
 
-option(HUNTER_ENABLED "Enable Hunter package manager" NO)
+option(HUNTER_ENABLED "Enable Hunter package manager" YES)
 include(HunterGate)
 HunterGate(
 	URL "https://github.com/ruslo/hunter/archive/v0.18.47.tar.gz"

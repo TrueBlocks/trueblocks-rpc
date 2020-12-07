@@ -15,7 +15,7 @@
 
         $(document).ready(function () {
             function showResult(id, result) {
-                alert("ID: " + id + " Result: " + result);
+                alert("ID: " + id + " Result: " + result["hash"]);
             }
 
             function showError(code, message) {
@@ -24,7 +24,7 @@
 
             var client = new JSClient("http://localhost:8383");
             console.log(client);
-            client.eth_getTransactionReceipt("0x12", showResult, showError);
+            client.eth_getTransactionByHash("0x12", showResult, showError);
         });
 
         function displayResult(result) {

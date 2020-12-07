@@ -127,7 +127,7 @@ void ServerProtocolHandler::WrapException(const jsonval_t& request, const JsonRp
 
 //---------------------------------------------------------------------------------------
 void ServerProtocolHandler::AddProcedure(const Procedure& procedure) {
-    procedures[procedure.GetProcedureName()] = procedure;
+    procedures[procedure.GetName()] = procedure;
 }
 
 //---------------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ void ServerProtocolHandler::HandleRequest(const string& request, string& retValu
     jsonval_t req;
     jsonval_t resp;
     Json::StreamWriterBuilder wbuilder;
-    wbuilder["indentation"] = "";
+    wbuilder["indLevel"] = "";
 
     try {
         if (reader.parse(request, req, false)) {

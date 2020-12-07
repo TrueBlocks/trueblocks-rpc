@@ -12,7 +12,7 @@ add_custom_command(
     COMMAND rpc_gen ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-server=AbstractServer --cpp-server-file=${SERVER_HEADER}
     MAIN_DEPENDENCY ../spec.json
     DEPENDS rpc_gen
-    COMMENT "Generating C++ Server Stubfiles"
+    COMMENT "Generating C++ server header"
     VERBATIM
 )
 add_executable(rpc_server rpc_server.cpp ${SERVER_HEADER})
@@ -25,7 +25,7 @@ add_custom_command(
     COMMAND rpc_gen ARGS ${CMAKE_CURRENT_SOURCE_DIR}/../spec.json --cpp-client=RpctClient --cpp-client-file=${CLIENT_HEADER}
     MAIN_DEPENDENCY ../spec.json
     DEPENDS rpc_gen
-    COMMENT "Generating C++ Client Stubfile"
+    COMMENT "Generating C++ client header"
     VERBATIM
 )
 add_executable(rpc_client rpc_client.cpp ${CLIENT_HEADER})

@@ -37,7 +37,7 @@ string BatchRequest::toString(bool fast) const {
     string res;
     if (fast) {
         Json::StreamWriterBuilder wbuilder;
-        wbuilder["indentation"] = "";
+        wbuilder["indLevel"] = "";
         res = Json::writeString(wbuilder, result);
     } else {
         Json::StreamWriterBuilder wbuilder;

@@ -84,7 +84,7 @@ void JsClientCodeGenerator::generateStub() {
 void JsClientCodeGenerator::generateMethod(Procedure& proc) {
     string method = TEMPLATE_JS_METHOD;
     replaceAll(method, "<class>", stubname);
-    replaceAll(method, "<procedure>", noramlizeJsLiteral(proc.GetProcedureName()));
+    replaceAll(method, "<procedure>", noramlizeJsLiteral(proc.GetName()));
 
     stringstream param_string;
     stringstream params_assignment;
@@ -93,7 +93,7 @@ void JsClientCodeGenerator::generateMethod(Procedure& proc) {
     for (parameterNameList_t::iterator it = list.begin(); it != list.end();) {
         param_string << it->first;
 
-        if (proc.GetParameterDeclarationType() == PARAMS_BY_NAME)
+        if (proc.GetParameterDecType() == PARAMS_BY_NAME)
             params_assignment << it->first << " : " << it->first;
         else
             params_assignment << it->first;
@@ -112,7 +112,7 @@ void JsClientCodeGenerator::generateMethod(Procedure& proc) {
     string params;
 
     if (proc.GetParameters().size() > 0) {
-        if (proc.GetParameterDeclarationType() == PARAMS_BY_NAME)
+        if (proc.GetParameterDecType() == PARAMS_BY_NAME)
             params = TEMPLATE_JS_PARAM_NAMED;
         else
             params = TEMPLATE_JS_PARAM_POSITIONAL;
@@ -125,7 +125,7 @@ void JsClientCodeGenerator::generateMethod(Procedure& proc) {
 
     method = TEMPLATE_JS_CALL_METHOD;
 
-    replaceAll(method, "<procedure>", proc.GetProcedureName());
+    replaceAll(method, "<procedure>", proc.GetName());
 
     writeLine(method);
 

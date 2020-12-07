@@ -34,3 +34,7 @@ enum jsontype_t {
 //---------------------------------------------------------------------------------------
 typedef std::map<string, jsontype_t> parameterNameList_t;
 typedef std::vector<jsontype_t> parameterPositionList_t;
+
+//---------------------------------------------------------------------------------------
+inline string json2Cpp(jsontype_t type) {
+}

@@ -22,10 +22,13 @@ namespace jsonrpc {
         Procedure();
         Procedure(const string& name, param_t paramType, jsontype_t returntype, ...);
 
+        int nParams(void) const {
+            return parametersName.size();
+        };
         const parameterNameList_t& GetParameters() const;
-        const string& GetProcedureName() const;
-        jsontype_t GetReturnType() const;
-        param_t GetParameterDeclarationType() const;
+        const string& GetName() const;
+        jsontype_t GetType() const;
+        param_t GetParameterDecType() const;
 
         void SetProcedureName(const string& name);
         void SetReturnType(jsontype_t type);

@@ -35,7 +35,7 @@ ClientProtocolHandler::ClientProtocolHandler() {
 void ClientProtocolHandler::BuildRequest(const string& method, const jsonval_t& parameter, string& result) {
     jsonval_t request;
     Json::StreamWriterBuilder wbuilder;
-    wbuilder["indentation"] = "";
+    wbuilder["indLevel"] = "";
     BuildRequest(1, method, parameter, request);
     result = Json::writeString(wbuilder, request);
 }

@@ -60,17 +60,17 @@ const parameterNameList_t& Procedure::GetParameters() const {
 }
 
 //---------------------------------------------------------------------------------------
-const string& Procedure::GetProcedureName() const {
+const string& Procedure::GetName() const {
     return procedureName;
 }
 
 //---------------------------------------------------------------------------------------
-param_t Procedure::GetParameterDeclarationType() const {
+param_t Procedure::GetParameterDecType() const {
     return paramDeclaration;
 }
 
 //---------------------------------------------------------------------------------------
-jsontype_t Procedure::GetReturnType() const {
+jsontype_t Procedure::GetType() const {
     return returntype;
 }
 

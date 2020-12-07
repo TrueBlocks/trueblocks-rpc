@@ -44,14 +44,14 @@ namespace jsonrpc {
 
         virtual void HandleMethodCall(Procedure& proc, const jsonval_t& input, jsonval_t& output) {
             S* instance = dynamic_cast<S*>(this);
-            (instance->*methods[proc.GetProcedureName()])(input, output);
+            (instance->*methods[proc.GetName()])(input, output);
         }
 
       protected:
         bool bindAndAddMethod(const Procedure& proc, methodPointer_t pointer) {
-            if (!symbolExists(proc.GetProcedureName())) {
+            if (!symbolExists(proc.GetName())) {
                 handler->AddProcedure(proc);
-                methods[proc.GetProcedureName()] = pointer;
+                methods[proc.GetName()] = pointer;
                 return true;
             }
             return false;

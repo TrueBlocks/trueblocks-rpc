@@ -16,21 +16,21 @@
 
 #include <rpclib/procedure.h>
 
+extern string toCppReturnType(jsontype_t type);
+extern string toCppParamType(jsontype_t type);
 namespace jsonrpc {
     //---------------------------------------------------------------------------------------
     extern void splitPackages(const string& classname, StringVector& result);
-    extern string normalizeString(const string& text);
+    extern string normalize(const string& text);
     extern string toString(jsontype_t type);
-    extern string toCppType(jsontype_t type, bool isReturn = false);
 
     //---------------------------------------------------------------------------------------
     class CodeGenerator {
       public:
         CodeGenerator(const string& sn, ProcedureVector& pv, const string& filename)
-            : stubname(sn), procedures(pv), indentation(0), atBeginning(true) {
+            : stubname(sn), procedures(pv), indChar(' '), indCount(4), indLevel(0), atBeginning(true) {
             file.open(filename.c_str());
             output = &file;
-            indentSymbol = "    ";
         }
 
         virtual ~CodeGenerator() {
@@ -43,8 +43,8 @@ namespace jsonrpc {
         void write(const string& line) {
             if (atBeginning) {
                 atBeginning = false;
-                for (int i = 0; i < indentation; i++)
-                    *output << indentSymbol;
+                for (int i = 0; i < indLevel; i++)
+                    *output << string(indCount, indChar);
             }
             *output << line;
         }
@@ -60,27 +60,27 @@ namespace jsonrpc {
         }
 
         void increaseIndentation() {
-            indentation++;
+            indLevel++;
         }
 
         void decreaseIndentation() {
-            indentation--;
+            indLevel--;
         }
 
-        void setIndentSymbol(const string& symbol) {
-            indentSymbol = symbol;
+        void setIndentSymbol(char ch, int n = 4) {
+            indCount = n;
+            indChar = ch;
         }
 
-        virtual string generateParameterDeclarationList(Procedure& proc) {
-            stringstream param_string;
-            parameterNameList_t list = proc.GetParameters();
-            for (parameterNameList_t::iterator it = list.begin(); it != list.end();) {
-                param_string << toCppType(it->second) << " " << it->first;
-                if (++it != list.end()) {
-                    param_string << ", ";
-                }
-            }
-            return param_string.str();
+        string indent(int inc = 0) {
+            indLevel += inc;
+            return string(indCount * indLevel, indChar);
+        }
+        string indentIn(void) {
+            return indent(1);
+        }
+        string indentOut(void) {
+            return indent(-1);
         }
 
         virtual void generateStub() = 0;
@@ -90,6 +90,7 @@ namespace jsonrpc {
                 decreaseIndentation();
                 writeLine("}");
             }
+            writeLine("");
         }
 
         int namespaceOpen(const string& classname) {
@@ -105,14 +106,13 @@ namespace jsonrpc {
         }
 
       protected:
+        std::ostream* output;
         string stubname;
         ProcedureVector& procedures;
-
-      private:
-        std::ostream* output;
         std::ofstream file;
-        string indentSymbol;
-        int indentation;
+        char indChar;
+        int indCount;
+        int indLevel;
         bool atBeginning;
     };
 
@@ -128,16 +128,6 @@ namespace jsonrpc {
       private:
         void generateMethod(Procedure& proc);
         void generateAssignments(Procedure& proc);
-        void generateProcCall(Procedure& proc);
-        string generateParameterDeclarationList(Procedure& proc) {
-            stringstream param_string;
-            parameterNameList_t list = proc.GetParameters();
-            for (parameterNameList_t::iterator it = list.begin(); it != list.end(); ++it) {
-                param_string << ", ";
-                param_string << it->first;
-            }
-            return param_string.str();
-        }
     };
 
     //---------------------------------------------------------------------------------------
@@ -161,11 +151,6 @@ namespace jsonrpc {
             : CodeGenerator(stubname, procedures, filename) {
         }
         void generateStub(void) final;
-
-      private:
-        void generateMethod(Procedure& proc);
-        void generateAssignments(Procedure& proc);
-        void generateProcCall(Procedure& proc);
     };
 
     class CppServerCodeGenerator : public CodeGenerator {
@@ -173,14 +158,6 @@ namespace jsonrpc {
         CppServerCodeGenerator(const string& stubname, ProcedureVector& procedures, const string& filename)
             : CodeGenerator(stubname, procedures, filename) {
         }
-
         void generateStub();
-
-      private:
-        void generateBindings();
-        void generateProcedureDefinitions();
-        void generateAbstractDefinitions();
-        void generateParameterMapping(const Procedure& proc);
-        string generateBindingParameterlist(const Procedure& proc);
     };
 }  // namespace jsonrpc

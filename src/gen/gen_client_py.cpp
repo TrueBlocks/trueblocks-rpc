@@ -16,10 +16,8 @@ using namespace jsonrpc;
 //---------------------------------------------------------------------------------------
 extern const char* TEMPLATE_PYTHON_CLIENT_SIGCLASS;
 extern const char* TEMPLATE_PYTHON_CLIENT_SIGCONSTRUCTOR;
-extern const char* TEMPLATE_PYTHON_CLIENT_SIGMETHOD;
 extern const char* TEMPLATE_PYTHON_NAMED_ASSIGNMENT;
 extern const char* TEMPLATE_PYTHON_POSITION_ASSIGNMENT;
-extern const char* TEMPLATE_PYTHON_METHODCALL;
 
 //---------------------------------------------------------------------------------------
 void PythonClientCodeGenerator::generateStub() {
@@ -51,22 +49,24 @@ void PythonClientCodeGenerator::generateStub() {
 
 //---------------------------------------------------------------------------------------
 void PythonClientCodeGenerator::generateMethod(Procedure& proc) {
-    string procsignature = TEMPLATE_PYTHON_CLIENT_SIGMETHOD;
-    replaceAll(procsignature, "<methodname>", normalizeString(proc.GetProcedureName()));
+    stringstream param_string;
+    parameterNameList_t list = proc.GetParameters();
+    for (parameterNameList_t::iterator it = list.begin(); it != list.end(); ++it) {
+        param_string << ", ";
+        param_string << it->first;
+    }
+    *output << indent() << "def " << normalize(proc.GetName());
+    *output << "(self" << param_string.str() << "):" << endl;
 
-    // generate parameters string
-    string params = generateParameterDeclarationList(proc);
-    replaceAll(procsignature, "<parameters>", params);
-
-    writeLine(procsignature);
-    increaseIndentation();
-
+    (void)indentIn();
     generateAssignments(proc);
-    writeNewLine();
-    generateProcCall(proc);
-    writeNewLine();
+    *output << endl;
 
-    decreaseIndentation();
+    *output << indent() << "result = self.call_method(\'" << proc.GetName() << "\', parameters)" << endl;
+    *output << indent() << "return result" << endl;
+    *output << endl;
+
+    (void)indentOut();
 }
 
 //---------------------------------------------------------------------------------------
@@ -74,10 +74,10 @@ void PythonClientCodeGenerator::generateAssignments(Procedure& proc) {
     string assignment;
     parameterNameList_t list = proc.GetParameters();
     if (list.size() > 0) {
-        param_t declType = proc.GetParameterDeclarationType();
-        if (proc.GetParameterDeclarationType() == PARAMS_BY_NAME) {
+        param_t declType = proc.GetParameterDecType();
+        if (proc.GetParameterDecType() == PARAMS_BY_NAME) {
             writeLine("parameters = {}");
-        } else if (proc.GetParameterDeclarationType() == PARAMS_BY_POSITION) {
+        } else if (proc.GetParameterDecType() == PARAMS_BY_POSITION) {
             writeLine("parameters = []");
         }
 
@@ -96,18 +96,8 @@ void PythonClientCodeGenerator::generateAssignments(Procedure& proc) {
 }
 
 //---------------------------------------------------------------------------------------
-void PythonClientCodeGenerator::generateProcCall(Procedure& proc) {
-    string call;
-    call = TEMPLATE_PYTHON_METHODCALL;
-    writeLine(substitute(call, "<name>", proc.GetProcedureName()));
-    writeLine("return result");
-}
-
-//---------------------------------------------------------------------------------------
 const char* TEMPLATE_PYTHON_CLIENT_SIGCLASS = "class <stubname>(client.Client):";
 const char* TEMPLATE_PYTHON_CLIENT_SIGCONSTRUCTOR =
     "def __init__(self, connector, version='2.0'):\n        super(<stubname>, self).__init__(connector, version)";
-const char* TEMPLATE_PYTHON_CLIENT_SIGMETHOD = "def <methodname>(self<parameters>):";
 const char* TEMPLATE_PYTHON_NAMED_ASSIGNMENT = "parameters[\'<paramname>\'] = <paramname>";
 const char* TEMPLATE_PYTHON_POSITION_ASSIGNMENT = "parameters.append(<paramname>)";
-const char* TEMPLATE_PYTHON_METHODCALL = "result = self.call_method(\'<name>\', parameters)";
